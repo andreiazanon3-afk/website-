@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andréia Zanon | Consteladora Estratégica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: #fafafa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        /* FOTO - DESTAQUE PRINCIPAL */
+        .photo-section {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 100%);
+        }
+
+        .photo-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            display: block;
+        }
+
+        /* CONTEÚDO */
+        .content {
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .name {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .title {
+            font-family: 'Lora', serif;
+            font-size: 12px;
+            color: #A85C4A;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .divider {
+            width: 40px;
+            height: 2px;
+            background: #C4956A;
+            margin: 0 auto 30px;
+        }
+
+        .pitch {
+            font-family: 'Lora', serif;
+            font-size: 17px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .pitch strong {
+            color: #8B3A3A;
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        /* BOTÕES */
+        .buttons-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 15px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-family: 'Lora', serif;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn-primary {
+            background: #8B3A3A;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #9B4A4A;
+        }
+
+        .btn-secondary {
+            background: #C4956A;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #D4A57A;
+        }
+
+        .btn-tertiary {
+            background: #A85C4A;
+            color: white;
+        }
+
+        .btn-tertiary:hover {
+            background: #B86C5A;
+        }
+
+        .btn-quaternary {
+            background: #D4A574;
+            color: white;
+        }
+
+        .btn-quaternary:hover {
+            background: #E4B584;
+        }
+
+        /* RODAPÉ */
+        .footer {
+            padding: 30px 40px;
+            background: #f5f5f5;
+            text-align: center;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+
+        .social-links a {
+            color: #999;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .social-links a:hover {
+            color: #8B3A3A;
+        }
+
+        .footer p {
+            color: #bbb;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        /* RESPONSIVO */
+        @media (max-width: 600px) {
+            .photo-section {
+                height: 350px;
+            }
+
+            .content {
+                padding: 40px 30px;
+            }
+
+            .name {
+                font-size: 24px;
+            }
+
+            .pitch {
+                font-size: 16px;
+            }
+
+            .btn {
+                padding: 13px 20px;
+                font-size: 14px;
+            }
+
+            .footer {
+                padding: 25px 30px;
+            }
+
+            .social-links {
+                gap: 20px;
+            }
+        }
+
+        /* ANIMAÇÃO DE ENTRADA */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- FOTO -->
+        <div class="photo-section">
+            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663364172471/GKAaQAeSVSGrosEq.jpeg" alt="Andréia Zanon">
+        </div>
+
+        <!-- CONTEÚDO -->
+        <div class="content">
+            <h1 class="name">Andréia Zanon</h1>
+            <p class="title">Consteladora Estratégica</p>
+            
+            <div class="divider"></div>
+
+            <p class="pitch">
+                Sou <strong>Andréia Zanon</strong>. Ajudo mulheres modernas a descobrir que não é sobre escolher entre ser mãe OU profissional. É sobre estar no lugar certo em cada contexto e ser inteira em todos eles.
+            </p>
+
+            <!-- BOTÕES -->
+            <div class="buttons-section">
+                <a href="https://wa.me/5554996742276?text=Oi%20Andréia!%20Gostaria%20de%20agendar%20um%20atendimento.%20Qual%20é%20a%20disponibilidade?" class="btn btn-primary" target="_blank">
+                    📅 Agendar Atendimento
+                </a>
+                <a href="https://chat.whatsapp.com/E9tj58QCLnRBWZFMyuYU44?mode=gi_t" class="btn btn-secondary" target="_blank">
+                    👥 Entrar na Comunidade
+                </a>
+                <a href="https://open.spotify.com/playlist/4PN9D4CtFEYFV85IebJAqn?si=TOiPEhw_Ssu686t8iBrLqQ&pi=bKtK2nu9Sp2mu" class="btn btn-tertiary" target="_blank">
+                    🎵 Acessar Playlist
+                </a>
+                <a href="https://wa.me/5554996742276?text=Oi%20Andréia!%20Gostaria%20de%20saber%20mais%20sobre%20consultoria%20estratégica%20para%20empresas%20familiares." class="btn btn-quaternary" target="_blank">
+                    💼 Consultoria Estratégica
+                </a>
+            </div>
+        </div>
+
+        <!-- RODAPÉ -->
+        <div class="footer">
+            <div class="social-links">
+                <a href="https://instagram.com/andreiazanon_" target="_blank">Instagram</a>
+                <a href="https://www.linkedin.com/in/andréia-zanon" target="_blank">LinkedIn</a>
+                <a href="mailto:contato@andreiazanon.com" target="_blank">Email</a>
+            </div>
+            <p>© 2026 ANDRÉIA ZANON. TODOS OS DIREITOS RESERVADOS.</p>
+        </div>
+    </div>
+</body>
+</html>
