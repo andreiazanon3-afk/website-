@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descubra Seu Estilo Parental | Andreia Zanon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: linear-gradient(135deg, #1a2332 0%, #f5f5f0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(26, 35, 50, 0.15);
+            max-width: 700px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #1a2332;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .intro-section {
+            background: #f9f9f9;
+            border-left: 4px solid #d4af37;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .intro-section.active {
+            display: block;
+        }
+
+        .intro-section h2 {
+            font-size: 20px;
+            color: #1a2332;
+            margin-bottom: 15px;
+        }
+
+        .intro-section p {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .intro-section ul {
+            margin-left: 20px;
+            font-size: 15px;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .intro-section li {
+            margin-bottom: 10px;
+        }
+
+        .intro-button {
+            background: #1a2332;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .intro-button:hover {
+            background: #d4af37;
+            color: #1a2332;
+        }
+
+        .quiz-section {
+            display: none;
+        }
+
+        .quiz-section.active {
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1a2332, #d4af37);
+            transition: width 0.3s;
+        }
+
+        .question-number {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 18px;
+            color: #1a2332;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option-btn {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Lora', serif;
+        }
+
+        .option-btn:hover {
+            border-color: #1a2332;
+            background: #f9f9f9;
+        }
+
+        .option-btn.selected {
+            background: #1a2332;
+            color: white;
+            border-color: #1a2332;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #1a2332;
+            background: white;
+            color: #1a2332;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Lora', serif;
+        }
+
+        .nav-btn:hover {
+            background: #1a2332;
+            color: white;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .lead-capture {
+            display: none;
+            text-align: center;
+        }
+
+        .lead-capture.active {
+            display: block;
+        }
+
+        .lead-capture h2 {
+            font-size: 24px;
+            color: #1a2332;
+            margin-bottom: 20px;
+        }
+
+        .lead-capture p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #1a2332;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: 'Lora', serif;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1a2332;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #1a2332;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Lora', serif;
+        }
+
+        .submit-btn:hover {
+            background: #d4af37;
+            color: #1a2332;
+        }
+
+        .result-section {
+            display: none;
+            text-align: center;
+        }
+
+        .result-section.active {
+            display: block;
+        }
+
+        .result-title {
+            font-size: 24px;
+            color: #1a2332;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, #1a2332, #2a3f5f);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .result-style {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .result-description {
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .whatsapp-btn {
+            width: 100%;
+            padding: 14px;
+            background: #25d366;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Lora', serif;
+            margin-top: 20px;
+        }
+
+        .whatsapp-btn:hover {
+            background: #1eaa50;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .question-text {
+                font-size: 16px;
+            }
+
+            .options {
+                flex-direction: column;
+            }
+
+            .result-style {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- INTRO SECTION -->
+        <div class="intro-section active" id="introSection">
+            <div class="header">
+                <h1>Descubra Seu Estilo Parental</h1>
+                <p>E como ele molda seus relacionamentos</p>
+            </div>
+
+            <h2>Por que isso importa?</h2>
+            <p>Seu estilo parental não é apenas sobre como você educa seus filhos. É sobre como você lidera, toma decisões, gerencia conflitos e se relaciona com as pessoas ao seu redor.</p>
+            
+            <p>Baseado na pesquisa do renomado psicólogo John Gottman, este teste identifica seu estilo parental predominante e como ele impacta toda a sua vida:</p>
+            
+            <ul>
+                <li><strong>Simplista:</strong> Estabelece limites claros e estrutura</li>
+                <li><strong>Desaprovador:</strong> Foca em crítica e correção</li>
+                <li><strong>Laissez-Faire:</strong> Permite liberdade e autonomia</li>
+                <li><strong>Preparador Emocional:</strong> Valida emoções e ensina</li>
+            </ul>
+
+            <p style="margin-top: 20px;">Compreender seu estilo é o primeiro passo para transformar seus relacionamentos e viver de forma mais autêntica.</p>
+
+            <button class="intro-button" onclick="startQuiz()">Começar o Teste</button>
+        </div>
+
+        <!-- QUIZ SECTION -->
+        <div class="quiz-section" id="quizSection">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="question-number" id="questionNumber"></div>
+            <div class="question-text" id="questionText"></div>
+
+            <div class="options" id="optionsContainer"></div>
+
+            <div class="navigation">
+                <button class="nav-btn" id="prevBtn" onclick="previousQuestion()" disabled>← Anterior</button>
+                <button class="nav-btn" id="nextBtn" onclick="nextQuestion()" disabled>Próxima →</button>
+            </div>
+        </div>
+
+        <!-- LEAD CAPTURE SECTION -->
+        <div class="lead-capture" id="leadCapture">
+            <h2>Quase lá!</h2>
+            <p>Para enviar seu resultado e começar sua transformação, deixe seus dados:</p>
+
+            <form onsubmit="submitLead(event)">
+                <div class="form-group">
+                    <label for="name">Seu nome:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="whatsapp">Seu WhatsApp:</label>
+                    <input type="tel" id="whatsapp" name="whatsapp" placeholder="(XX) 9XXXX-XXXX" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar e Ver Resultado</button>
+            </form>
+        </div>
+
+        <!-- RESULT SECTION -->
+        <div class="result-section" id="resultSection">
+            <div class="result-title">Seu Resultado</div>
+
+            <div class="result-box">
+                <div class="result-style" id="resultStyle"></div>
+                <div class="result-description" id="resultDescription"></div>
+            </div>
+
+            <p style="color: #666; margin-bottom: 20px;">Agora que você descobriu seu estilo, está pronto para transformar seus relacionamentos?</p>
+
+            <button class="whatsapp-btn" id="whatsappBtn" onclick="sendWhatsApp()">Falar com Andreia no WhatsApp</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            // Simplista (1, 2, 6, 7, 12, 13, 14, 15, 17, 18)
+            { text: "Criança realmente quase não tem motivo para ficar triste.", category: "Simplista" },
+            { text: "Acho que raiva não tem nada de mau, contanto que seja controlada.", category: "Simplista" },
+            { text: "Quando meu filho está triste, espera que eu conserte o mundo e o deixe perfeito.", category: "Simplista" },
+            { text: "Eu realmente não tenho tempo para tristeza na vida.", category: "Simplista" },
+            { text: "Acho que tristeza não tem nada de mau, contanto que seja controlada.", category: "Simplista" },
+            { text: "Tristeza é uma coisa que a gente tem que superar, esquecer e não ficar remoendo.", category: "Simplista" },
+            { text: "Não me importo de lidar com tristeza de criança, desde que não dure muito.", category: "Simplista" },
+            { text: "Prefiro uma criança feliz a uma excessivamente emotiva.", category: "Simplista" },
+            { text: "Ajudo meus filhos a superarem logo as tristezas para que possam se dedicar a coisas melhores.", category: "Simplista" },
+            { text: "Não acho que quando a criança está triste seja uma oportunidade para lhe ensinar alguma coisa.", category: "Simplista" },
+            
+            // Desaprovador (3, 4, 5, 8, 10, 11, 20, 21, 22)
+            { text: "Quando a criança faz manha, em geral só está querendo que os adultos fiquem com pena dela.", category: "Desaprovador" },
+            { text: "A raiva da criança merece uma folga.", category: "Desaprovador" },
+            { text: "Raiva em geral quer dizer agressão.", category: "Desaprovador" },
+            { text: "Criança costuma fazer manha para conseguir o que quer.", category: "Desaprovador" },
+            { text: "Quando minha filha fica brava, ela vira uma verdadeira peste.", category: "Desaprovador" },
+            { text: "Quando meu filho faz manha, é para chamar atenção.", category: "Desaprovador" },
+            { text: "Quando minha filha fica brava, ela vira uma peste.", category: "Desaprovador" },
+            { text: "Imponho limites a raiva de minha filha.", category: "Desaprovador" },
+            { text: "Quando meu filho faz manha, é para chamar atenção.", category: "Desaprovador" },
+            
+            // Laissez-Faire (26, 44, 45, 46, 47, 48, 49, 50)
+            { text: "Você deve expressar a raiva que sente.", category: "Laissez-Faire" },
+            { text: "Se há uma lição que eu possa dar sobre a tristeza, é que não há nada de mau em expressá-la.", category: "Laissez-Faire" },
+            { text: "Não sei se se pode fazer alguma coisa para mudar a tristeza.", category: "Laissez-Faire" },
+            { text: "Não há nada que se possa fazer por uma criança triste além de lhe oferecer consolo.", category: "Laissez-Faire" },
+            { text: "Quando meu filho está triste, tento mostrar-lhe que o amo em qualquer condição.", category: "Laissez-Faire" },
+            { text: "Quando minha filha está triste, não sei bem o que ela quer que eu faça.", category: "Laissez-Faire" },
+            { text: "Não estou tentando verdadeiramente ensinar a meu filho nada em particular sobre a tristeza.", category: "Laissez-Faire" },
+            { text: "Se há uma lição que eu possa dar sobre a raiva, é que não há nada de mau em expressá-la.", category: "Laissez-Faire" },
+            
+            // Preparador Emocional (16, 23, 27, 29, 30, 31, 32, 34, 35, 36, 37, 38, 39, 40, 51, 52, 53, 64, 71, 72, 73, 74, 75, 79, 81)
+            { text: "Quando meu filho está triste, é hora de resolver problemas.", category: "Preparador Emocional" },
+            { text: "A raiva é uma emoção que vale a pena explorar.", category: "Preparador Emocional" },
+            { text: "Quando minha filha está triste, é uma oportunidade de aproximação.", category: "Preparador Emocional" },
+            { text: "Quando meu filho está triste, tento ajudá-lo a investigar as causas de sua tristeza.", category: "Preparador Emocional" },
+            { text: "Quando meu filho está triste, me mostro compreensiva.", category: "Preparador Emocional" },
+            { text: "Quero que meu filho vivencie a tristeza.", category: "Preparador Emocional" },
+            { text: "O importante é descobrir por que a criança está triste.", category: "Preparador Emocional" },
+            { text: "Quando minha filha está triste, a gente senta e conversa sobre a tristeza.", category: "Preparador Emocional" },
+            { text: "Quando meu filho está triste, tento ajudá-lo a descobrir por que ele está com aquela sensação.", category: "Preparador Emocional" },
+            { text: "Quando meu filho está irritado, é uma oportunidade de aproximação.", category: "Preparador Emocional" },
+            { text: "Quando meu filho está irritado, dedico um pouco de tempo a ele e a vivenciar este sentimento.", category: "Preparador Emocional" },
+            { text: "Quero que meu filho vivencie a ira.", category: "Preparador Emocional" },
+            { text: "Acho que às vezes é bom a criança sentir raiva.", category: "Preparador Emocional" },
+            { text: "O importante é descobrir por que a criança está irritada.", category: "Preparador Emocional" },
+            { text: "Quando meu filho está irritado, tento entender seu estado de espírito.", category: "Preparador Emocional" },
+            { text: "Quando minha filha está irritada, tento mostrar-lhe que a amo em qualquer condição.", category: "Preparador Emocional" },
+            { text: "Quando meu filho está irritado, não sei bem o que ele quer que eu faça.", category: "Preparador Emocional" },
+            { text: "Quando meu filho está irritado, é hora de resolver um problema.", category: "Preparador Emocional" },
+            { text: "A criança tem o direito de sentir raiva.", category: "Preparador Emocional" },
+            { text: "É excitante para a criança manifestar raiva.", category: "Preparador Emocional" },
+            { text: "Quando minha filha está brava, eu simplesmente descubro o que está deixando brava.", category: "Preparador Emocional" },
+            { text: "Quando minha filha está brava, eu simplesmente descubro o que está deixando brava.", category: "Preparador Emocional" },
+            { text: "É importante ajudar a criança a descobrir o que a irritou.", category: "Preparador Emocional" },
+            { text: "Quando ela fica triste, digo que é melhor ela não desenvolver o mau gênio.", category: "Preparador Emocional" },
+            { text: "Quando meu filho se irrita, tenho medo de suas tendências destrutivas.", category: "Preparador Emocional" },
+            { text: "Quando meu filho se irrita, tenho medo de suas tendências destrutivas.", category: "Preparador Emocional" },
+            { text: "Quando meu filho fica irritado, acho que é hora de lhe dar umas palmadas.", category: "Preparador Emocional" }
+        ];
+
+        const descriptions = {
+            "Simplista": "Você estabelece limites claros e estrutura. Você acredita que as emoções devem ser controladas e que o foco deve estar em resolver problemas rapidamente. Isso pode fazer você parecer forte, mas pode deixar seus filhos e relacionamentos sentindo-se não validados.",
+            "Desaprovador": "Você tende a criticar e corrigir. Você vê as emoções como algo a ser controlado ou eliminado. Isso pode criar distância nos relacionamentos e fazer com que as pessoas se sintam julgadas.",
+            "Laissez-Faire": "Você permite liberdade e autonomia, mas pode faltar direcionamento. Você valida as emoções, mas não oferece ferramentas para lidar com elas. Isso pode deixar as pessoas se sentindo perdidas.",
+            "Preparador Emocional": "Você valida as emoções e ensina. Você vê as dificuldades como oportunidades de aprendizado e conexão. Esse é o estilo que cria relacionamentos mais saudáveis e pessoas emocionalmente inteligentes."
+        };
+
+        let currentQuestion = 0;
+        let answers = {};
+        let userName = "";
+        let userWhatsApp = "";
+
+        function startQuiz() {
+            document.getElementById("introSection").classList.remove("active");
+            document.getElementById("quizSection").classList.add("active");
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById("questionNumber").textContent = `Pergunta ${currentQuestion + 1} de ${questions.length}`;
+            document.getElementById("questionText").textContent = question.text;
+
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById("progressFill").style.width = progress + "%";
+
+            document.getElementById("prevBtn").disabled = currentQuestion === 0;
+            document.getElementById("nextBtn").disabled = !answers[currentQuestion];
+
+            renderOptions();
+        }
+
+        function renderOptions() {
+            const container = document.getElementById("optionsContainer");
+            container.innerHTML = `
+                <button class="option-btn ${answers[currentQuestion] === "V" ? "selected" : ""}" onclick="selectOption('V')">Verdadeiro</button>
+                <button class="option-btn ${answers[currentQuestion] === "F" ? "selected" : ""}" onclick="selectOption('F')">Falso</button>
+            `;
+        }
+
+        function selectOption(value) {
+            answers[currentQuestion] = value;
+            document.getElementById("nextBtn").disabled = false;
+            renderOptions();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                calculateResult();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function calculateResult() {
+            const scores = {
+                "Simplista": 0,
+                "Desaprovador": 0,
+                "Laissez-Faire": 0,
+                "Preparador Emocional": 0
+            };
+
+            questions.forEach((q, index) => {
+                if (answers[index] === "V") {
+                    scores[q.category]++;
+                }
+            });
+
+            const result = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+
+            document.getElementById("quizSection").classList.remove("active");
+            document.getElementById("leadCapture").classList.add("active");
+
+            window.finalResult = result;
+        }
+
+        function submitLead(event) {
+            event.preventDefault();
+            userName = document.getElementById("name").value;
+            userWhatsApp = document.getElementById("whatsapp").value;
+
+            document.getElementById("leadCapture").classList.remove("active");
+            document.getElementById("resultSection").classList.add("active");
+
+            document.getElementById("resultStyle").textContent = window.finalResult;
+            document.getElementById("resultDescription").textContent = descriptions[window.finalResult];
+        }
+
+        function sendWhatsApp() {
+            const message = `Oi Andreia! Fiz seu teste e descobri que sou ${window.finalResult}. Isso explica tanto sobre como eu educo meus filhos e como eu me relaciono com as pessoas. Quero entender melhor como isso afeta minha vida toda. Podemos conversar?`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/5554996742276?text=${encodedMessage}`;
+            window.open(whatsappURL, "_blank");
+        }
+    </script>
+</body>
+</html>
