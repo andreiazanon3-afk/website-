@@ -9,11 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #8B4513; /* Marrom/Dourado */
-            --secondary-color: #A52A2A; /* Marsala */
-            --bg-color: #FFFFFF;
-            --text-color: #333333;
-            --accent-color: #D2B48C; /* Bege/Dourado claro */
+            --primary-color: #966b3d; /* Dourado Sofisticado */
+            --secondary-color: #722f37; /* Marsala Profundo (Vinho) */
+            --bg-color: #fdfcfb; /* Off-white elegante */
+            --text-color: #2c2c2c;
+            --accent-color: #c5a059; /* Dourado Brilhante */
         }
 
         * {
@@ -24,123 +24,171 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-color );
+            background-color: var(--bg-color);
             color: var(--text-color);
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 60px 20px;
             line-height: 1.6;
         }
 
         .container {
-            max-width: 500px;
+            max-width: 480px;
             width: 100%;
             text-align: center;
         }
 
+        /* Espaço para a Foto */
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            border: 3px solid var(--accent-color);
+            padding: 5px;
+            background-color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
         .profile-header h1 {
             font-family: 'Lora', serif;
-            font-size: 2.2rem;
-            color: #444;
-            margin-bottom: 5px;
-            font-weight: 500;
+            font-size: 2.4rem;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
         }
 
         .profile-header h2 {
-            font-size: 0.9rem;
-            letter-spacing: 3px;
-            color: var(--accent-color);
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            color: var(--primary-color);
             text-transform: uppercase;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            font-weight: 500;
         }
 
         .divider {
-            width: 60px;
-            height: 3px;
-            background-color: var(--accent-color);
-            margin: 0 auto 30px;
-            border-radius: 2px;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            margin: 0 auto 35px;
         }
 
         .bio {
             font-family: 'Lora', serif;
             font-style: italic;
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 40px;
-            padding: 0 10px;
+            font-size: 1.15rem;
+            color: #4a4a4a;
+            margin-bottom: 45px;
+            padding: 0 15px;
+            line-height: 1.8;
         }
 
         .bio span {
             color: var(--secondary-color);
             font-weight: 600;
+            border-bottom: 1px solid rgba(114, 47, 55, 0.2);
         }
 
         .links-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-bottom: 40px;
+            gap: 18px;
+            margin-bottom: 50px;
         }
 
         .link-button {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 18px 25px;
+            padding: 20px 25px;
             text-decoration: none;
-            border-radius: 12px;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            border: 1px solid transparent;
+        }
+
+        .link-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
         }
 
         .link-button:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
 
-        /* Cores dos botões */
-        .btn-marsala { background-color: #8E3B3B; color: white; }
-        .btn-gold { background-color: #C69C6D; color: white; }
+        /* Cores dos botões - Mais vibrantes */
+        .btn-marsala { 
+            background: linear-gradient(135deg, #8E3B3B, #722f37);
+            color: white; 
+        }
+        
+        .btn-gold { 
+            background: linear-gradient(135deg, #d4af37, #c5a059);
+            color: white; 
+        }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 25px;
+            gap: 30px;
             margin-top: 20px;
         }
 
         .footer-links a {
             text-decoration: none;
-            color: #888;
-            font-size: 0.9rem;
-            transition: color 0.2s;
+            color: #777;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            font-weight: 500;
         }
 
         .footer-links a:hover {
             color: var(--secondary-color);
+            transform: translateY(-2px);
         }
 
         .copyright {
-            margin-top: 30px;
-            font-size: 0.75rem;
-            color: #bbb;
+            margin-top: 40px;
+            font-size: 0.7rem;
+            color: #aaa;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
         @media (max-width: 400px) {
-            .profile-header h1 { font-size: 1.8rem; }
-            .bio { font-size: 1rem; }
+            .profile-header h1 { font-size: 2rem; }
+            .bio { font-size: 1.05rem; }
+            .link-button { padding: 18px 20px; font-size: 0.95rem; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <!-- Espaço para sua foto -->
+        <div class="profile-image">
+            <!-- Quando você me enviar a foto, eu coloco o link aqui -->
+            <img src="https://via.placeholder.com/150?text=Sua+Foto" alt="Andreia Zanon">
+        </div>
+
         <header class="profile-header">
             <h1>Andreia Zanon</h1>
             <h2>Consteladora Estratégica</h2>
@@ -156,9 +204,9 @@
             <a href="https://chat.whatsapp.com/FvV69uX6G9y6p9v6p9v6p9" class="link-button btn-gold">👥 Entrar na Comunidade</a>
             <a href="https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBMmF" class="link-button btn-marsala">🎵 Acessar Playlist</a>
             
-            <!-- NOVOS BOTÕES DE TESTES -->
-            <a href="teste-parental.html" class="link-button btn-marsala">🧠 Descubra Seu Estilo Parental</a>
-            <a href="teste-feridas.html" class="link-button btn-gold">🩹 Descubra Suas Feridas Emocionais</a>
+            <!-- BOTÕES DE TESTES RENOMEADOS -->
+            <a href="teste-parental.html" class="link-button btn-gold">🧠 Teste de Estilo Parental</a>
+            <a href="teste-feridas.html" class="link-button btn-marsala">🩹 Descubra suas feridas emocionais</a>
         </nav>
 
         <footer class="footer-links">
