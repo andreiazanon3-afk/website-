@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Descubra Suas Feridas Emocionais | Andreia Zanon</title>
+    <title>Teste de Estilo Parental | Andreia Zanon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #bc8f8f;
+            --secondary-color: #722f37;
+            --bg-color: #fffaf9;
+            --text-color: #2c2c2c;
+            --accent-color: #e2b4b4;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,8 +23,8 @@
         }
 
         body {
-            font-family: 'Lora', serif;
-            background: linear-gradient(135deg, #1a2332 0%, #f5f5f0 100%);
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #722f37 0%, #fffaf9 100% );
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -23,8 +34,8 @@
 
         .container {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(26, 35, 50, 0.15);
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(114, 47, 55, 0.15);
             max-width: 700px;
             width: 100%;
             padding: 40px;
@@ -36,8 +47,9 @@
         }
 
         .header h1 {
+            font-family: 'Lora', serif;
             font-size: 28px;
-            color: #1a2332;
+            color: var(--secondary-color);
             margin-bottom: 15px;
             font-weight: 700;
         }
@@ -46,14 +58,13 @@
             font-size: 16px;
             color: #666;
             line-height: 1.6;
-            margin-bottom: 20px;
         }
 
         .intro-section {
-            background: #f9f9f9;
-            border-left: 4px solid #d4af37;
-            padding: 20px;
-            border-radius: 8px;
+            background: #fffaf9;
+            border-left: 4px solid var(--primary-color);
+            padding: 25px;
+            border-radius: 12px;
             margin-bottom: 30px;
             display: none;
         }
@@ -63,8 +74,9 @@
         }
 
         .intro-section h2 {
+            font-family: 'Lora', serif;
             font-size: 20px;
-            color: #1a2332;
+            color: var(--secondary-color);
             margin-bottom: 15px;
         }
 
@@ -75,33 +87,23 @@
             margin-bottom: 15px;
         }
 
-        .intro-section ul {
-            margin-left: 20px;
-            font-size: 15px;
-            color: #555;
-            line-height: 1.7;
-        }
-
-        .intro-section li {
-            margin-bottom: 10px;
-        }
-
         .intro-button {
-            background: #1a2332;
+            background: var(--secondary-color);
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 6px;
+            padding: 15px 30px;
+            border-radius: 10px;
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
             width: 100%;
             margin-top: 20px;
         }
 
         .intro-button:hover {
-            background: #d4af37;
-            color: #1a2332;
+            background: var(--primary-color);
+            transform: translateY(-2px);
         }
 
         .quiz-section {
@@ -114,8 +116,8 @@
 
         .progress-bar {
             width: 100%;
-            height: 6px;
-            background: #e0e0e0;
+            height: 8px;
+            background: #f0f0f0;
             border-radius: 10px;
             margin-bottom: 30px;
             overflow: hidden;
@@ -123,21 +125,17 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #1a2332, #d4af37);
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
             transition: width 0.3s;
         }
 
-        .question-number {
-            font-size: 14px;
-            color: #999;
-            margin-bottom: 15px;
-        }
-
         .question-text {
-            font-size: 18px;
-            color: #1a2332;
-            margin-bottom: 20px;
+            font-family: 'Lora', serif;
+            font-size: 20px;
+            color: var(--text-color);
+            margin-bottom: 25px;
             line-height: 1.6;
+            text-align: center;
         }
 
         .options {
@@ -148,124 +146,43 @@
 
         .option-btn {
             flex: 1;
-            padding: 15px;
-            border: 2px solid #ddd;
+            padding: 18px;
+            border: 2px solid #eee;
             background: white;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
             transition: all 0.3s;
-            font-family: 'Lora', serif;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .option-btn:hover {
-            border-color: #1a2332;
-            background: #f9f9f9;
+            border-color: var(--primary-color);
+            background: #fffaf9;
         }
 
         .option-btn.selected {
-            background: #1a2332;
+            background: var(--secondary-color);
             color: white;
-            border-color: #1a2332;
-        }
-
-        .navigation {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
+            border-color: var(--secondary-color);
         }
 
         .nav-btn {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid #1a2332;
+            padding: 12px 25px;
+            border: 2px solid var(--secondary-color);
             background: white;
-            color: #1a2332;
-            border-radius: 6px;
+            color: var(--secondary-color);
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             transition: all 0.3s;
-            font-family: 'Lora', serif;
         }
 
-        .nav-btn:hover {
-            background: #1a2332;
+        .nav-btn:hover:not(:disabled) {
+            background: var(--secondary-color);
             color: white;
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .lead-capture {
-            display: none;
-            text-align: center;
-        }
-
-        .lead-capture.active {
-            display: block;
-        }
-
-        .lead-capture h2 {
-            font-size: 24px;
-            color: #1a2332;
-            margin-bottom: 20px;
-        }
-
-        .lead-capture p {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            color: #1a2332;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-            font-family: 'Lora', serif;
-            transition: border 0.3s;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #1a2332;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background: #1a2332;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            font-family: 'Lora', serif;
-        }
-
-        .submit-btn:hover {
-            background: #d4af37;
-            color: #1a2332;
         }
 
         .result-section {
@@ -277,295 +194,198 @@
             display: block;
         }
 
-        .result-title {
-            font-size: 24px;
-            color: #1a2332;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
         .result-box {
-            background: linear-gradient(135deg, #1a2332, #2a3f5f);
+            background: linear-gradient(135deg, var(--secondary-color), #8E3B3B);
             color: white;
-            padding: 30px;
-            border-radius: 12px;
+            padding: 35px;
+            border-radius: 20px;
             margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(114, 47, 55, 0.2);
         }
 
-        .result-wound {
+        .result-style {
+            font-family: 'Lora', serif;
             font-size: 32px;
             font-weight: 700;
             margin-bottom: 15px;
         }
 
-        .result-description {
-            font-size: 16px;
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        .whatsapp-btn {
-            width: 100%;
-            padding: 14px;
-            background: #25d366;
+        .submit-btn {
+            display: block;
+            text-decoration: none;
+            background: var(--secondary-color);
             color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            font-family: 'Lora', serif;
-            margin-top: 20px;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(114, 47, 55, 0.3);
         }
 
-        .whatsapp-btn:hover {
-            background: #1eaa50;
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(114, 47, 55, 0.4);
+            background: #8E3B3B;
         }
 
         @media (max-width: 600px) {
-            .container {
-                padding: 25px;
-            }
-
-            .header h1 {
-                font-size: 22px;
-            }
-
-            .question-text {
-                font-size: 16px;
-            }
-
-            .options {
-                flex-direction: column;
-            }
-
-            .result-wound {
-                font-size: 24px;
-            }
+            .container { padding: 25px; }
+            .options { flex-direction: column; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- INTRO SECTION -->
         <div class="intro-section active" id="introSection">
             <div class="header">
-                <h1>Descubra Suas Feridas Emocionais</h1>
-                <p>E como elas moldam seus relacionamentos</p>
+                <h1>Teste de Estilo Parental</h1>
+                <p>Descubra como seu estilo de educar molda o futuro do seu filho</p>
             </div>
-
-            <h2>Por que isso importa?</h2>
-            <p>As feridas emocionais não resolvidas são a raiz de padrões repetitivos que você passa para seus filhos, sem nem perceber. Elas afetam como você se relaciona, como você ama, como você educa.</p>
-            
-            <p>Baseado na obra de Lise Bourbeau, este teste identifica qual ferida emocional está mais ativa em você:</p>
-            
-            <ul>
-                <li><strong>Rejeição:</strong> Medo de não ser aceita</li>
-                <li><strong>Abandono:</strong> Medo de ser deixada sozinha</li>
-                <li><strong>Humilhação:</strong> Medo de ser envergonhada</li>
-                <li><strong>Traição:</strong> Medo de ser enganada</li>
-                <li><strong>Injustiça:</strong> Medo de não ser reconhecida</li>
-            </ul>
-
-            <p style="margin-top: 20px;">Compreender suas feridas é o primeiro passo para interromper ciclos geracionais e criar relacionamentos mais saudáveis com seus filhos e com você mesma.</p>
-
+            <p>Seu estilo parental não é apenas sobre como você educa seus filhos. É sobre como você lidera, toma decisões e gerencia conflitos que impactam toda a sua vida e a deles.</p>
             <button class="intro-button" onclick="startQuiz()">Começar o Teste</button>
         </div>
 
-        <!-- QUIZ SECTION -->
         <div class="quiz-section" id="quizSection">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-
-            <div class="question-number" id="questionNumber"></div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
             <div class="question-text" id="questionText"></div>
-
             <div class="options" id="optionsContainer"></div>
-
-            <div class="navigation">
+            <div style="display: flex; justify-content: space-between;">
                 <button class="nav-btn" id="prevBtn" onclick="previousQuestion()" disabled>← Anterior</button>
-                <button class="nav-btn" id="nextBtn" onclick="nextQuestion()" disabled>Próxima →</button>
+                <span id="questionNumber" style="color: #999; font-size: 14px; align-self: center;"></span>
             </div>
         </div>
 
-        <!-- LEAD CAPTURE SECTION -->
-        <div class="lead-capture" id="leadCapture">
-            <h2>Quase lá!</h2>
-            <p>Para enviar seu resultado e começar sua transformação, deixe seus dados:</p>
-
-            <form onsubmit="submitLead(event)">
-                <div class="form-group">
-                    <label for="name">Seu nome:</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="whatsapp">Seu WhatsApp:</label>
-                    <input type="tel" id="whatsapp" name="whatsapp" placeholder="(XX) 9XXXX-XXXX" required>
-                </div>
-
-                <button type="submit" class="submit-btn">Enviar e Ver Resultado</button>
-            </form>
-        </div>
-
-        <!-- RESULT SECTION -->
         <div class="result-section" id="resultSection">
-            <div class="result-title">Sua Ferida Predominante</div>
-
+            <div class="header"><h1>Seu Estilo Parental</h1></div>
             <div class="result-box">
-                <div class="result-wound" id="resultWound"></div>
+                <div class="result-style" id="resultStyle"></div>
                 <div class="result-description" id="resultDescription"></div>
             </div>
 
-            <p style="color: #666; margin-bottom: 20px;">Agora que você descobriu sua ferida, está pronta para curá-la e transformar seus relacionamentos?</p>
+            <div class="provocation-box" style="background: #fffaf9; border: 1px solid #bc8f8f; padding: 25px; border-radius: 15px; margin-bottom: 30px; text-align: left;">
+                <p style="color: var(--secondary-color); font-weight: 700; margin-bottom: 12px; font-size: 1.1rem;">⚠️ Seu estilo de educar hoje é o futuro do seu filho amanhã.</p>
+                <p style="color: #4a4a4a; font-size: 1rem; line-height: 1.6;">Você está construindo uma base sólida ou replicando ciclos que deveriam ter sido interrompidos? O que você ignora hoje pode se tornar o fardo que seu filho carregará na vida adulta. Não deixe para depois o que pode ser curado agora.</p>
+            </div>
 
-            <button class="whatsapp-btn" id="whatsappBtn" onclick="sendWhatsApp()">Falar com Andreia no WhatsApp</button>
+            <a href="https://forms.gle/WUZsBGUJfUd7d3kC7" class="submit-btn">👉 Agendar Diagnóstico Sistêmico</a>
+            <p style="font-size: 0.85rem; color: #888; margin-top: 15px; font-weight: 500;">(Preencha o formulário de pré-atendimento para qualificação )</p>
         </div>
     </div>
 
     <script>
         const questions = [
-            // Rejeição
-            { text: "Quando me sinto rejeitada, tenho vontade de fugir e me isolar.", wound: "Rejeição" },
-            { text: "Sinto que não sou boa o suficiente e que os outros não me aceitam.", wound: "Rejeição" },
-            { text: "Tenho dificuldade em ocupar meu espaço e expressar minhas opiniões.", wound: "Rejeição" },
-            { text: "Quando meus filhos me rejeitam, sinto uma dor profunda.", wound: "Rejeição" },
-            { text: "Evito situações onde posso ser criticada ou não aceita.", wound: "Rejeição" },
-
-            // Abandono
-            { text: "Tenho medo de ficar sozinha e busco constantemente a atenção dos outros.", wound: "Abandono" },
-            { text: "Sinto-me carente e preciso de apoio para tomar decisões.", wound: "Abandono" },
-            { text: "Quando meus filhos se tornam independentes, sinto um vazio ou medo.", wound: "Abandono" },
-            { text: "Faço de tudo para que as pessoas não me abandonem, mesmo que me custe.", wound: "Abandono" },
-            { text: "Tenho dificuldade em me comprometer, por medo de ser abandonada.", wound: "Abandono" },
-
-            // Humilhação
-            { text: "Sinto-me frequentemente envergonhada ou humilhada, especialmente em público.", wound: "Humilhação" },
-            { text: "Tenho dificuldade em dizer não e acabo fazendo coisas que não quero.", wound: "Humilhação" },
-            { text: "Sinto-me responsável pelos problemas dos outros e me culpo facilmente.", wound: "Humilhação" },
-            { text: "Quando meus filhos fazem algo errado, sinto vergonha e culpa.", wound: "Humilhação" },
-            { text: "Coloco as necessidades dos outros acima das minhas.", wound: "Humilhação" },
-
-            // Traição
-            { text: "Tenho dificuldade em confiar nas pessoas e sou muito desconfiada.", wound: "Traição" },
-            { text: "Preciso ter controle sobre as situações e as pessoas ao meu redor.", wound: "Traição" },
-            { text: "Sinto raiva e frustração quando as coisas não saem como planejado.", wound: "Traição" },
-            { text: "Quando meus filhos me desobedecem, sinto que fui traída.", wound: "Traição" },
-            { text: "Sou muito exigente comigo mesma e com os outros.", wound: "Traição" },
-
-            // Injustiça
-            { text: "Busco a perfeição em tudo o que faço e sou muito crítica comigo mesma.", wound: "Injustiça" },
-            { text: "Tenho dificuldade em aceitar minhas imperfeições e as dos outros.", wound: "Injustiça" },
-            { text: "Sinto-me injustiçada quando não sou reconhecida pelo meu esforço.", wound: "Injustiça" },
-            { text: "Quando meus filhos agem de forma injusta, sinto raiva e indignação.", wound: "Injustiça" },
-            { text: "Tenho dificuldade em relaxar e me permitir ser vulnerável.", wound: "Injustiça" }
+            { text: "Criança realmente quase não tem motivo para ficar triste.", category: "Simplista" },
+            { text: "Acho que raiva não tem nada de mau, contanto que seja controlada.", category: "Simplista" },
+            { text: "Quando meu filho está triste, espera que eu conserte o mundo e o deixe perfeito.", category: "Simplista" },
+            { text: "Eu realmente não tenho tempo para tristeza na vida.", category: "Simplista" },
+            { text: "Acho que tristeza não tem nada de mau, contanto que seja controlada.", category: "Simplista" },
+            { text: "Quando a criança faz manha, em geral só está querendo que os adultos fiquem com pena dela.", category: "Desaprovador" },
+            { text: "A raiva da criança merece uma folga.", category: "Desaprovador" },
+            { text: "Raiva em geral quer dizer agressão.", category: "Desaprovador" },
+            { text: "Criança costuma fazer manha para conseguir o que quer.", category: "Desaprovador" },
+            { text: "Quando minha filha fica brava, ela vira uma verdadeira peste.", category: "Desaprovador" },
+            { text: "Você deve expressar a raiva que sente.", category: "Laissez-Faire" },
+            { text: "Se há uma lição que eu possa dar sobre a tristeza, é que não há nada de mau em expressá-la.", category: "Laissez-Faire" },
+            { text: "Não sei se se pode fazer alguma coisa para mudar a tristeza.", category: "Laissez-Faire" },
+            { text: "Não há nada que se possa fazer por uma criança triste além de lhe oferecer consolo.", category: "Laissez-Faire" },
+            { text: "Quando meu filho está triste, tento mostrar-lhe que o compreendo.", category: "Preparador Emocional" },
+            { text: "Tento ser compreensivo quando meu filho está triste.", category: "Preparador Emocional" },
+            { text: "Quando meu filho está triste, é uma oportunidade para ficarmos mais próximos.", category: "Preparador Emocional" },
+            { text: "Sento-me com meu filho quando ele está triste e conversamos.", category: "Preparador Emocional" },
+            { text: "Ajudo meu filho a dar nome à emoção que ele está sentindo.", category: "Preparador Emocional" }
         ];
 
         const descriptions = {
-            "Rejeição": "Você carrega o medo de não ser aceita. Isso pode fazer você se isolar quando se sente rejeitada, ou tentar se adequar demais para ser aceita. Com seus filhos, isso pode aparecer como dificuldade em estabelecer limites por medo de ser rejeitada.",
-            "Abandono": "Você tem medo de ficar sozinha. Isso pode fazer você ser dependente ou fazer demais para manter as pessoas perto. Com seus filhos, isso pode aparecer como dificuldade em deixá-los crescer e ser independentes.",
-            "Humilhação": "Você sente vergonha facilmente e se culpa pelos problemas. Isso pode fazer você se sacrificar demais ou aceitar desrespeito. Com seus filhos, isso pode aparecer como culpa excessiva ou dificuldade em estabelecer limites.",
-            "Traição": "Você tem dificuldade em confiar e precisa de controle. Isso pode fazer você ser controladora ou desconfiada. Com seus filhos, isso pode aparecer como rigidez excessiva ou dificuldade em permitir autonomia.",
-            "Injustiça": "Você busca perfeição e se sente injustiçada quando não é reconhecida. Isso pode fazer você ser muito crítica. Com seus filhos, isso pode aparecer como exigência excessiva ou dificuldade em aceitar imperfeições."
+            "Simplista": "Você tende a minimizar as emoções negativas, tentando fazer com que a criança as supere rapidamente sem dar muita importância.",
+            "Desaprovador": "Você vê as emoções negativas como algo a ser controlado ou punido, muitas vezes interpretando-as como mau comportamento.",
+            "Laissez-Faire": "Você aceita todas as emoções da criança, mas tem dificuldade em estabelecer limites ou guiar a criança sobre como lidar com elas.",
+            "Preparador Emocional": "Você vê as emoções como uma oportunidade de conexão e ensino, validando os sentimentos enquanto ajuda a criança a resolver problemas."
         };
 
         let currentQuestion = 0;
-        let answers = {};
-        let userName = "";
-        let userWhatsApp = "";
+        let answers = [];
 
         function startQuiz() {
-            document.getElementById("introSection").classList.remove("active");
-            document.getElementById("quizSection").classList.add("active");
-            loadQuestion();
+            document.getElementById('introSection').classList.remove('active');
+            document.getElementById('quizSection').classList.add('active');
+            showQuestion();
         }
 
-        function loadQuestion() {
-            const question = questions[currentQuestion];
-            document.getElementById("questionNumber").textContent = `Pergunta ${currentQuestion + 1} de ${questions.length}`;
-            document.getElementById("questionText").textContent = question.text;
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('questionText').innerText = q.text;
+            document.getElementById('questionNumber').innerText = `Questão ${currentQuestion + 1} de ${questions.length}`;
+            
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            const options = [
+                { text: "Discordo", value: 0 },
+                { text: "Neutro", value: 1 },
+                { text: "Concordo", value: 2 }
+            ];
 
-            const progress = ((currentQuestion + 1) / questions.length) * 100;
-            document.getElementById("progressFill").style.width = progress + "%";
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                if (answers[currentQuestion] === opt.value) btn.classList.add('selected');
+                btn.innerText = opt.text;
+                btn.onclick = () => selectOption(opt.value);
+                container.appendChild(btn);
+            });
 
-            document.getElementById("prevBtn").disabled = currentQuestion === 0;
-            document.getElementById("nextBtn").disabled = !answers[currentQuestion];
-
-            renderOptions();
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            updateProgress();
         }
 
-        function renderOptions() {
-            const container = document.getElementById("optionsContainer");
-            container.innerHTML = `
-                <button class="option-btn ${answers[currentQuestion] === "Sim" ? "selected" : ""}" onclick="selectOption('Sim')">Sim</button>
-                <button class="option-btn ${answers[currentQuestion] === "Não" ? "selected" : ""}" onclick="selectOption('Não')">Não</button>
-            `;
-        }
-
-        function selectOption(value) {
-            answers[currentQuestion] = value;
-            document.getElementById("nextBtn").disabled = false;
-            renderOptions();
+        function selectOption(val) {
+            answers[currentQuestion] = val;
+            setTimeout(nextQuestion, 300);
         }
 
         function nextQuestion() {
+            if (answers[currentQuestion] === undefined) return;
             if (currentQuestion < questions.length - 1) {
                 currentQuestion++;
-                loadQuestion();
+                showQuestion();
             } else {
-                calculateResult();
+                showResult();
             }
         }
 
         function previousQuestion() {
             if (currentQuestion > 0) {
                 currentQuestion--;
-                loadQuestion();
+                showQuestion();
             }
         }
 
-        function calculateResult() {
-            const scores = {
-                "Rejeição": 0,
-                "Abandono": 0,
-                "Humilhação": 0,
-                "Traição": 0,
-                "Injustiça": 0
-            };
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+        }
 
-            questions.forEach((q, index) => {
-                if (answers[index] === "Sim") {
-                    scores[q.wound]++;
-                }
+        function showResult() {
+            const scores = {};
+            questions.forEach((q, i) => {
+                scores[q.category] = (scores[q.category] || 0) + (answers[i] || 0);
             });
 
-            const result = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            let maxScore = -1;
+            let finalResult = "";
+            for (const cat in scores) {
+                if (scores[cat] > maxScore) {
+                    maxScore = scores[cat];
+                    finalResult = cat;
+                }
+            }
 
-            document.getElementById("quizSection").classList.remove("active");
-            document.getElementById("leadCapture").classList.add("active");
-
-            window.finalResult = result;
-        }
-
-        function submitLead(event) {
-            event.preventDefault();
-            userName = document.getElementById("name").value;
-            userWhatsApp = document.getElementById("whatsapp").value;
-
-            document.getElementById("leadCapture").classList.remove("active");
-            document.getElementById("resultSection").classList.add("active");
-
-            document.getElementById("resultWound").textContent = window.finalResult;
-            document.getElementById("resultDescription").textContent = descriptions[window.finalResult];
-        }
-
-        function sendWhatsApp() {
-            const message = `Olá, Andreia! Fiz seu teste e descobri que minha ferida predominante é a de ${window.finalResult}. Como será que essa ferida está moldando minhas decisões, relacionamentos e até a forma como lido com meus filhos? Como sua visão sistêmica pode me guiar a transformar esses ciclos que talvez eu não perceba?`;
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappURL = `https://wa.me/5554996742276?text=${encodedMessage}`;
-            window.open(whatsappURL, "_blank");
+            document.getElementById('quizSection').classList.remove('active');
+            document.getElementById('resultSection').classList.add('active');
+            document.getElementById('resultStyle').innerText = finalResult;
+            document.getElementById('resultDescription').innerText = descriptions[finalResult];
         }
     </script>
 </body>
