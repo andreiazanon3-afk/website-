@@ -9,22 +9,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #bc8f8f; /* Rosy Brown (Nude Rosado ) */
-            --secondary-color: #722f37; /* Marsala Profundo (Vinho) */
-            --bg-color: #fffaf9; /* Off-white rosado suave */
+            --primary-color: #bc8f8f; /* Nude Rosado */
+            --secondary-color: #722f37; /* Marsala Profundo */
+            --bg-color: #fffaf9;
             --text-color: #2c2c2c;
-            --accent-color: #e2b4b4; /* Nude Rosado Claro */
+            --accent-color: #e2b4b4;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-color);
+            background-color: var(--bg-color );
             color: var(--text-color);
             display: flex;
             flex-direction: column;
@@ -34,185 +30,84 @@
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 480px;
-            width: 100%;
-            text-align: center;
-        }
+        .container { max-width: 480px; width: 100%; text-align: center; }
 
         .profile-image {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 25px;
-            border: 3px solid var(--accent-color);
-            padding: 5px;
-            background-color: white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 25px;
+            border: 3px solid var(--accent-color); padding: 5px; background-color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; display: flex;
+            align-items: center; justify-content: center;
         }
 
-        .profile-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
+        .profile-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 
         .profile-header h1 {
-            font-family: 'Lora', serif;
-            font-size: 2.4rem;
-            color: var(--secondary-color);
-            margin-bottom: 8px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
+            font-family: 'Lora', serif; font-size: 2.4rem; color: var(--secondary-color);
+            margin-bottom: 8px; font-weight: 600; letter-spacing: -0.5px;
         }
 
         .profile-header h2 {
-            font-size: 0.85rem;
-            letter-spacing: 4px;
-            color: var(--primary-color);
-            text-transform: uppercase;
-            margin-bottom: 25px;
-            font-weight: 500;
+            font-size: 0.85rem; letter-spacing: 4px; color: var(--primary-color);
+            text-transform: uppercase; margin-bottom: 25px; font-weight: 500;
         }
 
         .divider {
-            width: 50px;
-            height: 2px;
+            width: 50px; height: 2px; margin: 0 auto 35px;
             background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
-            margin: 0 auto 35px;
         }
 
         .bio {
-            font-family: 'Lora', serif;
-            font-style: italic;
-            font-size: 1.15rem;
-            color: #4a4a4a;
-            margin-bottom: 45px;
-            padding: 0 15px;
-            line-height: 1.8;
+            font-family: 'Lora', serif; font-style: italic; font-size: 1.15rem;
+            color: #4a4a4a; margin-bottom: 45px; padding: 0 15px; line-height: 1.8;
         }
 
-        .bio span {
-            color: var(--secondary-color);
-            font-weight: 600;
-            border-bottom: 1px solid rgba(114, 47, 55, 0.2);
-        }
+        .bio span { color: var(--secondary-color); font-weight: 600; border-bottom: 1px solid rgba(114, 47, 55, 0.2); }
 
-        .links-container {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            margin-bottom: 50px;
-        }
+        .links-container { display: flex; flex-direction: column; gap: 18px; margin-bottom: 50px; }
 
         .link-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 25px;
-            text-decoration: none;
-            border-radius: 15px;
-            font-weight: 600;
-            font-size: 1.05rem;
+            display: flex; align-items: center; justify-content: center; padding: 20px 25px;
+            text-decoration: none; border-radius: 15px; font-weight: 600; font-size: 1.05rem;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-            border: 1px solid transparent;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08); border: 1px solid transparent;
         }
 
-        .link-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-        }
+        .link-button:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
 
-        .link-button:active {
-            transform: scale(0.97);
-        }
+        .btn-marsala { background: linear-gradient(135deg, #8E3B3B, #722f37); color: white; }
+        .btn-nude { background: linear-gradient(135deg, #e2b4b4, #bc8f8f); color: white; }
 
-        .btn-marsala { 
-            background: linear-gradient(135deg, #8E3B3B, #722f37);
-            color: white; 
-        }
-        
-        .btn-nude { 
-            background: linear-gradient(135deg, #e2b4b4, #bc8f8f);
-            color: white; 
-        }
+        .footer-links { display: flex; justify-content: center; gap: 30px; margin-top: 20px; }
+        .footer-links a { text-decoration: none; color: #777; font-size: 0.95rem; font-weight: 500; }
+        .footer-links a:hover { color: var(--secondary-color); }
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        .footer-links a {
-            text-decoration: none;
-            color: #777;
-            font-size: 0.95rem;
-            transition: all 0.2s;
-            font-weight: 500;
-        }
-
-        .footer-links a:hover {
-            color: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
-        .copyright {
-            margin-top: 40px;
-            font-size: 0.7rem;
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        @media (max-width: 400px) {
-            .profile-header h1 { font-size: 2rem; }
-            .bio { font-size: 1.05rem; }
-            .link-button { padding: 18px 20px; font-size: 0.95rem; }
-        }
+        .copyright { margin-top: 40px; font-size: 0.7rem; color: #aaa; text-transform: uppercase; letter-spacing: 2px; }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <div class="profile-image">
-            <img src="andreia.jpg" alt="Andreia Zanon">
-        </div>
-
+        <div class="profile-image"><img src="andreia.jpg" alt="Andreia Zanon"></div>
         <header class="profile-header">
             <h1>Andreia Zanon</h1>
             <h2>Consteladora Estratégica</h2>
             <div class="divider"></div>
         </header>
-
         <section class="bio">
             <p>Sou <span>Andreia Zanon</span>. Ajudo mulheres modernas a descobrir que não é sobre escolher entre ser mãe OU profissional. É sobre estar no lugar certo em cada contexto e ser inteira em todos eles.</p>
         </section>
-
         <nav class="links-container">
-            <a href="https://forms.gle/Q8pzieL4FWHQ7JVj9" class="link-button btn-marsala">📅 Agendar Constelação / Acompanhamento Sistêmico</a>
-            <p style="font-size: 0.75rem; color: #bc8f8f; margin-top: -10px; margin-bottom: 10px; font-weight: 500;">(Preencha o formulário de pré-atendimento para qualificação )</p>
-            <a href="https://chat.whatsapp.com/FvV69uX6G9y6p9v6p9v6p9" class="link-button btn-nude">👥 Entrar na Comunidade</a>
-            <a href="https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBMmF" class="link-button btn-marsala">🎵 Acessar Playlist</a>
-            
+            <a href="https://wa.me/5554996742276?text=Olá%20Andreia,%20gostaria%20de%20agendar%20uma%20constelação%20ou%20acompanhamento%20sistêmico." class="link-button btn-marsala">📅 Agendar Constelação / Acompanhamento Sistêmico</a>
+            <a href="https://chat.whatsapp.com/E9tj58QCLnRBWZFMyuYU44?s=cl&p=i&ilr=2" class="link-button btn-nude">👥 Entrar na Comunidade</a>
+            <a href="https://open.spotify.com/playlist/4PN9D4CtFEYFV85IebJAqn?si=RypJFqbKTuiGlX-czhJXng&pi=Ae2i-mCsSXmz7" class="link-button btn-marsala">🎵 Acessar Playlist</a>
             <a href="teste-parental.html" class="link-button btn-nude">🧠 Teste de Estilo Parental</a>
             <a href="teste-feridas.html" class="link-button btn-marsala">🩹 Descubra suas feridas emocionais</a>
         </nav>
-
         <footer class="footer-links">
             <a href="https://www.instagram.com/andreiazanon__">Instagram</a>
             <a href="https://www.linkedin.com/in/andreia-zanon-22b0813b6">LinkedIn</a>
             <a href="mailto:andreiazanon3@gmail.com">Email</a>
         </footer>
-
         <p class="copyright">© 2026 Andreia Zanon. Todos os direitos reservados.</p>
     </div>
-
 </body>
 </html>
