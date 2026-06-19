@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teste de Estilo Parental | Andreia Zanon</title>
+    <title>Descubra Suas Feridas Emocionais | Andreia Zanon</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -203,7 +203,7 @@
             box-shadow: 0 10px 30px rgba(114, 47, 55, 0.2);
         }
 
-        .result-style {
+        .result-wound {
             font-family: 'Lora', serif;
             font-size: 32px;
             font-weight: 700;
@@ -240,10 +240,10 @@
     <div class="container">
         <div class="intro-section active" id="introSection">
             <div class="header">
-                <h1>Teste de Estilo Parental</h1>
-                <p>Descubra como seu estilo de educar molda o futuro do seu filho</p>
+                <h1>Descubra Suas Feridas Emocionais</h1>
+                <p>E como elas moldam seus relacionamentos e sua maternidade</p>
             </div>
-            <p>Seu estilo parental não é apenas sobre como você educa seus filhos. É sobre como você lidera, toma decisões e gerencia conflitos que impactam toda a sua vida e a deles.</p>
+            <p>As feridas emocionais não resolvidas são a raiz de padrões repetitivos que você passa para seus filhos, sem nem perceber. Elas afetam como você se relaciona, como você ama, como você educa.</p>
             <button class="intro-button" onclick="startQuiz()">Começar o Teste</button>
         </div>
 
@@ -258,50 +258,57 @@
         </div>
 
         <div class="result-section" id="resultSection">
-            <div class="header"><h1>Seu Estilo Parental</h1></div>
+            <div class="header"><h1>Sua Ferida Predominante</h1></div>
             <div class="result-box">
-                <div class="result-style" id="resultStyle"></div>
+                <div class="result-wound" id="resultWound"></div>
                 <div class="result-description" id="resultDescription"></div>
             </div>
 
-            <div class="provocation-box" style="background: #fffaf9; border: 1px solid #bc8f8f; padding: 25px; border-radius: 15px; margin-bottom: 30px; text-align: left;">
-                <p style="color: var(--secondary-color); font-weight: 700; margin-bottom: 12px; font-size: 1.1rem;">⚠️ Seu estilo de educar hoje é o futuro do seu filho amanhã.</p>
-                <p style="color: #4a4a4a; font-size: 1rem; line-height: 1.6;">Você está construindo uma base sólida ou replicando ciclos que deveriam ter sido interrompidos? O que você ignora hoje pode se tornar o fardo que seu filho carregará na vida adulta. Não deixe para depois o que pode ser curado agora.</p>
+            <div class="provocation-box" style="background: #fff5f5; border: 1px solid #e2b4b4; padding: 25px; border-radius: 15px; margin-bottom: 30px; text-align: left;">
+                <p style="color: var(--secondary-color); font-weight: 700; margin-bottom: 12px; font-size: 1.1rem;">⚠️ O que você não vê é o que mais te trava.</p>
+                <p style="color: #4a4a4a; font-size: 1rem; line-height: 1.6;">Descobrir sua ferida é apenas o primeiro passo. O verdadeiro perigo está nos ciclos invisíveis que você está repetindo com seus filhos e relacionamentos agora mesmo. Você está pronta para interromper esse padrão antes que ele se torne o destino deles?</p>
             </div>
 
-            <a href="https://forms.gle/WUZsBGUJfUd7d3kC7" class="submit-btn">👉 Agendar Diagnóstico Sistêmico</a>
+            <a href="https://forms.gle/Q8pzieL4FWHQ7JVj9" class="submit-btn">👉 Agendar Diagnóstico Sistêmico</a>
             <p style="font-size: 0.85rem; color: #888; margin-top: 15px; font-weight: 500;">(Preencha o formulário de pré-atendimento para qualificação )</p>
         </div>
     </div>
 
     <script>
         const questions = [
-            { text: "Criança realmente quase não tem motivo para ficar triste.", category: "Simplista" },
-            { text: "Acho que raiva não tem nada de mau, contanto que seja controlada.", category: "Simplista" },
-            { text: "Quando meu filho está triste, espera que eu conserte o mundo e o deixe perfeito.", category: "Simplista" },
-            { text: "Eu realmente não tenho tempo para tristeza na vida.", category: "Simplista" },
-            { text: "Acho que tristeza não tem nada de mau, contanto que seja controlada.", category: "Simplista" },
-            { text: "Quando a criança faz manha, em geral só está querendo que os adultos fiquem com pena dela.", category: "Desaprovador" },
-            { text: "A raiva da criança merece uma folga.", category: "Desaprovador" },
-            { text: "Raiva em geral quer dizer agressão.", category: "Desaprovador" },
-            { text: "Criança costuma fazer manha para conseguir o que quer.", category: "Desaprovador" },
-            { text: "Quando minha filha fica brava, ela vira uma verdadeira peste.", category: "Desaprovador" },
-            { text: "Você deve expressar a raiva que sente.", category: "Laissez-Faire" },
-            { text: "Se há uma lição que eu possa dar sobre a tristeza, é que não há nada de mau em expressá-la.", category: "Laissez-Faire" },
-            { text: "Não sei se se pode fazer alguma coisa para mudar a tristeza.", category: "Laissez-Faire" },
-            { text: "Não há nada que se possa fazer por uma criança triste além de lhe oferecer consolo.", category: "Laissez-Faire" },
-            { text: "Quando meu filho está triste, tento mostrar-lhe que o compreendo.", category: "Preparador Emocional" },
-            { text: "Tento ser compreensivo quando meu filho está triste.", category: "Preparador Emocional" },
-            { text: "Quando meu filho está triste, é uma oportunidade para ficarmos mais próximos.", category: "Preparador Emocional" },
-            { text: "Sento-me com meu filho quando ele está triste e conversamos.", category: "Preparador Emocional" },
-            { text: "Ajudo meu filho a dar nome à emoção que ele está sentindo.", category: "Preparador Emocional" }
+            { text: "Quando me sinto rejeitada, tenho vontade de fugir e me isolar.", wound: "Rejeição" },
+            { text: "Sinto que não sou boa o suficiente e que os outros não me aceitam.", wound: "Rejeição" },
+            { text: "Tenho dificuldade em ocupar meu espaço e expressar minhas opiniões.", wound: "Rejeição" },
+            { text: "Quando meus filhos me rejeitam, sinto uma dor profunda.", wound: "Rejeição" },
+            { text: "Evito situações onde posso ser criticada ou não aceita.", wound: "Rejeição" },
+            { text: "Tenho medo de ficar sozinha e busco constantemente a atenção dos outros.", wound: "Abandono" },
+            { text: "Sinto-me carente e preciso de apoio para tomar decisões.", wound: "Abandono" },
+            { text: "Quando meus filhos se tornam independentes, sinto um vazio ou medo.", wound: "Abandono" },
+            { text: "Faço de tudo para que as pessoas não me abandonem, mesmo que me custe.", wound: "Abandono" },
+            { text: "Tenho dificuldade em me comprometer, por medo de ser abandonada.", wound: "Abandono" },
+            { text: "Sinto-me frequentemente envergonhada ou humilhada, especialmente em público.", wound: "Humilhação" },
+            { text: "Tenho dificuldade em dizer não e acabo fazendo coisas que não quero.", wound: "Humilhação" },
+            { text: "Sinto-me responsável pelos problemas dos outros e me culpo facilmente.", wound: "Humilhação" },
+            { text: "Quando meus filhos fazem algo errado, sinto vergonha e culpa.", wound: "Humilhação" },
+            { text: "Coloco as necessidades dos outros acima das minhas.", wound: "Humilhação" },
+            { text: "Tenho dificuldade em confiar nas pessoas e sou muito desconfiada.", wound: "Traição" },
+            { text: "Preciso ter controle sobre as situações e as pessoas ao meu redor.", wound: "Traição" },
+            { text: "Sinto raiva e frustração quando as coisas não saem como planejado.", wound: "Traição" },
+            { text: "Quando meus filhos me desobedecem, sinto que fui traída.", wound: "Traição" },
+            { text: "Sou muito exigente comigo mesma e com os outros.", wound: "Traição" },
+            { text: "Busco a perfeição em tudo o que faço e sou muito crítica comigo mesma.", wound: "Injustiça" },
+            { text: "Tenho dificuldade em aceitar minhas imperfeições e as dos outros.", wound: "Injustiça" },
+            { text: "Sinto-me injustiçada quando não sou reconhecida pelo meu esforço.", wound: "Injustiça" },
+            { text: "Quando meus filhos agem de forma injusta, sinto raiva e indignação.", wound: "Injustiça" },
+            { text: "Tenho dificuldade em relaxar e me divertir sem me sentir culpada.", wound: "Injustiça" }
         ];
 
         const descriptions = {
-            "Simplista": "Você tende a minimizar as emoções negativas, tentando fazer com que a criança as supere rapidamente sem dar muita importância.",
-            "Desaprovador": "Você vê as emoções negativas como algo a ser controlado ou punido, muitas vezes interpretando-as como mau comportamento.",
-            "Laissez-Faire": "Você aceita todas as emoções da criança, mas tem dificuldade em estabelecer limites ou guiar a criança sobre como lidar com elas.",
-            "Preparador Emocional": "Você vê as emoções como uma oportunidade de conexão e ensino, validando os sentimentos enquanto ajuda a criança a resolver problemas."
+            "Rejeição": "A ferida da rejeição gera a máscara do 'Escapista'. Você tende a se isolar e sentir que não tem direito de existir ou ocupar espaço.",
+            "Abandono": "A ferida do abandono gera a máscara do 'Dependente'. Você busca atenção constante e teme profundamente a solidão.",
+            "Humilhação": "A ferida da humilhação gera a máscara do 'Masoquista'. Você se sente culpada e tende a colocar as necessidades dos outros acima das suas.",
+            "Traição": "A ferida da traição gera a máscara do 'Controlador'. Você precisa ter o controle de tudo para não ser enganada ou decepcionada.",
+            "Injustiça": "A ferida da injustiça gera a máscara do 'Rígido'. Você busca a perfeição e tem dificuldade em expressar sentimentos e vulnerabilidade."
         };
 
         let currentQuestion = 0;
@@ -322,9 +329,9 @@
             container.innerHTML = '';
             
             const options = [
-                { text: "Discordo", value: 0 },
-                { text: "Neutro", value: 1 },
-                { text: "Concordo", value: 2 }
+                { text: "Nunca", value: 0 },
+                { text: "Às vezes", value: 1 },
+                { text: "Sempre", value: 2 }
             ];
 
             options.forEach(opt => {
@@ -370,21 +377,21 @@
         function showResult() {
             const scores = {};
             questions.forEach((q, i) => {
-                scores[q.category] = (scores[q.category] || 0) + (answers[i] || 0);
+                scores[q.wound] = (scores[q.wound] || 0) + (answers[i] || 0);
             });
 
             let maxScore = -1;
             let finalResult = "";
-            for (const cat in scores) {
-                if (scores[cat] > maxScore) {
-                    maxScore = scores[cat];
-                    finalResult = cat;
+            for (const wound in scores) {
+                if (scores[wound] > maxScore) {
+                    maxScore = scores[wound];
+                    finalResult = wound;
                 }
             }
 
             document.getElementById('quizSection').classList.remove('active');
             document.getElementById('resultSection').classList.add('active');
-            document.getElementById('resultStyle').innerText = finalResult;
+            document.getElementById('resultWound').innerText = finalResult;
             document.getElementById('resultDescription').innerText = descriptions[finalResult];
         }
     </script>
