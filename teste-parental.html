@@ -16,11 +16,7 @@
             --accent-color: #e2b4b4;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Montserrat', sans-serif;
@@ -35,279 +31,134 @@
         .container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 15px 50px rgba(114, 47, 55, 0.15);
-            max-width: 700px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             width: 100%;
+            max-width: 500px;
             padding: 40px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .header h1 {
-            font-family: 'Lora', serif;
-            font-size: 28px;
-            color: var(--secondary-color);
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .header p {
-            font-size: 16px;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .intro-section {
-            background: #fffaf9;
-            border-left: 4px solid var(--primary-color);
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            display: none;
-        }
-
-        .intro-section.active {
-            display: block;
-        }
-
-        .intro-section h2 {
-            font-family: 'Lora', serif;
-            font-size: 20px;
-            color: var(--secondary-color);
-            margin-bottom: 15px;
-        }
-
-        .intro-section p {
-            font-size: 15px;
-            color: #555;
-            line-height: 1.7;
-            margin-bottom: 15px;
-        }
-
-        .intro-button {
-            background: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .intro-button:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .quiz-section {
-            display: none;
-        }
-
-        .quiz-section.active {
-            display: block;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #f0f0f0;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
-            transition: width 0.3s;
-        }
-
-        .question-text {
-            font-family: 'Lora', serif;
-            font-size: 20px;
-            color: var(--text-color);
-            margin-bottom: 25px;
-            line-height: 1.6;
             text-align: center;
         }
 
-        .options {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
+        h1 { font-family: 'Lora', serif; color: var(--secondary-color); margin-bottom: 20px; font-size: 1.8rem; }
+        p { color: #555; margin-bottom: 30px; line-height: 1.6; }
+
+        .section { display: none; }
+        .section.active { display: block; }
+
+        .progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 4px; margin-bottom: 30px; overflow: hidden; }
+        .progress-fill { width: 0%; height: 100%; background: var(--primary-color); transition: width 0.3s ease; }
 
         .option-btn {
-            flex: 1;
-            padding: 18px;
-            border: 2px solid #eee;
-            background: white;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.3s;
-            font-family: 'Montserrat', sans-serif;
+            display: block; width: 100%; padding: 15px; margin-bottom: 12px;
+            border: 2px solid #eee; border-radius: 12px; background: none;
+            cursor: pointer; font-family: inherit; font-weight: 600; transition: all 0.2s;
         }
 
-        .option-btn:hover {
-            border-color: var(--primary-color);
-            background: #fffaf9;
-        }
+        .option-btn:hover { border-color: var(--primary-color); background: #fffaf9; }
+        .option-btn.selected { background: var(--primary-color); color: white; border-color: var(--primary-color); }
 
-        .option-btn.selected {
-            background: var(--secondary-color);
-            color: white;
-            border-color: var(--secondary-color);
-        }
-
+        .nav-btns { display: flex; gap: 10px; margin-top: 20px; }
         .nav-btn {
-            padding: 12px 25px;
-            border: 2px solid var(--secondary-color);
-            background: white;
-            color: var(--secondary-color);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            transition: all 0.3s;
+            flex: 1; padding: 12px; border-radius: 10px; border: none;
+            cursor: pointer; font-weight: 600; transition: opacity 0.2s;
         }
+        .btn-prev { background: #eee; color: #666; }
+        .btn-next { background: var(--secondary-color); color: white; }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .nav-btn:hover:not(:disabled) {
-            background: var(--secondary-color);
-            color: white;
-        }
+        .result-card { background: #fffaf9; padding: 25px; border-radius: 15px; border: 1px solid var(--accent-color); margin-bottom: 25px; }
+        .result-style { font-size: 1.4rem; color: var(--secondary-color); font-weight: 700; margin-bottom: 10px; display: block; }
+        
+        .provocation { font-family: 'Lora', serif; font-style: italic; font-size: 1.05rem; color: #444; margin-bottom: 25px; line-height: 1.7; }
+        .provocation b { color: var(--secondary-color); }
 
-        .result-section {
-            display: none;
-            text-align: center;
+        .cta-btn {
+            display: block; width: 100%; padding: 18px; background: var(--secondary-color);
+            color: white; text-decoration: none; border-radius: 12px; font-weight: 700;
+            margin-bottom: 15px; transition: transform 0.2s;
         }
-
-        .result-section.active {
-            display: block;
-        }
-
-        .result-box {
-            background: linear-gradient(135deg, var(--secondary-color), #8E3B3B);
-            color: white;
-            padding: 35px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(114, 47, 55, 0.2);
-        }
-
-        .result-style {
-            font-family: 'Lora', serif;
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .submit-btn {
-            display: block;
-            text-decoration: none;
-            background: var(--secondary-color);
-            color: white;
-            padding: 18px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(114, 47, 55, 0.3);
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(114, 47, 55, 0.4);
-            background: #8E3B3B;
-        }
-
-        @media (max-width: 600px) {
-            .container { padding: 25px; }
-            .options { flex-direction: column; }
-        }
+        .cta-btn:hover { transform: scale(1.02); }
+        
+        .insta-link { color: var(--primary-color); text-decoration: none; font-weight: 600; border-bottom: 1px solid var(--accent-color); }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="intro-section active" id="introSection">
-            <div class="header">
-                <h1>Teste de Estilo Parental</h1>
-                <p>Descubra como seu estilo de educar molda o futuro do seu filho</p>
-            </div>
-            <p>Seu estilo parental não é apenas sobre como você educa seus filhos. É sobre como você lidera, toma decisões e gerencia conflitos que impactam toda a sua vida e a deles.</p>
-            <button class="intro-button" onclick="startQuiz()">Começar o Teste</button>
+        <!-- Intro -->
+        <div id="introSection" class="section active">
+            <h1>Teste de Estilo Parental</h1>
+            <p>Descubra qual o seu estilo predominante de educar e como ele impacta o futuro do seu filho.</p>
+            <button class="cta-btn" onclick="startQuiz()">Começar Teste</button>
         </div>
 
-        <div class="quiz-section" id="quizSection">
-            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-            <div class="question-text" id="questionText"></div>
-            <div class="options" id="optionsContainer"></div>
-            <div style="display: flex; justify-content: space-between;">
-                <button class="nav-btn" id="prevBtn" onclick="previousQuestion()" disabled>← Anterior</button>
-                <span id="questionNumber" style="color: #999; font-size: 14px; align-self: center;"></span>
+        <!-- Quiz -->
+        <div id="quizSection" class="section">
+            <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+            <p id="questionNumber" style="font-size: 0.8rem; font-weight: 700; color: var(--primary-color); margin-bottom: 10px;"></p>
+            <h2 id="questionText" style="font-size: 1.2rem; margin-bottom: 25px; color: var(--secondary-color);"></h2>
+            <div id="optionsContainer"></div>
+            <div class="nav-btns">
+                <button id="prevBtn" class="nav-btn btn-prev" onclick="previousQuestion()">Anterior</button>
+                <button id="nextBtn" class="nav-btn btn-next" onclick="nextQuestion()">Próxima</button>
             </div>
         </div>
 
-        <div class="result-section" id="resultSection">
-            <div class="header"><h1>Seu Estilo Parental</h1></div>
-            <div class="result-box">
-                <div class="result-style" id="resultStyle"></div>
-                <div class="result-description" id="resultDescription"></div>
+        <!-- Result -->
+        <div id="resultSection" class="section">
+            <h1>Seu Resultado</h1>
+            <div class="result-card">
+                <span class="result-style" id="resultStyle"></span>
+                <p id="resultDescription" style="margin-bottom: 0; font-size: 0.95rem;"></p>
+            </div>
+            
+            <div class="provocation">
+                Teu estilo predominante é o <b id="resultStyleName"></b>. 🤍  
+  
+
+                Nenhum estilo é certo ou errado, e nenhum tu escolheu. Ele se formou a partir de como tu mesma foi cuidada, muito antes de tu seres mãe.  
+  
+
+                O ponto é esse: debaixo do cansaço e dos gatilhos, todo estilo tem um padrão herdado que age sozinho, sem tu perceber, e acaba aparecendo no teu filho.  
+  
+
+                Me responde com sinceridade: tu quer só entender melhor teu estilo por enquanto, ou sente que chegou a hora de enxergar o que escapa de ti e mudar isso?  
+  
+
+                Se for tua hora de olhar pra isso, preenche o formulário aqui que eu te recebo. ↓
             </div>
 
-            <div class="provocation-box" style="background: #fffaf9; border: 1px solid #bc8f8f; padding: 25px; border-radius: 15px; margin-bottom: 30px; text-align: left;">
-                <p style="color: var(--secondary-color); font-weight: 700; margin-bottom: 12px; font-size: 1.1rem;">⚠️ Seu estilo de educar hoje é o futuro do seu filho amanhã.</p>
-                <p style="color: #4a4a4a; font-size: 1rem; line-height: 1.6;">Você está construindo uma base sólida ou replicando ciclos que deveriam ter sido interrompidos? O que você ignora hoje pode se tornar o fardo que seu filho carregará na vida adulta. Não deixe para depois o que pode ser curado agora.</p>
-            </div>
-
-            <a href="https://forms.gle/WUZsBGUJfUd7d3kC7" class="submit-btn">👉 Agendar Diagnóstico Sistêmico</a>
-            <p style="font-size: 0.85rem; color: #888; margin-top: 15px; font-weight: 500;">(Preencha o formulário de pré-atendimento para qualificação )</p>
+            <a href="https://forms.gle/WUZsBGUJfUd7d3kC7" class="cta-btn">👉 Agendar Diagnóstico Sistêmico</a>
+            
+            <p style="font-size: 0.9rem; color: #777;">
+                Se tá só conhecendo teu estilo agora, me segue no <a href="https://www.instagram.com/andreiazanon__" class="insta-link">@andreiazanon__</a> que logo vou ter algo mais leve pra começar.
+            </p>
         </div>
     </div>
 
     <script>
         const questions = [
-            { text: "Criança realmente quase não tem motivo para ficar triste.", category: "Simplista" },
-            { text: "Acho que raiva não tem nada de mau, contanto que seja controlada.", category: "Simplista" },
-            { text: "Quando meu filho está triste, espera que eu conserte o mundo e o deixe perfeito.", category: "Simplista" },
-            { text: "Eu realmente não tenho tempo para tristeza na vida.", category: "Simplista" },
-            { text: "Acho que tristeza não tem nada de mau, contanto que seja controlada.", category: "Simplista" },
-            { text: "Quando a criança faz manha, em geral só está querendo que os adultos fiquem com pena dela.", category: "Desaprovador" },
-            { text: "A raiva da criança merece uma folga.", category: "Desaprovador" },
-            { text: "Raiva em geral quer dizer agressão.", category: "Desaprovador" },
-            { text: "Criança costuma fazer manha para conseguir o que quer.", category: "Desaprovador" },
-            { text: "Quando minha filha fica brava, ela vira uma verdadeira peste.", category: "Desaprovador" },
-            { text: "Você deve expressar a raiva que sente.", category: "Laissez-Faire" },
-            { text: "Se há uma lição que eu possa dar sobre a tristeza, é que não há nada de mau em expressá-la.", category: "Laissez-Faire" },
-            { text: "Não sei se se pode fazer alguma coisa para mudar a tristeza.", category: "Laissez-Faire" },
-            { text: "Não há nada que se possa fazer por uma criança triste além de lhe oferecer consolo.", category: "Laissez-Faire" },
-            { text: "Quando meu filho está triste, tento mostrar-lhe que o compreendo.", category: "Preparador Emocional" },
-            { text: "Tento ser compreensivo quando meu filho está triste.", category: "Preparador Emocional" },
-            { text: "Quando meu filho está triste, é uma oportunidade para ficarmos mais próximos.", category: "Preparador Emocional" },
-            { text: "Sento-me com meu filho quando ele está triste e conversamos.", category: "Preparador Emocional" },
-            { text: "Ajudo meu filho a dar nome à emoção que ele está sentindo.", category: "Preparador Emocional" }
+            { text: "Você acredita que as crianças devem ser vistas e não ouvidas?", category: "Desaprovador" },
+            { text: "Você valida as emoções do seu filho, mesmo quando não concorda com o comportamento?", category: "Preparador Emocional" },
+            { text: "Você tende a ignorar ou minimizar o choro do seu filho para que ele 'aprenda'?", category: "Simplista" },
+            { text: "Você tem dificuldade em estabelecer limites claros e acaba cedendo muito?", category: "Laissez-Faire" },
+            { text: "Você usa o castigo como principal forma de ensinar disciplina?", category: "Desaprovador" },
+            { text: "Você ajuda seu filho a nomear o que ele está sentindo?", category: "Preparador Emocional" },
+            { text: "Você se sente desconfortável quando seu filho expressa raiva ou tristeza?", category: "Simplista" },
+            { text: "Você acredita que as crianças devem descobrir as coisas sozinhas, sem muita interferência?", category: "Laissez-Faire" },
+            { text: "Você explica o porquê das regras em vez de apenas dizer 'porque eu mandei'?", category: "Preparador Emocional" },
+            { text: "Você frequentemente se sente culpada por não saber como lidar com as birras?", category: "Laissez-Faire" }
         ];
 
         const descriptions = {
-            "Simplista": "Você tende a minimizar as emoções negativas, tentando fazer com que a criança as supere rapidamente sem dar muita importância.",
-            "Desaprovador": "Você vê as emoções negativas como algo a ser controlado ou punido, muitas vezes interpretando-as como mau comportamento.",
-            "Laissez-Faire": "Você aceita todas as emoções da criança, mas tem dificuldade em estabelecer limites ou guiar a criança sobre como lidar com elas.",
-            "Preparador Emocional": "Você vê as emoções como uma oportunidade de conexão e ensino, validando os sentimentos enquanto ajuda a criança a resolver problemas."
+            "Simplista": "Você tende a minimizar as emoções negativas, querendo que o filho saia logo daquele estado. Isso pode fazer com que a criança sinta que suas emoções não são importantes.",
+            "Desaprovador": "Você é rigorosa com o comportamento e tende a julgar as emoções. Isso pode criar filhos obedientes, mas com baixa autoestima e medo de errar.",
+            "Laissez-Faire": "Você é muito afetuosa e aceita todas as emoções, mas tem dificuldade em dar limites. Isso pode deixar a criança insegura por falta de uma estrutura clara.",
+            "Preparador Emocional": "Você usa os momentos de crise como oportunidade de conexão e ensino. Você valida a emoção, mas orienta o comportamento, criando filhos emocionalmente inteligentes."
         };
 
         let currentQuestion = 0;
-        let answers = [];
+        let answers = {};
 
-        function startQuiz() {
+        function startQuiz( ) {
             document.getElementById('introSection').classList.remove('active');
             document.getElementById('quizSection').classList.add('active');
             showQuestion();
@@ -315,38 +166,31 @@
 
         function showQuestion() {
             const q = questions[currentQuestion];
+            document.getElementById('questionNumber').innerText = `PERGUNTA ${currentQuestion + 1} DE ${questions.length}`;
             document.getElementById('questionText').innerText = q.text;
-            document.getElementById('questionNumber').innerText = `Questão ${currentQuestion + 1} de ${questions.length}`;
             
             const container = document.getElementById('optionsContainer');
             container.innerHTML = '';
             
-            const options = [
-                { text: "Discordo", value: 0 },
-                { text: "Neutro", value: 1 },
-                { text: "Concordo", value: 2 }
-            ];
-
-            options.forEach(opt => {
+            ['Verdadeiro', 'Falso'].forEach(opt => {
                 const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                if (answers[currentQuestion] === opt.value) btn.classList.add('selected');
-                btn.innerText = opt.text;
-                btn.onclick = () => selectOption(opt.value);
+                btn.className = `option-btn ${answers[currentQuestion] === opt ? 'selected' : ''}`;
+                btn.innerText = opt;
+                btn.onclick = () => selectOption(opt);
                 container.appendChild(btn);
             });
 
             document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            document.getElementById('nextBtn').disabled = !answers[currentQuestion];
             updateProgress();
         }
 
-        function selectOption(val) {
-            answers[currentQuestion] = val;
-            setTimeout(nextQuestion, 300);
+        function selectOption(opt) {
+            answers[currentQuestion] = opt;
+            showQuestion();
         }
 
         function nextQuestion() {
-            if (answers[currentQuestion] === undefined) return;
             if (currentQuestion < questions.length - 1) {
                 currentQuestion++;
                 showQuestion();
@@ -370,11 +214,13 @@
         function showResult() {
             const scores = {};
             questions.forEach((q, i) => {
-                scores[q.category] = (scores[q.category] || 0) + (answers[i] || 0);
+                if (answers[i] === 'Verdadeiro') {
+                    scores[q.category] = (scores[q.category] || 0) + 1;
+                }
             });
 
             let maxScore = -1;
-            let finalResult = "";
+            let finalResult = "Preparador Emocional"; // Default
             for (const cat in scores) {
                 if (scores[cat] > maxScore) {
                     maxScore = scores[cat];
@@ -385,6 +231,7 @@
             document.getElementById('quizSection').classList.remove('active');
             document.getElementById('resultSection').classList.add('active');
             document.getElementById('resultStyle').innerText = finalResult;
+            document.getElementById('resultStyleName').innerText = finalResult;
             document.getElementById('resultDescription').innerText = descriptions[finalResult];
         }
     </script>
