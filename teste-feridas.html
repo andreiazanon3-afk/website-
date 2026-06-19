@@ -16,11 +16,7 @@
             --accent-color: #e2b4b4;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Montserrat', sans-serif;
@@ -35,286 +31,132 @@
         .container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 15px 50px rgba(114, 47, 55, 0.15);
-            max-width: 700px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             width: 100%;
+            max-width: 500px;
             padding: 40px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .header h1 {
-            font-family: 'Lora', serif;
-            font-size: 28px;
-            color: var(--secondary-color);
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .header p {
-            font-size: 16px;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .intro-section {
-            background: #fffaf9;
-            border-left: 4px solid var(--primary-color);
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            display: none;
-        }
-
-        .intro-section.active {
-            display: block;
-        }
-
-        .intro-section h2 {
-            font-family: 'Lora', serif;
-            font-size: 20px;
-            color: var(--secondary-color);
-            margin-bottom: 15px;
-        }
-
-        .intro-section p {
-            font-size: 15px;
-            color: #555;
-            line-height: 1.7;
-            margin-bottom: 15px;
-        }
-
-        .intro-button {
-            background: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .intro-button:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .quiz-section {
-            display: none;
-        }
-
-        .quiz-section.active {
-            display: block;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #f0f0f0;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
-            transition: width 0.3s;
-        }
-
-        .question-text {
-            font-family: 'Lora', serif;
-            font-size: 20px;
-            color: var(--text-color);
-            margin-bottom: 25px;
-            line-height: 1.6;
             text-align: center;
         }
 
-        .options {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
+        h1 { font-family: 'Lora', serif; color: var(--secondary-color); margin-bottom: 20px; font-size: 1.8rem; }
+        p { color: #555; margin-bottom: 30px; line-height: 1.6; }
+
+        .section { display: none; }
+        .section.active { display: block; }
+
+        .progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 4px; margin-bottom: 30px; overflow: hidden; }
+        .progress-fill { width: 0%; height: 100%; background: var(--primary-color); transition: width 0.3s ease; }
 
         .option-btn {
-            flex: 1;
-            padding: 18px;
-            border: 2px solid #eee;
-            background: white;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.3s;
-            font-family: 'Montserrat', sans-serif;
+            display: block; width: 100%; padding: 15px; margin-bottom: 12px;
+            border: 2px solid #eee; border-radius: 12px; background: none;
+            cursor: pointer; font-family: inherit; font-weight: 600; transition: all 0.2s;
         }
 
-        .option-btn:hover {
-            border-color: var(--primary-color);
-            background: #fffaf9;
-        }
+        .option-btn:hover { border-color: var(--primary-color); background: #fffaf9; }
+        .option-btn.selected { background: var(--primary-color); color: white; border-color: var(--primary-color); }
 
-        .option-btn.selected {
-            background: var(--secondary-color);
-            color: white;
-            border-color: var(--secondary-color);
-        }
-
+        .nav-btns { display: flex; gap: 10px; margin-top: 20px; }
         .nav-btn {
-            padding: 12px 25px;
-            border: 2px solid var(--secondary-color);
-            background: white;
-            color: var(--secondary-color);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            transition: all 0.3s;
+            flex: 1; padding: 12px; border-radius: 10px; border: none;
+            cursor: pointer; font-weight: 600; transition: opacity 0.2s;
         }
+        .btn-prev { background: #eee; color: #666; }
+        .btn-next { background: var(--secondary-color); color: white; }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .nav-btn:hover:not(:disabled) {
-            background: var(--secondary-color);
-            color: white;
-        }
+        .result-card { background: #fffaf9; padding: 25px; border-radius: 15px; border: 1px solid var(--accent-color); margin-bottom: 25px; }
+        .result-wound { font-size: 1.4rem; color: var(--secondary-color); font-weight: 700; margin-bottom: 10px; display: block; }
+        
+        .provocation { font-family: 'Lora', serif; font-style: italic; font-size: 1.05rem; color: #444; margin-bottom: 25px; line-height: 1.7; }
+        .provocation b { color: var(--secondary-color); }
 
-        .result-section {
-            display: none;
-            text-align: center;
+        .cta-btn {
+            display: block; width: 100%; padding: 18px; background: var(--secondary-color);
+            color: white; text-decoration: none; border-radius: 12px; font-weight: 700;
+            margin-bottom: 15px; transition: transform 0.2s;
         }
-
-        .result-section.active {
-            display: block;
-        }
-
-        .result-box {
-            background: linear-gradient(135deg, var(--secondary-color), #8E3B3B);
-            color: white;
-            padding: 35px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(114, 47, 55, 0.2);
-        }
-
-        .result-wound {
-            font-family: 'Lora', serif;
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .submit-btn {
-            display: block;
-            text-decoration: none;
-            background: var(--secondary-color);
-            color: white;
-            padding: 18px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(114, 47, 55, 0.3);
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(114, 47, 55, 0.4);
-            background: #8E3B3B;
-        }
-
-        @media (max-width: 600px) {
-            .container { padding: 25px; }
-            .options { flex-direction: column; }
-        }
+        .cta-btn:hover { transform: scale(1.02); }
+        
+        .insta-link { color: var(--primary-color); text-decoration: none; font-weight: 600; border-bottom: 1px solid var(--accent-color); }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="intro-section active" id="introSection">
-            <div class="header">
-                <h1>Descubra Suas Feridas Emocionais</h1>
-                <p>E como elas moldam seus relacionamentos e sua maternidade</p>
-            </div>
-            <p>As feridas emocionais não resolvidas são a raiz de padrões repetitivos que você passa para seus filhos, sem nem perceber. Elas afetam como você se relaciona, como você ama, como você educa.</p>
-            <button class="intro-button" onclick="startQuiz()">Começar o Teste</button>
+        <!-- Intro -->
+        <div id="introSection" class="section active">
+            <h1>Descubra Suas Feridas Emocionais</h1>
+            <p>Este teste ajudará você a identificar qual ferida emocional está predominando em sua vida e como ela afeta sua maternidade e relações.</p>
+            <button class="cta-btn" onclick="startQuiz()">Começar Teste</button>
         </div>
 
-        <div class="quiz-section" id="quizSection">
-            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-            <div class="question-text" id="questionText"></div>
-            <div class="options" id="optionsContainer"></div>
-            <div style="display: flex; justify-content: space-between;">
-                <button class="nav-btn" id="prevBtn" onclick="previousQuestion()" disabled>← Anterior</button>
-                <span id="questionNumber" style="color: #999; font-size: 14px; align-self: center;"></span>
+        <!-- Quiz -->
+        <div id="quizSection" class="section">
+            <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+            <p id="questionNumber" style="font-size: 0.8rem; font-weight: 700; color: var(--primary-color); margin-bottom: 10px;"></p>
+            <h2 id="questionText" style="font-size: 1.2rem; margin-bottom: 25px; color: var(--secondary-color);"></h2>
+            <div id="optionsContainer"></div>
+            <div class="nav-btns">
+                <button id="prevBtn" class="nav-btn btn-prev" onclick="previousQuestion()">Anterior</button>
+                <button id="nextBtn" class="nav-btn btn-next" onclick="nextQuestion()">Próxima</button>
             </div>
         </div>
 
-        <div class="result-section" id="resultSection">
-            <div class="header"><h1>Sua Ferida Predominante</h1></div>
-            <div class="result-box">
-                <div class="result-wound" id="resultWound"></div>
-                <div class="result-description" id="resultDescription"></div>
+        <!-- Result -->
+        <div id="resultSection" class="section">
+            <h1>Seu Resultado</h1>
+            <div class="result-card">
+                <span class="result-wound" id="resultWound"></span>
+                <p id="resultDescription" style="margin-bottom: 0; font-size: 0.95rem;"></p>
+            </div>
+            
+            <div class="provocation">
+                Sua ferida predominante é a <b id="resultWoundName"></b>. 🤍  
+  
+
+                Saber o nome dela é o primeiro passo. O que muda o ciclo é rompe-lo na raiz, em uma sessão individual de constelação.  
+  
+
+                Me responde com sinceridade: Você quer só entender melhor por enquanto, ou sente que chegou a hora de romper esse padrão de verdade?  
+  
+
+                Se for sua hora de agir, preenche o formulário aqui que eu já te recebo. ↓
             </div>
 
-            <div class="provocation-box" style="background: #fff5f5; border: 1px solid #e2b4b4; padding: 25px; border-radius: 15px; margin-bottom: 30px; text-align: left;">
-                <p style="color: var(--secondary-color); font-weight: 700; margin-bottom: 12px; font-size: 1.1rem;">⚠️ O que você não vê é o que mais te trava.</p>
-                <p style="color: #4a4a4a; font-size: 1rem; line-height: 1.6;">Descobrir sua ferida é apenas o primeiro passo. O verdadeiro perigo está nos ciclos invisíveis que você está repetindo com seus filhos e relacionamentos agora mesmo. Você está pronta para interromper esse padrão antes que ele se torne o destino deles?</p>
-            </div>
-
-            <a href="https://forms.gle/Q8pzieL4FWHQ7JVj9" class="submit-btn">👉 Agendar Diagnóstico Sistêmico</a>
-            <p style="font-size: 0.85rem; color: #888; margin-top: 15px; font-weight: 500;">(Preencha o formulário de pré-atendimento para qualificação )</p>
+            <a href="https://forms.gle/WUZsBGUJfUd7d3kC7" class="cta-btn">👉 Agendar Diagnóstico Sistêmico</a>
+            
+            <p style="font-size: 0.9rem; color: #777;">
+                Se ainda tá começando a olhar pra isso, me segue no <a href="https://www.instagram.com/andreiazanon__" class="insta-link">@andreiazanon__</a> que logo vou ter algo mais leve pra começar.
+            </p>
         </div>
     </div>
 
     <script>
         const questions = [
-            { text: "Quando me sinto rejeitada, tenho vontade de fugir e me isolar.", wound: "Rejeição" },
-            { text: "Sinto que não sou boa o suficiente e que os outros não me aceitam.", wound: "Rejeição" },
-            { text: "Tenho dificuldade em ocupar meu espaço e expressar minhas opiniões.", wound: "Rejeição" },
-            { text: "Quando meus filhos me rejeitam, sinto uma dor profunda.", wound: "Rejeição" },
-            { text: "Evito situações onde posso ser criticada ou não aceita.", wound: "Rejeição" },
-            { text: "Tenho medo de ficar sozinha e busco constantemente a atenção dos outros.", wound: "Abandono" },
-            { text: "Sinto-me carente e preciso de apoio para tomar decisões.", wound: "Abandono" },
-            { text: "Quando meus filhos se tornam independentes, sinto um vazio ou medo.", wound: "Abandono" },
-            { text: "Faço de tudo para que as pessoas não me abandonem, mesmo que me custe.", wound: "Abandono" },
-            { text: "Tenho dificuldade em me comprometer, por medo de ser abandonada.", wound: "Abandono" },
-            { text: "Sinto-me frequentemente envergonhada ou humilhada, especialmente em público.", wound: "Humilhação" },
-            { text: "Tenho dificuldade em dizer não e acabo fazendo coisas que não quero.", wound: "Humilhação" },
-            { text: "Sinto-me responsável pelos problemas dos outros e me culpo facilmente.", wound: "Humilhação" },
-            { text: "Quando meus filhos fazem algo errado, sinto vergonha e culpa.", wound: "Humilhação" },
-            { text: "Coloco as necessidades dos outros acima das minhas.", wound: "Humilhação" },
-            { text: "Tenho dificuldade em confiar nas pessoas e sou muito desconfiada.", wound: "Traição" },
-            { text: "Preciso ter controle sobre as situações e as pessoas ao meu redor.", wound: "Traição" },
-            { text: "Sinto raiva e frustração quando as coisas não saem como planejado.", wound: "Traição" },
-            { text: "Quando meus filhos me desobedecem, sinto que fui traída.", wound: "Traição" },
-            { text: "Sou muito exigente comigo mesma e com os outros.", wound: "Traição" },
-            { text: "Busco a perfeição em tudo o que faço e sou muito crítica comigo mesma.", wound: "Injustiça" },
-            { text: "Tenho dificuldade em aceitar minhas imperfeições e as dos outros.", wound: "Injustiça" },
-            { text: "Sinto-me injustiçada quando não sou reconhecida pelo meu esforço.", wound: "Injustiça" },
-            { text: "Quando meus filhos agem de forma injusta, sinto raiva e indignação.", wound: "Injustiça" },
-            { text: "Tenho dificuldade em relaxar e me divertir sem me sentir culpada.", wound: "Injustiça" }
+            { text: "Você sente que precisa ser perfeita em tudo o que faz para ser aceita?", wound: "Injustiça" },
+            { text: "Você tem dificuldade em dizer não por medo de ser abandonada?", wound: "Abandono" },
+            { text: "Você sente que as pessoas frequentemente se aproveitam da sua bondade?", wound: "Humilhação" },
+            { text: "Você tem dificuldade em confiar plenamente nas pessoas, mesmo as mais próximas?", wound: "Traição" },
+            { text: "Você se sente frequentemente excluída ou que não pertence aos lugares?", wound: "Rejeição" },
+            { text: "Você se cobra excessivamente para dar conta de tudo sozinha?", wound: "Injustiça" },
+            { text: "Você sente uma necessidade constante de atenção e carinho?", wound: "Abandono" },
+            { text: "Você se sente envergonhada por erros bobos ou situações simples?", wound: "Humilhação" },
+            { text: "Você tende a controlar as situações para evitar ser surpreendida negativamente?", wound: "Traição" },
+            { text: "Você prefere se isolar quando está passando por um problema?", wound: "Rejeição" }
         ];
 
         const descriptions = {
-            "Rejeição": "A ferida da rejeição gera a máscara do 'Escapista'. Você tende a se isolar e sentir que não tem direito de existir ou ocupar espaço.",
-            "Abandono": "A ferida do abandono gera a máscara do 'Dependente'. Você busca atenção constante e teme profundamente a solidão.",
-            "Humilhação": "A ferida da humilhação gera a máscara do 'Masoquista'. Você se sente culpada e tende a colocar as necessidades dos outros acima das suas.",
-            "Traição": "A ferida da traição gera a máscara do 'Controlador'. Você precisa ter o controle de tudo para não ser enganada ou decepcionada.",
-            "Injustiça": "A ferida da injustiça gera a máscara do 'Rígido'. Você busca a perfeição e tem dificuldade em expressar sentimentos e vulnerabilidade."
+            "Rejeição": "Você tende a se anular e fugir de situações onde possa ser julgada. Com seus filhos, isso pode aparecer como uma dificuldade em se sentir 'boa o suficiente' como mãe.",
+            "Abandono": "Você tem medo da solidão e pode se tornar dependente emocionalmente. Na maternidade, isso pode gerar uma superproteção por medo de perder a conexão com os filhos.",
+            "Humilhação": "Você se coloca em segundo plano e carrega o peso do mundo. Pode sentir que precisa se sacrificar o tempo todo para ser uma 'boa mãe'.",
+            "Traição": "Você precisa estar no controle de tudo para se sentir segura. Isso pode gerar uma maternidade rígida e com dificuldade de delegar ou confiar nos outros.",
+            "Injustiça": "Você busca a perfeição e tem dificuldade em mostrar vulnerabilidade. Pode ser muito exigente consigo mesma e com o desempenho dos seus filhos."
         };
 
         let currentQuestion = 0;
-        let answers = [];
+        let answers = {};
 
-        function startQuiz() {
+        function startQuiz( ) {
             document.getElementById('introSection').classList.remove('active');
             document.getElementById('quizSection').classList.add('active');
             showQuestion();
@@ -322,38 +164,31 @@
 
         function showQuestion() {
             const q = questions[currentQuestion];
+            document.getElementById('questionNumber').innerText = `PERGUNTA ${currentQuestion + 1} DE ${questions.length}`;
             document.getElementById('questionText').innerText = q.text;
-            document.getElementById('questionNumber').innerText = `Questão ${currentQuestion + 1} de ${questions.length}`;
             
             const container = document.getElementById('optionsContainer');
             container.innerHTML = '';
             
-            const options = [
-                { text: "Nunca", value: 0 },
-                { text: "Às vezes", value: 1 },
-                { text: "Sempre", value: 2 }
-            ];
-
-            options.forEach(opt => {
+            ['Sim', 'Não'].forEach(opt => {
                 const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                if (answers[currentQuestion] === opt.value) btn.classList.add('selected');
-                btn.innerText = opt.text;
-                btn.onclick = () => selectOption(opt.value);
+                btn.className = `option-btn ${answers[currentQuestion] === opt ? 'selected' : ''}`;
+                btn.innerText = opt;
+                btn.onclick = () => selectOption(opt);
                 container.appendChild(btn);
             });
 
             document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            document.getElementById('nextBtn').disabled = !answers[currentQuestion];
             updateProgress();
         }
 
-        function selectOption(val) {
-            answers[currentQuestion] = val;
-            setTimeout(nextQuestion, 300);
+        function selectOption(opt) {
+            answers[currentQuestion] = opt;
+            showQuestion();
         }
 
         function nextQuestion() {
-            if (answers[currentQuestion] === undefined) return;
             if (currentQuestion < questions.length - 1) {
                 currentQuestion++;
                 showQuestion();
@@ -377,11 +212,13 @@
         function showResult() {
             const scores = {};
             questions.forEach((q, i) => {
-                scores[q.wound] = (scores[q.wound] || 0) + (answers[i] || 0);
+                if (answers[i] === 'Sim') {
+                    scores[q.wound] = (scores[q.wound] || 0) + 1;
+                }
             });
 
             let maxScore = -1;
-            let finalResult = "";
+            let finalResult = "Rejeição"; // Default
             for (const wound in scores) {
                 if (scores[wound] > maxScore) {
                     maxScore = scores[wound];
@@ -392,6 +229,7 @@
             document.getElementById('quizSection').classList.remove('active');
             document.getElementById('resultSection').classList.add('active');
             document.getElementById('resultWound').innerText = finalResult;
+            document.getElementById('resultWoundName').innerText = finalResult;
             document.getElementById('resultDescription').innerText = descriptions[finalResult];
         }
     </script>
