@@ -9,53 +9,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #bc8f8f;
-            --secondary-color: #722f37;
-            --bg-color: #fffaf9;
-            --text-color: #2c2c2c;
-            --accent-color: #e2b4b4;
+            --primary-color: #bc8f8f; --secondary-color: #722f37; --bg-color: #fffaf9;
+            --text-color: #2c2c2c; --accent-color: #e2b4b4;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #722f37 0%, #fffaf9 100% );
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            font-family: 'Montserrat', sans-serif; background: linear-gradient(135deg, #722f37 0%, #fffaf9 100% );
+            min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px;
         }
-
         .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            width: 100%;
-            max-width: 500px;
-            padding: 40px;
-            text-align: center;
+            background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            width: 100%; max-width: 500px; padding: 40px; text-align: center;
         }
-
         h1 { font-family: 'Lora', serif; color: var(--secondary-color); margin-bottom: 20px; font-size: 1.8rem; }
         p { color: #555; margin-bottom: 30px; line-height: 1.6; }
-
         .section { display: none; }
         .section.active { display: block; }
-
         .progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 4px; margin-bottom: 30px; overflow: hidden; }
         .progress-fill { width: 0%; height: 100%; background: var(--primary-color); transition: width 0.3s ease; }
-
         .option-btn {
             display: block; width: 100%; padding: 15px; margin-bottom: 12px;
             border: 2px solid #eee; border-radius: 12px; background: none;
             cursor: pointer; font-family: inherit; font-weight: 600; transition: all 0.2s;
         }
-
         .option-btn:hover { border-color: var(--primary-color); background: #fffaf9; }
         .option-btn.selected { background: var(--primary-color); color: white; border-color: var(--primary-color); }
-
         .nav-btns { display: flex; gap: 10px; margin-top: 20px; }
         .nav-btn {
             flex: 1; padding: 12px; border-radius: 10px; border: none;
@@ -64,33 +42,30 @@
         .btn-prev { background: #eee; color: #666; }
         .btn-next { background: var(--secondary-color); color: white; }
         .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
         .result-card { background: #fffaf9; padding: 25px; border-radius: 15px; border: 1px solid var(--accent-color); margin-bottom: 25px; }
         .result-wound { font-size: 1.4rem; color: var(--secondary-color); font-weight: 700; margin-bottom: 10px; display: block; }
-        
-        .provocation { font-family: 'Lora', serif; font-style: italic; font-size: 1.05rem; color: #444; margin-bottom: 25px; line-height: 1.7; }
-        .provocation b { color: var(--secondary-color); }
-
+        .provocation { font-family: 'Lora', serif; font-size: 1.05rem; color: #444; margin-bottom: 25px; line-height: 1.7; text-align: left; }
         .cta-btn {
             display: block; width: 100%; padding: 18px; background: var(--secondary-color);
             color: white; text-decoration: none; border-radius: 12px; font-weight: 700;
             margin-bottom: 15px; transition: transform 0.2s;
         }
-        .cta-btn:hover { transform: scale(1.02); }
-        
+        .cta-btn-secondary {
+            display: block; width: 100%; padding: 18px; background: white;
+            color: var(--secondary-color); text-decoration: none; border-radius: 12px; font-weight: 700;
+            margin-bottom: 15px; border: 2px solid var(--secondary-color);
+        }
+        .cta-btn:hover, .cta-btn-secondary:hover { transform: scale(1.02); }
         .insta-link { color: var(--primary-color); text-decoration: none; font-weight: 600; border-bottom: 1px solid var(--accent-color); }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Intro -->
         <div id="introSection" class="section active">
             <h1>Descubra Suas Feridas Emocionais</h1>
-            <p>Este teste ajudará você a identificar qual ferida emocional está predominando em sua vida e como ela afeta sua maternidade e relações.</p>
+            <p>Identifique a ferida que molda suas reações e descubra como romper esse ciclo na raiz.</p>
             <button class="cta-btn" onclick="startQuiz()">Começar Teste</button>
         </div>
-
-        <!-- Quiz -->
         <div id="quizSection" class="section">
             <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
             <p id="questionNumber" style="font-size: 0.8rem; font-weight: 700; color: var(--primary-color); margin-bottom: 10px;"></p>
@@ -101,15 +76,12 @@
                 <button id="nextBtn" class="nav-btn btn-next" onclick="nextQuestion()">Próxima</button>
             </div>
         </div>
-
-        <!-- Result -->
         <div id="resultSection" class="section">
             <h1>Seu Resultado</h1>
             <div class="result-card">
                 <span class="result-wound" id="resultWound"></span>
                 <p id="resultDescription" style="margin-bottom: 0; font-size: 0.95rem;"></p>
             </div>
-            
             <div class="provocation">
                 Sua ferida predominante é a <b id="resultWoundName"></b>. 🤍  
   
@@ -122,110 +94,58 @@
 
                 Se for sua hora de agir, preenche o formulário aqui que eu já te recebo. ↓
             </div>
-
-            <a href="https://forms.gle/WUZsBGUJfUd7d3kC7" class="cta-btn">👉 Agendar Diagnóstico Sistêmico</a>
-            
+            <a href="https://forms.gle/Q8pzieL4FWHQ7JVj9" class="cta-btn">👉 Agendar Diagnóstico Sistêmico</a>
+            <a href="https://pay.kiwify.com.br/VjnRcLS" class="cta-btn-secondary">🎥 Quero entender melhor (Aula + Bônus )</a>
             <p style="font-size: 0.9rem; color: #777;">
                 Se ainda tá começando a olhar pra isso, me segue no <a href="https://www.instagram.com/andreiazanon__" class="insta-link">@andreiazanon__</a> que logo vou ter algo mais leve pra começar.
             </p>
         </div>
     </div>
-
     <script>
         const questions = [
-            { text: "Você sente que precisa ser perfeita em tudo o que faz para ser aceita?", wound: "Injustiça" },
-            { text: "Você tem dificuldade em dizer não por medo de ser abandonada?", wound: "Abandono" },
-            { text: "Você sente que as pessoas frequentemente se aproveitam da sua bondade?", wound: "Humilhação" },
-            { text: "Você tem dificuldade em confiar plenamente nas pessoas, mesmo as mais próximas?", wound: "Traição" },
-            { text: "Você se sente frequentemente excluída ou que não pertence aos lugares?", wound: "Rejeição" },
-            { text: "Você se cobra excessivamente para dar conta de tudo sozinha?", wound: "Injustiça" },
-            { text: "Você sente uma necessidade constante de atenção e carinho?", wound: "Abandono" },
-            { text: "Você se sente envergonhada por erros bobos ou situações simples?", wound: "Humilhação" },
-            { text: "Você tende a controlar as situações para evitar ser surpreendida negativamente?", wound: "Traição" },
-            { text: "Você prefere se isolar quando está passando por um problema?", wound: "Rejeição" }
+            { text: "Você sente uma necessidade constante de ser perfeita para ser aceita?", wound: "Injustiça" },
+            { text: "Você tem dificuldade em confiar nas pessoas e prefere controlar tudo sozinha?", wound: "Traição" },
+            { text: "Você se sente profundamente mal quando alguém te ignora ou exclui?", wound: "Rejeição" },
+            { text: "Você sente que precisa cuidar de todos, mas ninguém cuida de você?", wound: "Abandono" },
+            { text: "Você tem pavor de passar por situações onde se sinta exposta ou ridicularizada?", wound: "Humilhação" },
+            { text: "Você costuma ser muito rígida consigo mesma e com os outros?", wound: "Injustiça" },
+            { text: "Você prefere se isolar quando está sofrendo para não incomodar ninguém?", wound: "Rejeição" },
+            { text: "Você sente um vazio imenso quando está sozinha?", wound: "Abandono" },
+            { text: "Você se cobra excessivamente para ser uma mãe/profissional exemplar?", wound: "Humilhação" },
+            { text: "Você costuma duvidar das intenções das pessoas quando elas são gentis?", wound: "Traição" }
         ];
-
         const descriptions = {
-            "Rejeição": "Você tende a se anular e fugir de situações onde possa ser julgada. Com seus filhos, isso pode aparecer como uma dificuldade em se sentir 'boa o suficiente' como mãe.",
-            "Abandono": "Você tem medo da solidão e pode se tornar dependente emocionalmente. Na maternidade, isso pode gerar uma superproteção por medo de perder a conexão com os filhos.",
-            "Humilhação": "Você se coloca em segundo plano e carrega o peso do mundo. Pode sentir que precisa se sacrificar o tempo todo para ser uma 'boa mãe'.",
-            "Traição": "Você precisa estar no controle de tudo para se sentir segura. Isso pode gerar uma maternidade rígida e com dificuldade de delegar ou confiar nos outros.",
-            "Injustiça": "Você busca a perfeição e tem dificuldade em mostrar vulnerabilidade. Pode ser muito exigente consigo mesma e com o desempenho dos seus filhos."
+            "Rejeição": "A ferida da rejeição faz você querer se tornar invisível para não ser notada e, consequentemente, não ser rejeitada novamente.",
+            "Abandono": "Gera um medo constante de ficar sozinha, levando à dependência emocional ou à necessidade de atenção excessiva.",
+            "Humilhação": "Faz você carregar o peso do mundo nas costas, sentindo-se responsável pela felicidade de todos, menos a sua.",
+            "Traição": "Cria uma couraça de controle. Você acredita que se controlar tudo e todos, nunca mais será pega de surpresa ou enganada.",
+            "Injustiça": "Leva ao perfeccionismo extremo e à rigidez. Você acredita que só terá valor se for impecável em tudo o que faz."
         };
-
-        let currentQuestion = 0;
-        let answers = {};
-
-        function startQuiz( ) {
-            document.getElementById('introSection').classList.remove('active');
-            document.getElementById('quizSection').classList.add('active');
-            showQuestion();
-        }
-
+        let currentQuestion = 0; let answers = {};
+        function startQuiz( ) { document.getElementById('introSection').classList.remove('active'); document.getElementById('quizSection').classList.add('active'); showQuestion(); }
         function showQuestion() {
             const q = questions[currentQuestion];
             document.getElementById('questionNumber').innerText = `PERGUNTA ${currentQuestion + 1} DE ${questions.length}`;
             document.getElementById('questionText').innerText = q.text;
-            
-            const container = document.getElementById('optionsContainer');
-            container.innerHTML = '';
-            
+            const container = document.getElementById('optionsContainer'); container.innerHTML = '';
             ['Sim', 'Não'].forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = `option-btn ${answers[currentQuestion] === opt ? 'selected' : ''}`;
-                btn.innerText = opt;
-                btn.onclick = () => selectOption(opt);
+                btn.innerText = opt; btn.onclick = () => selectOption(opt);
                 container.appendChild(btn);
             });
-
             document.getElementById('prevBtn').disabled = currentQuestion === 0;
             document.getElementById('nextBtn').disabled = !answers[currentQuestion];
             updateProgress();
         }
-
-        function selectOption(opt) {
-            answers[currentQuestion] = opt;
-            showQuestion();
-        }
-
-        function nextQuestion() {
-            if (currentQuestion < questions.length - 1) {
-                currentQuestion++;
-                showQuestion();
-            } else {
-                showResult();
-            }
-        }
-
-        function previousQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion();
-            }
-        }
-
-        function updateProgress() {
-            const progress = ((currentQuestion + 1) / questions.length) * 100;
-            document.getElementById('progressFill').style.width = `${progress}%`;
-        }
-
+        function selectOption(opt) { answers[currentQuestion] = opt; showQuestion(); }
+        function nextQuestion() { if (currentQuestion < questions.length - 1) { currentQuestion++; showQuestion(); } else { showResult(); } }
+        function previousQuestion() { if (currentQuestion > 0) { currentQuestion--; showQuestion(); } }
+        function updateProgress() { const progress = ((currentQuestion + 1) / questions.length) * 100; document.getElementById('progressFill').style.width = `${progress}%`; }
         function showResult() {
-            const scores = {};
-            questions.forEach((q, i) => {
-                if (answers[i] === 'Sim') {
-                    scores[q.wound] = (scores[q.wound] || 0) + 1;
-                }
-            });
-
-            let maxScore = -1;
-            let finalResult = "Rejeição"; // Default
-            for (const wound in scores) {
-                if (scores[wound] > maxScore) {
-                    maxScore = scores[wound];
-                    finalResult = wound;
-                }
-            }
-
+            const scores = {}; questions.forEach((q, i) => { if (answers[i] === 'Sim') { scores[q.wound] = (scores[q.wound] || 0) + 1; } });
+            let maxScore = -1; let finalResult = "Rejeição";
+            for (const wound in scores) { if (scores[wound] > maxScore) { maxScore = scores[wound]; finalResult = wound; } }
             document.getElementById('quizSection').classList.remove('active');
             document.getElementById('resultSection').classList.add('active');
             document.getElementById('resultWound').innerText = finalResult;
