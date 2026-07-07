@@ -9,53 +9,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #bc8f8f;
-            --secondary-color: #722f37;
-            --bg-color: #fffaf9;
-            --text-color: #2c2c2c;
-            --accent-color: #e2b4b4;
+            --primary-color: #bc8f8f; --secondary-color: #722f37; --bg-color: #fffaf9;
+            --text-color: #2c2c2c; --accent-color: #e2b4b4;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #722f37 0%, #fffaf9 100% );
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            font-family: 'Montserrat', sans-serif; background: linear-gradient(135deg, #722f37 0%, #fffaf9 100% );
+            min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px;
         }
-
         .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            width: 100%;
-            max-width: 500px;
-            padding: 40px;
-            text-align: center;
+            background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            width: 100%; max-width: 500px; padding: 40px; text-align: center;
         }
-
         h1 { font-family: 'Lora', serif; color: var(--secondary-color); margin-bottom: 20px; font-size: 1.8rem; }
         p { color: #555; margin-bottom: 30px; line-height: 1.6; }
-
         .section { display: none; }
         .section.active { display: block; }
-
         .progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 4px; margin-bottom: 30px; overflow: hidden; }
         .progress-fill { width: 0%; height: 100%; background: var(--primary-color); transition: width 0.3s ease; }
-
         .option-btn {
             display: block; width: 100%; padding: 15px; margin-bottom: 12px;
             border: 2px solid #eee; border-radius: 12px; background: none;
             cursor: pointer; font-family: inherit; font-weight: 600; transition: all 0.2s;
         }
-
         .option-btn:hover { border-color: var(--primary-color); background: #fffaf9; }
         .option-btn.selected { background: var(--primary-color); color: white; border-color: var(--primary-color); }
-
         .nav-btns { display: flex; gap: 10px; margin-top: 20px; }
         .nav-btn {
             flex: 1; padding: 12px; border-radius: 10px; border: none;
@@ -64,33 +42,30 @@
         .btn-prev { background: #eee; color: #666; }
         .btn-next { background: var(--secondary-color); color: white; }
         .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
         .result-card { background: #fffaf9; padding: 25px; border-radius: 15px; border: 1px solid var(--accent-color); margin-bottom: 25px; }
         .result-style { font-size: 1.4rem; color: var(--secondary-color); font-weight: 700; margin-bottom: 10px; display: block; }
-        
-        .provocation { font-family: 'Lora', serif; font-style: italic; font-size: 1.05rem; color: #444; margin-bottom: 25px; line-height: 1.7; }
-        .provocation b { color: var(--secondary-color); }
-
+        .provocation { font-family: 'Lora', serif; font-size: 1.05rem; color: #444; margin-bottom: 25px; line-height: 1.7; text-align: left; }
         .cta-btn {
             display: block; width: 100%; padding: 18px; background: var(--secondary-color);
             color: white; text-decoration: none; border-radius: 12px; font-weight: 700;
             margin-bottom: 15px; transition: transform 0.2s;
         }
-        .cta-btn:hover { transform: scale(1.02); }
-        
+        .cta-btn-secondary {
+            display: block; width: 100%; padding: 18px; background: white;
+            color: var(--secondary-color); text-decoration: none; border-radius: 12px; font-weight: 700;
+            margin-bottom: 15px; border: 2px solid var(--secondary-color);
+        }
+        .cta-btn:hover, .cta-btn-secondary:hover { transform: scale(1.02); }
         .insta-link { color: var(--primary-color); text-decoration: none; font-weight: 600; border-bottom: 1px solid var(--accent-color); }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Intro -->
         <div id="introSection" class="section active">
             <h1>Teste de Estilo Parental</h1>
             <p>Descubra qual o seu estilo predominante de educar e como ele impacta o futuro do seu filho.</p>
             <button class="cta-btn" onclick="startQuiz()">Começar Teste</button>
         </div>
-
-        <!-- Quiz -->
         <div id="quizSection" class="section">
             <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
             <p id="questionNumber" style="font-size: 0.8rem; font-weight: 700; color: var(--primary-color); margin-bottom: 10px;"></p>
@@ -101,15 +76,12 @@
                 <button id="nextBtn" class="nav-btn btn-next" onclick="nextQuestion()">Próxima</button>
             </div>
         </div>
-
-        <!-- Result -->
         <div id="resultSection" class="section">
             <h1>Seu Resultado</h1>
             <div class="result-card">
                 <span class="result-style" id="resultStyle"></span>
                 <p id="resultDescription" style="margin-bottom: 0; font-size: 0.95rem;"></p>
             </div>
-            
             <div class="provocation">
                 Teu estilo predominante é o <b id="resultStyleName"></b>. 🤍  
   
@@ -125,15 +97,13 @@
 
                 Se for tua hora de olhar pra isso, preenche o formulário aqui que eu te recebo. ↓
             </div>
-
             <a href="https://forms.gle/WUZsBGUJfUd7d3kC7" class="cta-btn">👉 Agendar Diagnóstico Sistêmico</a>
-            
+            <a href="https://pay.kiwify.com.br/VjnRcLS" class="cta-btn-secondary">🎥 Quero entender melhor (Aula + Bônus )</a>
             <p style="font-size: 0.9rem; color: #777;">
                 Se tá só conhecendo teu estilo agora, me segue no <a href="https://www.instagram.com/andreiazanon__" class="insta-link">@andreiazanon__</a> que logo vou ter algo mais leve pra começar.
             </p>
         </div>
     </div>
-
     <script>
         const questions = [
             { text: "Você acredita que as crianças devem ser vistas e não ouvidas?", category: "Desaprovador" },
@@ -147,87 +117,37 @@
             { text: "Você explica o porquê das regras em vez de apenas dizer 'porque eu mandei'?", category: "Preparador Emocional" },
             { text: "Você frequentemente se sente culpada por não saber como lidar com as birras?", category: "Laissez-Faire" }
         ];
-
         const descriptions = {
             "Simplista": "Você tende a minimizar as emoções negativas, querendo que o filho saia logo daquele estado. Isso pode fazer com que a criança sinta que suas emoções não são importantes.",
             "Desaprovador": "Você é rigorosa com o comportamento e tende a julgar as emoções. Isso pode criar filhos obedientes, mas com baixa autoestima e medo de errar.",
             "Laissez-Faire": "Você é muito afetuosa e aceita todas as emoções, mas tem dificuldade em dar limites. Isso pode deixar a criança insegura por falta de uma estrutura clara.",
             "Preparador Emocional": "Você usa os momentos de crise como oportunidade de conexão e ensino. Você valida a emoção, mas orienta o comportamento, criando filhos emocionalmente inteligentes."
         };
-
-        let currentQuestion = 0;
-        let answers = {};
-
-        function startQuiz( ) {
-            document.getElementById('introSection').classList.remove('active');
-            document.getElementById('quizSection').classList.add('active');
-            showQuestion();
-        }
-
+        let currentQuestion = 0; let answers = {};
+        function startQuiz( ) { document.getElementById('introSection').classList.remove('active'); document.getElementById('quizSection').classList.add('active'); showQuestion(); }
         function showQuestion() {
             const q = questions[currentQuestion];
             document.getElementById('questionNumber').innerText = `PERGUNTA ${currentQuestion + 1} DE ${questions.length}`;
             document.getElementById('questionText').innerText = q.text;
-            
-            const container = document.getElementById('optionsContainer');
-            container.innerHTML = '';
-            
+            const container = document.getElementById('optionsContainer'); container.innerHTML = '';
             ['Verdadeiro', 'Falso'].forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = `option-btn ${answers[currentQuestion] === opt ? 'selected' : ''}`;
-                btn.innerText = opt;
-                btn.onclick = () => selectOption(opt);
+                btn.innerText = opt; btn.onclick = () => selectOption(opt);
                 container.appendChild(btn);
             });
-
             document.getElementById('prevBtn').disabled = currentQuestion === 0;
             document.getElementById('nextBtn').disabled = !answers[currentQuestion];
             updateProgress();
         }
-
-        function selectOption(opt) {
-            answers[currentQuestion] = opt;
-            showQuestion();
-        }
-
-        function nextQuestion() {
-            if (currentQuestion < questions.length - 1) {
-                currentQuestion++;
-                showQuestion();
-            } else {
-                showResult();
-            }
-        }
-
-        function previousQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion();
-            }
-        }
-
-        function updateProgress() {
-            const progress = ((currentQuestion + 1) / questions.length) * 100;
-            document.getElementById('progressFill').style.width = `${progress}%`;
-        }
-
+        function selectOption(opt) { answers[currentQuestion] = opt; showQuestion(); }
+        function nextQuestion() { if (currentQuestion < questions.length - 1) { currentQuestion++; showQuestion(); } else { showResult(); } }
+        function previousQuestion() { if (currentQuestion > 0) { currentQuestion--; showQuestion(); } }
+        function updateProgress() { const progress = ((currentQuestion + 1) / questions.length) * 100; document.getElementById('progressFill').style.width = `${progress}%`; }
         function showResult() {
-            const scores = {};
-            questions.forEach((q, i) => {
-                if (answers[i] === 'Verdadeiro') {
-                    scores[q.category] = (scores[q.category] || 0) + 1;
-                }
-            });
-
-            let maxScore = -1;
-            let finalResult = "Preparador Emocional"; // Default
-            for (const cat in scores) {
-                if (scores[cat] > maxScore) {
-                    maxScore = scores[cat];
-                    finalResult = cat;
-                }
-            }
-
+            const scores = {}; questions.forEach((q, i) => { if (answers[i] === 'Verdadeiro') { scores[q.category] = (scores[q.category] || 0) + 1; } });
+            let maxScore = -1; let finalResult = "Preparador Emocional";
+            for (const cat in scores) { if (scores[cat] > maxScore) { maxScore = scores[cat]; finalResult = cat; } }
             document.getElementById('quizSection').classList.remove('active');
             document.getElementById('resultSection').classList.add('active');
             document.getElementById('resultStyle').innerText = finalResult;
