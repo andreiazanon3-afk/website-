@@ -98,7 +98,7 @@
                 Se for tua hora de olhar pra isso, preenche o formulário aqui que eu te recebo. ↓
             </div>
             <a href="https://forms.gle/WUZsBGUJfUd7d3kC7" class="cta-btn">👉 Agendar Diagnóstico Sistêmico</a>
-            <a href="https://pay.kiwify.com.br/VjnRcLS" class="cta-btn-secondary">🎥 Quero entender melhor (Aula + Bônus )</a>
+            <a href="aula.html" class="cta-btn-secondary">🎥 Quero entender melhor (Aula + Bônus )</a>
             <p style="font-size: 0.9rem; color: #777;">
                 Se tá só conhecendo teu estilo agora, me segue no <a href="https://www.instagram.com/andreiazanon__" class="insta-link">@andreiazanon__</a> que logo vou ter algo mais leve pra começar.
             </p>
@@ -143,10 +143,10 @@
         function selectOption(opt) { answers[currentQuestion] = opt; showQuestion(); }
         function nextQuestion() { if (currentQuestion < questions.length - 1) { currentQuestion++; showQuestion(); } else { showResult(); } }
         function previousQuestion() { if (currentQuestion > 0) { currentQuestion--; showQuestion(); } }
-        function updateProgress() { const progress = ((currentQuestion + 1) / questions.length) * 100; document.getElementById('progressFill').style.width = `${progress}%`; }
+        function updateProgress() { const progress = ((currentQuestion + 1) / questions.length) * 100; document.getElementById('progressFill').style.width = \`\${progress}%\`; }
         function showResult() {
             const scores = {}; questions.forEach((q, i) => { if (answers[i] === 'Verdadeiro') { scores[q.category] = (scores[q.category] || 0) + 1; } });
-            let maxScore = -1; let finalResult = "Preparador Emocional";
+            let maxScore = -1; let finalResult = \"Preparador Emocional\";
             for (const cat in scores) { if (scores[cat] > maxScore) { maxScore = scores[cat]; finalResult = cat; } }
             document.getElementById('quizSection').classList.remove('active');
             document.getElementById('resultSection').classList.add('active');
