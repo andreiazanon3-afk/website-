@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O Ciclo da Exaustão Materna · Andréia Zanon</title>
+<style>
+  :root{
+    --vinho:#481010;--vinho-soft:#5c2020;--petroleo:#1C3A48;
+    --nude:#D2B9A2;--creme:#F2EDE4;--preto:#0E0A08;--linha:#e0d2c2;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--creme);color:var(--preto);line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:720px;margin:0 auto;padding:0 26px}
+  .eyebrow{font-family:'Helvetica Neue',Arial,sans-serif;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--vinho-soft);font-weight:600}
+  .cta{display:inline-block;font-family:'Helvetica Neue',Arial,sans-serif;background:var(--nude);color:var(--vinho);text-decoration:none;font-weight:600;font-size:16px;padding:17px 32px;border-radius:2px;transition:transform .15s ease,background .15s ease}
+  .cta:hover{background:#e2cdb6;transform:translateY(-1px)}
+  .cta.dark{background:var(--vinho);color:var(--creme)}
+  .cta.dark:hover{background:var(--vinho-soft)}
+  .price-line{font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;color:#6b5749;margin-top:12px}
+
+  .hero{background:var(--vinho);color:var(--creme);padding:76px 0 68px}
+  .hero .eyebrow{color:var(--nude)}
+  .hero h1{font-size:38px;line-height:1.2;font-weight:normal;margin:20px 0 18px;letter-spacing:-.01em}
+  .hero h1 em{font-style:italic;color:var(--nude)}
+  .hero p.sub{font-size:18px;color:#e8ddd0;max-width:560px;margin-bottom:32px}
+  .hero .price-line{color:#c9b9a8;font-style:italic;font-family:Georgia,serif}
+
+  section{padding:62px 0}
+  h2{font-size:28px;font-weight:normal;color:var(--vinho);letter-spacing:-.01em;margin-bottom:10px}
+  .intro{color:#514237;font-size:17px;margin-bottom:34px;max-width:580px}
+
+  .check{display:flex;gap:18px;padding:22px 0;border-top:1px solid var(--linha);align-items:flex-start}
+  .check:last-of-type{border-bottom:1px solid var(--linha)}
+  .check .dot{min-width:9px;height:9px;background:var(--nude);border-radius:50%;margin-top:11px}
+  .check p{font-size:17px;color:#3d3129}
+
+  .ciclo{background:#ece3d6}
+  .loop{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--linha);border:1px solid var(--linha);margin-top:6px}
+  .loop div{background:var(--creme);padding:24px 20px}
+  .loop .n{font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;letter-spacing:.18em;color:var(--vinho-soft);font-weight:600;text-transform:uppercase;margin-bottom:7px}
+  .loop h3{font-size:19px;font-weight:normal;color:var(--vinho);margin-bottom:6px}
+  .loop p{font-size:15px;color:#5a4a3d;line-height:1.55}
+  .ciclo .fecho{margin-top:26px;font-size:18px;color:var(--vinho);font-style:italic;max-width:560px}
+
+  /* AUTORIDADE */
+  .sobre{background:var(--creme)}
+  .sobre .grid{display:grid;grid-template-columns:280px 1fr;gap:38px;align-items:center}
+  .sobre img{width:100%;border-radius:4px;display:block}
+  .sobre h2{margin-bottom:16px}
+  .sobre p{font-size:17px;color:#3d3129;margin-bottom:14px}
+  .sobre p:last-child{margin-bottom:0}
+  .sobre .assina{font-style:italic;color:var(--vinho-soft)}
+
+  .naoe{background:var(--petroleo);color:var(--creme)}
+  .naoe h2{color:var(--nude)}
+  .naoe .intro{color:#cdd8dd}
+  .naoe ul{list-style:none;max-width:600px}
+  .naoe li{padding:13px 0 13px 26px;position:relative;border-top:1px solid rgba(210,185,162,.18);font-size:16px;color:#e4ebee}
+  .naoe li::before{content:"";position:absolute;left:0;top:21px;width:11px;height:1.5px;background:var(--nude)}
+  .naoe .fecho{margin-top:26px;font-size:18px;font-style:italic;color:var(--nude);max-width:560px}
+
+  .oferta{text-align:center}
+  .card{background:var(--vinho);color:var(--creme);border-radius:4px;padding:46px 34px;margin-top:10px;text-align:left}
+  .card .eyebrow{color:var(--nude)}
+  .card h3{font-size:28px;font-weight:normal;margin:12px 0 4px}
+  .card .tag{color:#e8ddd0;font-style:italic;font-size:17px;margin-bottom:28px}
+  .card ul{list-style:none;margin-bottom:30px}
+  .card li{padding:12px 0 12px 28px;position:relative;border-bottom:1px solid rgba(210,185,162,.22);font-size:16px;color:#efe6da}
+  .card li:last-child{border-bottom:none}
+  .card li::before{content:"";position:absolute;left:3px;top:20px;width:8px;height:8px;background:var(--nude);border-radius:50%}
+  .card li strong{color:#fff;font-weight:normal;display:block;font-size:17px}
+  .valor{font-family:'Helvetica Neue',Arial,sans-serif;text-align:center;margin-bottom:26px}
+  .valor .v{font-size:40px;color:#fff;font-weight:600}
+  .valor .nota{display:block;font-size:13px;color:#c9b9a8;margin-top:6px;font-family:Georgia,serif;font-style:italic}
+  .card .btnwrap{text-align:center}
+
+  /* DEPOIMENTOS */
+  .depo{background:#ece3d6}
+  .depo .quote{background:var(--creme);border-left:3px solid var(--nude);padding:24px 26px;margin-bottom:16px;border-radius:0 4px 4px 0}
+  .depo .quote p{font-size:16px;color:#3d3129;font-style:italic;margin-bottom:10px;line-height:1.6}
+  .depo .quote .nome{font-family:'Helvetica Neue',Arial,sans-serif;font-style:normal;font-size:13px;letter-spacing:.05em;color:var(--vinho-soft);font-weight:600}
+
+  .quem ul{list-style:none;max-width:600px}
+  .quem li{padding:13px 0 13px 26px;position:relative;border-top:1px solid var(--linha);font-size:17px;color:#3d3129}
+  .quem li::before{content:"";position:absolute;left:0;top:21px;width:11px;height:1.5px;background:var(--vinho)}
+
+  .final{text-align:center;padding:70px 0}
+  .final h2{font-size:29px;max-width:520px;margin:0 auto 12px;line-height:1.28}
+  .final h2 em{font-style:italic;color:var(--petroleo)}
+  .final p{color:#5a4a3d;margin-bottom:28px;font-size:17px}
+  .final .jornada{max-width:520px;margin:0 auto 30px;font-size:17px;color:#3d3129;font-style:italic}
+
+  footer{background:var(--vinho);color:var(--nude);text-align:center;padding:28px 0;font-family:'Helvetica Neue',Arial,sans-serif;font-size:13px;letter-spacing:.04em}
+  footer .h{color:var(--creme);display:block;margin-bottom:5px;font-size:15px}
+
+  @media(max-width:640px){
+    .hero{padding:58px 0 52px}.hero h1{font-size:30px}
+    section{padding:50px 0}h2,.final h2{font-size:25px}
+    .loop{grid-template-columns:1fr}.card{padding:36px 22px}
+    .sobre .grid{grid-template-columns:1fr;gap:24px}
+    .sobre img{max-width:280px;margin:0 auto}
+  }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Aula gravada · cerca de 20 minutos</span>
+      <h1>Tu dorme oito horas<br><em>e acorda cansada do mesmo jeito</em></h1>
+      <p class="sub">Porque não é sono que te falta. Nesta aula eu te mostro o ciclo que te esgota, de onde ele vem, e te dou uma ferramenta de 3 minutos pra usar na próxima vez que a tensão subir</p>
+      <a class="cta" href="#" data-buy>Quero assistir agora ↓</a>
+      <p class="price-line">R$47, acesso imediato e pra sempre</p>
+    </div>
+  </header>
+
+  <section class="reconhece">
+    <div class="wrap">
+      <span class="eyebrow">Talvez tu já tenha percebido</span>
+      <h2>Não é sobre organizar melhor o dia</h2>
+      <p class="intro">É sobre uma coisa que continua acontecendo mesmo quando o dia já está organizado. Vê se tu se reconhece</p>
+      <div class="check"><span class="dot"></span><p>Tu grita, se arrepende, promete que amanhã vai ser diferente, e amanhã repete</p></div>
+      <div class="check"><span class="dot"></span><p>Tu já tentou planner, respiração, contar até dez, aplicativo de rotina. Ajudou um pouco e voltou tudo</p></div>
+      <div class="check"><span class="dot"></span><p>Tu chora escondida depois de brigar e acha que está marcando teu filho</p></div>
+      <div class="check"><span class="dot"></span><p>Tu se pega fazendo com teu filho exatamente o que tu jurou que nunca faria</p></div>
+    </div>
+  </section>
+
+  <section class="ciclo">
+    <div class="wrap">
+      <span class="eyebrow">O que tu vai enxergar</span>
+      <h2>O ciclo tem três partes</h2>
+      <p class="intro">E elas não são coisas separadas. É o mesmo movimento se repetindo, e ele roda sozinho até alguém enxergar ele por inteiro</p>
+      <div class="loop">
+        <div><div class="n">Primeiro</div><h3>A exaustão que ninguém vê</h3><p>Tu segura tudo calada, faz o que precisa, e por dentro já está no limite. Ninguém percebe. Às vezes nem tu</p></div>
+        <div><div class="n">Depois</div><h3>A explosão que te assusta</h3><p>O grito, a resposta seca. Aquele momento em que tu se assusta contigo, porque não parecia que ia sair assim</p></div>
+        <div><div class="n">E então</div><h3>A culpa que alimenta</h3><p>Eu sou uma mãe horrível. E a culpa não te protege da próxima explosão. Ela gasta a energia que te recuperaria</p></div>
+      </div>
+      <p class="fecho">Isso não é falha de caráter. É um ciclo. E ciclo se quebra na raiz, não no meio</p>
+    </div>
+  </section>
+
+  <section class="sobre">
+    <div class="wrap">
+      <div class="grid">
+        <img src="andreia.jpg" alt="Andréia Zanon">
+        <div>
+          <span class="eyebrow">Quem te leva por esse caminho</span>
+          <h2>Eu sou a Andréia Zanon</h2>
+          <p>Sou terapeuta sistêmica e mentora emocional materna. E eu não trabalho com esse ciclo por teoria. Eu vivi ele.</p>
+          <p>Trabalho com mães que estão exaustas, que explodem com os filhos e depois se afogam na culpa. Essa aula existe porque eu encontrei a saída, e o que eu te mostro aqui é o primeiro passo dela.</p>
+          <p class="assina">A mulher que enxerga o padrão é a que pode escolher outro caminho</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="naoe">
+    <div class="wrap">
+      <span class="eyebrow">Sejamos honestas</span>
+      <h2>O que esta aula não é</h2>
+      <p class="intro">Prefiro te dizer isso agora do que tu descobrir depois de pagar</p>
+      <ul>
+        <li>Não é aula de organização. Rotina organiza o dia, não toca a raiz</li>
+        <li>Não vai te dizer que está tudo bem e que a culpa é do mundo</li>
+        <li>Não é uma sessão. Ir até a origem de verdade precisa de tempo e escuta ao vivo, e isso é o próximo passo</li>
+        <li>Não te promete que tu nunca mais vai gritar. Te dá uma rota de volta quando acontecer</li>
+      </ul>
+      <p class="fecho">É onde tu enxerga o ciclo pela primeira vez e sai com algo na mão pra usar hoje</p>
+    </div>
+  </section>
+
+  <section class="oferta" id="comprar">
+    <div class="wrap">
+      <span class="eyebrow">O que tu leva</span>
+      <h2>O Ciclo da Exaustão Materna</h2>
+      <div class="card">
+        <span class="eyebrow">Aula gravada</span>
+        <h3>20 minutos que mudam o que tu enxerga</h3>
+        <p class="tag">Mais o Reset Emocional Materno de bônus</p>
+        <ul>
+          <li><strong>Por que o sono não cura esse cansaço</strong>O peso que tu carrega não é tarefa. É herança, e descanso físico não alcança</li>
+          <li><strong>O ciclo inteiro, na tua frente</strong>Exaustão, explosão, culpa. Como um alimenta o outro e por onde ele se rompe</li>
+          <li><strong>De quem tu aprendeu a se anular</strong>A raiz que atravessa gerações. Tu não escolheu essa estrada, ela te foi entregue</li>
+          <li><strong>Por que planner e respiração não resolvem</strong>Remendar o pneu sem achar o prego. Vai furar de novo</li>
+          <li><strong>Bônus: Reset Emocional Materno</strong>Três passos, três minutos, pra usar quando tu sentir a tensão subindo. Nomeia o gatilho, respira e lembra do vínculo, faz um microgesto de reconexão</li>
+        </ul>
+        <div class="valor"><span class="v">R$47</span><span class="nota">Acesso imediato e pra sempre. Assiste quantas vezes quiser</span></div>
+        <div class="btnwrap"><a class="cta" href="#" data-buy>Quero assistir agora ↓</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="depo">
+    <div class="wrap">
+      <span class="eyebrow">Mães que já caminharam comigo</span>
+      <h2>O que muda depois</h2>
+      <p class="intro">São falas de mulheres que já fizeram esse trabalho comigo, cada uma no seu momento</p>
+
+      <div class="quote">
+        <p>Me acolheu sem julgamentos, me ouviu, e foi me conduzindo a me redescobrir. Aprendi a me priorizar e o benefício que isso traz pra nós mulheres com tantos papéis na vida</p>
+        <span class="nome">Josana</span>
+      </div>
+      <div class="quote">
+        <p>Sou uma mãe totalmente diferente. Antes era ação x reação. Agora é ação x respiração x pensar x agir</p>
+        <span class="nome">Angélica</span>
+      </div>
+      <div class="quote">
+        <p>Consegui enxergar qualidades minhas que eu já não lembrava mais, de onde vieram e como uso a meu favor. Me senti viva, não somente existindo</p>
+        <span class="nome">Queli</span>
+      </div>
+      <div class="quote">
+        <p>Inteligência emocional faz toda diferença pra um maternar com consciência e o mínimo de traumas. Como tu diz, um caminho sem volta</p>
+        <span class="nome">Jeysa</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="quem">
+    <div class="wrap">
+      <span class="eyebrow">Pra quem é</span>
+      <h2>Esta aula é pra ti se</h2>
+      <p class="intro">Ela não é pra toda mãe. É pra um tipo específico de mulher</p>
+      <ul>
+        <li>Tu já sabe o que precisa mudar e mesmo assim não consegue soltar</li>
+        <li>Tu não tem medo de olhar pra tua própria história pra entender a de hoje</li>
+        <li>Tu quer parar de repetir com teu filho o que viveu com a tua mãe</li>
+        <li>Tu está cansada de solução que organiza o de fora e não muda nada por dentro</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <h2>O padrão não começou em ti<br><em>mas pode terminar aqui</em></h2>
+      <p class="jornada">Esta aula é a primeira esquina de uma estrada. Tu assiste, enxerga o ciclo, e sai com o Reset na mão. Se fizer sentido pra ti, o caminho continua, e eu te mostro o próximo passo lá dentro</p>
+      <a class="cta dark" href="#" data-buy>Assistir por R$47 ↓</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span class="h">@andreiazanon__</span>
+      Andréia Zanon · Mentora emocional materna · Método MAPA
+    </div>
+  </footer>
+
+<script>
+  var KIWIFY = "https://pay.kiwify.com.br/VjnRcLS";
+  document.querySelectorAll('[data-buy]').forEach(function(a){ a.href = KIWIFY; });
+</script>
+</body>
+</html>
