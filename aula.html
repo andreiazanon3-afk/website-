@@ -63,8 +63,17 @@
   .loop p{font-size:15px;color:#5a4a3d;line-height:1.55}
   .ciclo .fecho{margin-top:26px;font-size:18px;color:var(--vinho);font-style:italic;max-width:560px}
 
+  /* GATILHOS */
+  .gatilhos{background:var(--creme)}
+  .gat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--linha);border:1px solid var(--linha);margin-top:6px}
+  .gat-grid div{background:#fff;padding:26px 22px}
+  .gat-grid .n{font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;letter-spacing:.18em;color:var(--vinho-soft);font-weight:600;text-transform:uppercase;margin-bottom:7px}
+  .gat-grid h3{font-size:18px;font-weight:normal;color:var(--vinho);margin-bottom:6px}
+  .gat-grid p{font-size:15px;color:#5a4a3d;line-height:1.55}
+  .gatilhos .fecho{margin-top:26px;font-size:18px;color:var(--vinho);font-style:italic;max-width:580px}
+
   /* AUTORIDADE */
-  .sobre{background:var(--creme)}
+  .sobre{background:#ece3d6}
   .sobre .grid{display:grid;grid-template-columns:280px 1fr;gap:38px;align-items:center}
   .sobre img{width:100%;border-radius:4px;display:block}
   .sobre h2{margin-bottom:16px}
@@ -73,7 +82,8 @@
   .sobre .assina{font-style:italic;color:var(--vinho-soft)}
 
   .naoe{background:var(--petroleo);color:var(--creme)}
-  .naoe h2{color:var(--nude)}
+  .naoe .eyebrow{color:var(--nude)}
+  .naoe h2{color:#fff}
   .naoe .intro{color:#cdd8dd}
   .naoe ul{list-style:none;max-width:600px}
   .naoe li{padding:13px 0 13px 26px;position:relative;border-top:1px solid rgba(210,185,162,.18);font-size:16px;color:#e4ebee}
@@ -96,11 +106,12 @@
   .card .btnwrap{text-align:center}
 
   /* DEPOIMENTOS */
-  .depo{background:#ece3d6}
-  .depo .quote{background:var(--creme);border-left:3px solid var(--nude);padding:24px 26px;margin-bottom:16px;border-radius:0 4px 4px 0}
+  .depo{background:var(--creme)}
+  .depo .quote{background:#fff;border-left:3px solid var(--nude);padding:24px 26px;margin-bottom:16px;border-radius:0 4px 4px 0}
   .depo .quote p{font-size:16px;color:#3d3129;font-style:italic;margin-bottom:10px;line-height:1.6}
   .depo .quote .nome{font-family:'Helvetica Neue',Arial,sans-serif;font-style:normal;font-size:13px;letter-spacing:.05em;color:var(--vinho-soft);font-weight:600}
 
+  .quem{background:#ece3d6}
   .quem ul{list-style:none;max-width:600px}
   .quem li{padding:13px 0 13px 26px;position:relative;border-top:1px solid var(--linha);font-size:17px;color:#3d3129}
   .quem li::before{content:"";position:absolute;left:0;top:21px;width:11px;height:1.5px;background:var(--vinho)}
@@ -117,7 +128,7 @@
   @media(max-width:640px){
     .hero{padding:58px 0 52px}.hero h1{font-size:30px}
     section{padding:50px 0}h2,.final h2{font-size:25px}
-    .loop{grid-template-columns:1fr}.card{padding:36px 22px}
+    .loop,.gat-grid{grid-template-columns:1fr}.card{padding:36px 22px}
     .sobre .grid{grid-template-columns:1fr;gap:24px}
     .sobre img{max-width:280px;margin:0 auto}
   }
@@ -129,7 +140,7 @@
     <div class="wrap">
       <span class="eyebrow">Aula gravada · cerca de 20 minutos</span>
       <h1>Tu dorme oito horas<br><em>e acorda cansada do mesmo jeito</em></h1>
-      <p class="sub">Porque não é sono que te falta. Nesta aula eu te mostro o ciclo que te esgota, de onde ele vem, e te dou uma ferramenta de 3 minutos pra usar na próxima vez que a tensão subir</p>
+      <p class="sub">Porque não é sono que te falta. Nesta aula eu te mostro o ciclo que te esgota, de onde ele vem, e te entrego uma ferramenta de 3 minutos pra usar toda vez que a tensão subir. É o primeiro passo pra tu sair do ciclo de explodir e se culpar</p>
       <a class="cta" href="#" data-buy>Quero assistir agora ↓</a>
       <p class="price-line">R$47, acesso imediato e pra sempre</p>
     </div>
@@ -138,8 +149,8 @@
   <section class="reconhece">
     <div class="wrap">
       <span class="eyebrow">Talvez tu já tenha percebido</span>
-      <h2>Não é sobre organizar melhor o dia</h2>
-      <p class="intro">É sobre uma coisa que continua acontecendo mesmo quando o dia já está organizado. Vê se tu se reconhece</p>
+      <h2>O dia já está organizado. E mesmo assim</h2>
+      <p class="intro">Tem uma coisa que continua acontecendo depois que a lista do dia já foi cumprida. Vê se tu se reconhece</p>
       <div class="check"><span class="dot"></span><p>Tu grita, se arrepende, promete que amanhã vai ser diferente, e amanhã repete</p></div>
       <div class="check"><span class="dot"></span><p>Tu já tentou planner, respiração, contar até dez, aplicativo de rotina. Ajudou um pouco e voltou tudo</p></div>
       <div class="check"><span class="dot"></span><p>Tu chora escondida depois de brigar e acha que está marcando teu filho</p></div>
@@ -158,6 +169,20 @@
         <div><div class="n">E então</div><h3>A culpa que alimenta</h3><p>Eu sou uma mãe horrível. E a culpa não te protege da próxima explosão. Ela gasta a energia que te recuperaria</p></div>
       </div>
       <p class="fecho">Isso não é falha de caráter. É um ciclo. E ciclo se quebra na raiz, não no meio</p>
+    </div>
+  </section>
+
+  <section class="gatilhos">
+    <div class="wrap">
+      <span class="eyebrow">O que a aula desativa</span>
+      <h2>O grito não começa no grito</h2>
+      <p class="intro">Antes de tu explodir, três gatilhos já dispararam por baixo, sem tu perceber. A aula te mostra cada um deles, e te dá como interromper antes que o sistema todo pegue fogo</p>
+      <div class="gat-grid">
+        <div><div class="n">Gatilho 1</div><h3>O Ciclo da Culpa</h3><p>Tu grita, se culpa, e a culpa te deixa mais no limite pra próxima. O que devia te frear é o que te empurra</p></div>
+        <div><div class="n">Gatilho 2</div><h3>O Espelho Emocional</h3><p>Teu filho reflete o que tu carrega. O que dispara em ti não veio dele, mas acaba caindo sobre ele</p></div>
+        <div><div class="n">Gatilho 3</div><h3>A Mãe Perfeita</h3><p>A imagem impossível que tu tenta ser gasta tua energia antes mesmo do dia começar</p></div>
+      </div>
+      <p class="fecho">Não é força de vontade. É interrupção estratégica. Tu aprende a reconhecer o primeiro sinal de tensão e reiniciar o sistema em 3 minutos, antes do grito sair</p>
     </div>
   </section>
 
@@ -185,7 +210,7 @@
         <li>Não é aula de organização. Rotina organiza o dia, não toca a raiz</li>
         <li>Não vai te dizer que está tudo bem e que a culpa é do mundo</li>
         <li>Não é uma sessão. Ir até a origem de verdade precisa de tempo e escuta ao vivo, e isso é o próximo passo</li>
-        <li>Não te promete que tu nunca mais vai gritar. Te dá uma rota de volta quando acontecer</li>
+        <li>Não te promete que tu nunca mais vai gritar. Te dá uma ferramenta pra usar quando a tensão subir</li>
       </ul>
       <p class="fecho">É onde tu enxerga o ciclo pela primeira vez e sai com algo na mão pra usar hoje</p>
     </div>
@@ -201,10 +226,10 @@
         <p class="tag">Mais o Reset Emocional Materno de bônus</p>
         <ul>
           <li><strong>Por que o sono não cura esse cansaço</strong>O peso que tu carrega não é tarefa. É herança, e descanso físico não alcança</li>
-          <li><strong>O ciclo inteiro, na tua frente</strong>Exaustão, explosão, culpa. Como um alimenta o outro e por onde ele se rompe</li>
+          <li><strong>Os três gatilhos que fazem tu gritar</strong>O Ciclo da Culpa, o Espelho Emocional e a Mãe Perfeita. Como cada um dispara antes do grito, e por onde interromper</li>
           <li><strong>De quem tu aprendeu a se anular</strong>A raiz que atravessa gerações. Tu não escolheu essa estrada, ela te foi entregue</li>
           <li><strong>Por que planner e respiração não resolvem</strong>Remendar o pneu sem achar o prego. Vai furar de novo</li>
-          <li><strong>Bônus: Reset Emocional Materno</strong>Três passos, três minutos, pra usar quando tu sentir a tensão subindo. Nomeia o gatilho, respira e lembra do vínculo, faz um microgesto de reconexão</li>
+          <li><strong>Bônus: Reset Emocional Materno</strong>Teu repertório de 3 minutos pra usar toda vez que a tensão subir, quantas vezes o dia pedir. Reconhece o primeiro sinal, reinicia o sistema, reconecta. É a porta pra tu ver a primeira camada por baixo do grito</li>
         </ul>
         <div class="valor"><span class="v">R$47</span><span class="nota">Acesso imediato e pra sempre. Assiste quantas vezes quiser</span></div>
         <div class="btnwrap"><a class="cta" href="#" data-buy>Quero assistir agora ↓</a></div>
