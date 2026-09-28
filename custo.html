@@ -241,6 +241,22 @@ footer{padding:30px 0;font-size:.87rem;color:var(--muted);background:var(--bg)}
   .statement,.balance,.learn,.who,.proof,.offer,.about,.faq,.final{padding-top:76px;padding-bottom:70px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* ===== CICLO ===== */
+.hero-kick{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:1.22rem;line-height:1.4;color:var(--muted);margin-bottom:22px;max-width:30ch}
+.cycle{background:var(--bg);padding:56px 0 50px}
+.cycle .lbl{font-size:12.5px;letter-spacing:.2em;color:var(--nude);font-weight:600;margin-bottom:8px}
+.cycle h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(2rem,8.5vw,2.8rem);line-height:1;letter-spacing:-.02em;color:var(--vinho);margin-bottom:28px}
+.steps{position:relative;padding-left:30px}
+.steps:before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:1px;background:var(--line)}
+.step{position:relative;padding:0 0 26px}
+.step:before{content:"";position:absolute;left:-27px;top:7px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--vinho)}
+.step .n{font-size:12px;letter-spacing:.18em;color:var(--nude);font-weight:600;text-transform:uppercase}
+.step h3{font-family:'Playfair Display',serif;font-size:1.3rem;line-height:1.25;color:var(--fg);margin:2px 0 6px}
+.step p{color:var(--muted);font-size:1.01rem;max-width:44ch}
+.step.back:before{background:var(--vinho)}
+.turn{margin-top:14px;border-top:1px solid var(--line);padding-top:26px;font-size:1.2rem;line-height:1.45;max-width:32ch}
+.turn b{display:block;color:var(--vinho);font-family:'Playfair Display',serif;font-size:1.45rem;line-height:1.25;margin-top:10px}
 </style>
 </head>
 <body>
@@ -248,12 +264,38 @@ footer{padding:30px 0;font-size:.87rem;color:var(--muted);background:var(--bg)}
 <header class="hero">
   <div class="w">
     <div class="eyebrow">AULA GRAVADA COM ANDRÉIA ZANON</div>
+    <p class="hero-kick">Tu grita, se arrepende, jura que amanhã vai ser diferente. E amanhã acontece de novo.</p>
     <h1 class="display">O CUSTO<br><span class="l2">POR DAR CONTA</span></h1>
     <div class="hero-rule"></div>
-    <p class="hero-sub">Tua agenda mostra o que tu fez. <b>Teu saldo mostra o que isso te custou.</b></p>
+    <p class="hero-sub">O ciclo não começa no grito. <b>Começa em tudo que tu carrega sozinha.</b></p>
     <div class="hero-when">Aula gravada · acesso para sempre</div>
   </div>
 </header>
+
+<section class="cycle">
+  <div class="w">
+    <div class="lbl">O CICLO QUE TE ESGOTA</div>
+    <h2>Ele gira em três tempos. E sempre volta ao começo.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="n">Primeiro</div>
+        <h3>Tu aguenta calada</h3>
+        <p>Resolve, lembra, antecipa, segura. Por fora parece que está tudo sob controle. Por dentro, o tanque já está na reserva.</p>
+      </div>
+      <div class="step">
+        <div class="n">Depois</div>
+        <h3>Tu explode por pouco</h3>
+        <p>Um copo derramado, uma birra, um pedido a mais. E sai uma versão tua que te assusta.</p>
+      </div>
+      <div class="step back">
+        <div class="n">E então</div>
+        <h3>A culpa fecha a conta</h3>
+        <p>Tu te chama de mãe horrível e promete fazer melhor. Só que a culpa não te devolve energia. Ela tira o pouco que sobrou, e o ciclo recomeça.</p>
+      </div>
+    </div>
+    <p class="turn">Todo mundo tenta quebrar o ciclo no meio, controlando o grito.<b>A raiz está antes. No que tu carrega sem ninguém ver.</b></p>
+  </div>
+</section>
 
 <section class="statement">
   <div class="w">
@@ -269,7 +311,7 @@ footer{padding:30px 0;font-size:.87rem;color:var(--muted);background:var(--bg)}
       <div class="row"><span class="sign">−</span><span>Pedir ajuda e ainda explicar como se faz</span></div>
       <div class="row"><span class="sign">−</span><span>Carregar mentalmente o que ainda não foi feito</span></div>
     </div>
-    <p class="stmt-foot">Não ocupam horário.<b>Mas consomem saldo.</b></p>
+    <p class="stmt-foot">Não ocupam horário.<b>Mas consomem saldo. E quando o saldo zera, a explosão é a conta chegando.</b></p>
   </div>
 </section>
 
@@ -285,6 +327,10 @@ footer{padding:30px 0;font-size:.87rem;color:var(--muted);background:var(--bg)}
     <h2 class="sec-h">O que tu vai enxergar nessa aula</h2>
     <p class="lead">Não é uma aula para te ensinar a encaixar mais coisas na rotina. É para entender o que está te colocando nesse lugar, e por onde começar a reorganizar.</p>
 
+    <div class="point">
+      <h3>Por que o ciclo sempre volta</h3>
+      <p>O que acontece antes do grito, e por que prometer que não vai mais gritar nunca funcionou.</p>
+    </div>
     <div class="point">
       <h3>O que é realmente teu</h3>
       <p>E o que tu assumiu ao longo do caminho sem ninguém ter pedido.</p>
