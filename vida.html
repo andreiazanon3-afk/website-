@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Vida da Mãe Moderna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: app de uma coluna com abas no topo; cada aba é um módulo do mapa da vida */
+:root{
+  --bg:#f7f2ee; --surface:#fffdfb; --line:#e6d9d2; --fg:#2b2125; --muted:#7a6a6e;
+  --vinho:#7b2d3f; --vinho-soft:#f1e2e4; --petroleo:#1f5560; --petroleo-soft:#dde9ea; --nude:#d9b8a6;
+  --ok:#2f6b4f; --ok-soft:#e1efe7; --warn:#9a5b12; --warn-soft:#f6ead8; --bad:#9b2b2b; --bad-soft:#f5dfdf;
+  --display:"Instrument Serif", Georgia, "Times New Roman", serif;
+  --body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#171214; --surface:#211a1d; --line:#3a2e33; --fg:#f2e9e6; --muted:#b3a3a7;
+  --vinho:#e08aa0; --vinho-soft:#3a2229; --petroleo:#7fc2cc; --petroleo-soft:#17363b; --nude:#c79c87;
+  --ok:#7fd0a6; --ok-soft:#173327; --warn:#e7b26a; --warn-soft:#3a2b17; --bad:#f09a9a; --bad-soft:#3d1d1d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#171214; --surface:#211a1d; --line:#3a2e33; --fg:#f2e9e6; --muted:#b3a3a7;
+  --vinho:#e08aa0; --vinho-soft:#3a2229; --petroleo:#7fc2cc; --petroleo-soft:#17363b; --nude:#c79c87;
+  --ok:#7fd0a6; --ok-soft:#173327; --warn:#e7b26a; --warn-soft:#3a2b17; --bad:#f09a9a; --bad-soft:#3d1d1d; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:980px;margin:0 auto}
+header.top{padding-block:28px 12px;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,6vw,52px);line-height:1;margin:0;letter-spacing:-.5px}
+h1 em{color:var(--vinho)}
+.who{color:var(--muted);font-size:13px}
+.who b{color:var(--fg)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:4px;overflow-x:auto;padding-block:8px;border-bottom:1px solid var(--line);margin-bottom:22px;scrollbar-width:none}
+nav.tabs button{flex:0 0 auto;border:0;background:none;color:var(--muted);font:600 13px var(--body);padding:8px 12px;border-radius:999px;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{background:var(--vinho);color:var(--surface)}
+nav.tabs button:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--petroleo);outline-offset:2px}
+section.panel{display:grid;gap:18px;grid-template-columns:minmax(0,1fr)}
+section.panel>*,.box{min-width:0}
+h2{font-family:var(--display);font-weight:400;font-size:30px;margin:0;line-height:1.1;text-wrap:balance}
+h3{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:700}
+p{margin:0}
+.lead{color:var(--muted);max-width:62ch}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px}
+.grid2>*,.grid3>*{min-width:0}
+.dream{background:var(--petroleo);color:var(--surface);border-radius:var(--r);padding:22px}
+.dream h3{color:var(--petroleo-soft)}
+.dream p.big{font-family:var(--display);font-size:clamp(24px,4vw,34px);line-height:1.15}
+.dream p.small{margin-top:10px;opacity:.85;font-size:14px;max-width:70ch}
+:root[data-theme="dark"] .dream, .dream{}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat .n{font-family:var(--display);font-size:40px;line-height:1;font-variant-numeric:tabular-nums}
+.stat .l{color:var(--muted);font-size:13px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;border:0;cursor:pointer;font-family:var(--body);white-space:nowrap}
+.p-so{background:var(--vinho-soft);color:var(--vinho)}
+.p-del{background:var(--petroleo-soft);color:var(--petroleo)}
+.p-div{background:var(--warn-soft);color:var(--warn)}
+.p-aut{background:var(--ok-soft);color:var(--ok)}
+.p-cort{background:var(--bad-soft);color:var(--bad)}
+.p-q{background:var(--line);color:var(--muted)}
+.e-drena{background:var(--bad-soft);color:var(--bad)}
+.e-neutra{background:var(--line);color:var(--fg)}
+.e-nutre{background:var(--ok-soft);color:var(--ok)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td.area{color:var(--muted);font-size:12px;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:6px 12px;border-radius:999px;font:500 13px var(--body);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+label.f{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+input[type=text],input[type=number],input[type=date],select,textarea{font:15px var(--body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+textarea{min-height:64px;resize:vertical}
+.btn{border:1px solid var(--vinho);background:var(--vinho);color:var(--surface);font:600 14px var(--body);padding:9px 16px;border-radius:999px;cursor:pointer}
+.btn.ghost{background:none;color:var(--vinho)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.goal{display:grid;gap:10px}
+.goal .tag{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--vinho)}
+.goal .t{font-family:var(--display);font-size:22px;line-height:1.15}
+.smart{display:grid;gap:6px;font-size:13px}
+.smart div{display:grid;grid-template-columns:22px 1fr;gap:6px}
+.smart b{color:var(--petroleo);font-family:var(--display);font-size:18px;line-height:1.1}
+.note{font-size:12px;color:var(--muted);font-style:italic}
+.wheel{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;align-items:center}
+.wheel svg{width:100%;max-width:420px;height:auto;justify-self:center}
+.sl{display:grid;grid-template-columns:1fr 44px;gap:4px 10px;align-items:center;font-size:14px}
+.sl input{grid-column:1/-1;accent-color:var(--vinho);width:100%}
+.sl output{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.anchor{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.anchor:last-child{border-bottom:0}
+.anchor .when{font-weight:700;font-size:13px;color:var(--petroleo);min-width:110px;font-variant-numeric:tabular-nums}
+.anchor .why{grid-column:2;font-size:13px;color:var(--muted)}
+.block{border-left:3px solid var(--nude);padding-left:12px}
+.block.on{border-color:var(--vinho)}
+.block h4{margin:0 0 4px;font-size:15px}
+.block ul{margin:6px 0 0;padding-left:18px;font-size:14px;color:var(--muted)}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.day{display:grid;gap:6px;text-align:center;font-size:12px;color:var(--muted)}
+.day select{font-size:12px;padding:6px 2px}
+.meter{height:10px;border-radius:999px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--vinho)}
+.callout{border-radius:var(--r);padding:14px 16px;font-size:14px}
+.callout.v{background:var(--vinho-soft);color:var(--fg)}
+.callout.p{background:var(--petroleo-soft);color:var(--fg)}
+.callout b{color:var(--vinho)}
+.callout.p b{color:var(--petroleo)}
+.belief{font-family:var(--display);font-size:24px;line-height:1.2}
+.belief s{color:var(--muted);text-decoration-thickness:1px}
+.belief .new{color:var(--vinho)}
+.list{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.list li{display:flex;gap:10px;align-items:baseline;font-size:14px}
+.list li::before{content:"";flex:0 0 6px;height:6px;border-radius:50%;background:var(--nude);transform:translateY(-2px)}
+.foot{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;color:var(--muted);font-size:13px}
+.confirm{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.small{font-size:13px;color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+@media (max-width:520px){.week{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (prefers-reduced-motion:no-preference){.meter i{transition:width .4s}}
+.ficha-sel{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
+.ficha-sel select{width:auto;min-width:150px;font-weight:600}
+.q{display:grid;grid-template-columns:34px 1fr;gap:4px 12px}
+.q .nq{font-family:var(--display);font-size:26px;line-height:1;color:var(--vinho);font-variant-numeric:tabular-nums}
+.q .bl{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--petroleo)}
+.q .pq{font-size:17px;font-weight:600;line-height:1.3}
+.q .dq{font-size:13px;color:var(--muted)}
+.q textarea,.q .row{grid-column:2}
+.q.done .nq{color:var(--ok)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px}
+.card{display:grid;gap:8px;align-content:start}
+.card .nm{font-family:var(--display);font-size:28px;line-height:1}
+.card.cur{border-color:var(--vinho)}
+.enc{display:grid;gap:6px;padding-block:14px;border-bottom:1px solid var(--line)}
+.enc:last-child{border-bottom:0}
+.enc .d{font-weight:700;color:var(--petroleo);font-variant-numeric:tabular-nums}
+.priv{background:var(--warn-soft);border-radius:8px;padding:8px 10px;font-size:13px}
+.report{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,4vw,40px);display:grid;gap:26px}
+.report header{display:grid;gap:6px;border-bottom:1px solid var(--line);padding-bottom:18px}
+.report .kicker{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--vinho)}
+.report .rname{font-family:var(--display);font-size:clamp(34px,6vw,54px);line-height:1}
+.report h4{font-family:var(--display);font-weight:400;font-size:24px;margin:0 0 10px;color:var(--petroleo)}
+.report .dir{display:grid;grid-template-columns:34px 1fr;gap:4px 10px;align-items:baseline}
+.report .dir b{font-family:var(--display);font-size:26px;color:var(--vinho);font-weight:400}
+.report .sig{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+.tag2{display:inline-block;font-size:12px;padding:2px 9px;border-radius:999px;background:var(--petroleo-soft);color:var(--petroleo);font-weight:600}
+body.present header.top,body.present nav.tabs,body.present .foot,body.present .prep{display:none}
+body.present .report{border:0}
+.exitp{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6}
+.importbox{display:grid;gap:8px;width:100%}
+.login{min-height:100vh;display:grid;place-items:center;padding-block:40px}
+.lgcard{width:min(100%,380px);display:grid;gap:10px}
+.lgform{display:grid;gap:12px;margin-top:12px}
+input[type=email],input[type=password]{font:15px var(--body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px;width:100%}
+</style>
+</head>
+<body>
+<section id="login" class="login">
+ <div class="lgcard">
+  <h1>Vida da <em>Mãe</em> Moderna</h1>
+  <p class="small">Área de acompanhamento · Andréia Zanon</p>
+  <form id="lgForm" class="lgform">
+   <label class="f" for="lgEmail">E-mail<input type="email" id="lgEmail" autocomplete="email" required></label>
+   <label class="f" for="lgPass">Senha<input type="password" id="lgPass" autocomplete="current-password" minlength="8" required></label>
+   <button class="btn" id="lgBtn" type="submit">Entrar</button>
+   <button class="btn ghost" id="lgToggle" type="button">Primeiro acesso? Criar meu acesso</button>
+   <p id="lgMsg" class="small" role="status"></p>
+  </form>
+ </div>
+</section>
+<div id="appwrap" hidden>
+<div class="wrap">
+<header class="top">
+  <div>
+    <h1>Vida da <em>Mãe</em> Moderna</h1>
+    <p class="who">Ferramenta de acompanhamento · Andréia Zanon</p>
+  </div>
+  <div class="row"><label class="ficha-sel" for="fichaSel">Ficha<select id="fichaSel"></select></label><span class="small" id="quem"></span><button class="btn ghost" id="sairBtn" type="button">Sair</button></div>
+</header>
+
+<nav class="tabs" role="tablist" id="tabs"></nav>
+<main id="app"></main>
+
+<div class="foot" id="foot">
+  <span id="savestate"></span>
+  <button class="btn ghost" id="copyBtn" type="button">Copiar todos os dados</button>
+  <button class="btn ghost" id="impBtn" type="button">Importar dados</button>
+  <span id="copyMsg" class="small"></span>
+  <div id="impArea" class="importbox" hidden>
+    <label class="f" for="impTxt">Cola aqui os dados copiados de outro aparelho</label>
+    <textarea id="impTxt"></textarea>
+    <div class="row"><button class="btn" id="impGo" type="button">Importar</button><button class="btn ghost" id="impNo" type="button">Cancelar</button></div>
+  </div>
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function(){
+const KEY='vmm-site';
+const SB_URL='https://xweqfsavgxgzhdgbdrna.supabase.co', SB_KEY='sb_publishable_4UmKFKCsept-MFCkz1uBcw_DaE-3r0a';
+const TABS=[
+ ['fichas','Clientes'],['anamnese','Anamnese'],['painel','Painel'],['perfil','Perfil'],['roda','Roda da vida'],['metas','Metas'],
+ ['mapa','Atividades'],['rotina','Rotina'],['financas','Finanças'],['descanso','Descanso'],['encontros','Encontros'],['relatorio','Relatório']
+];
+const TABNAME=Object.fromEntries(TABS);
+const AREAS_RODA=['Corpo e saúde','Mente e descanso','Maternidade','Casamento','Família','Trabalho','Finanças','Estudos','Amizades','Espiritualidade','Lazer'];
+const QUEM=[['so','Só eu'],['del','Delegável'],['div','Dividir em casa'],['aut','Automatizar'],['cort','Cortar'],['q','?']];
+const ENERG=[['q','?'],['drena','Drena'],['neutra','Neutra'],['nutre','Nutre']];
+const CUIDADO=['','Pilates','Treino','Corrida','Caminhada','Descanso escolhido','Desabei'];
+const ROTEIRO=[
+ {id:'chegada',bl:'Chegada',p:'De 0 a 10, como tu chegas hoje? O que te trouxe até aqui?',d:'Anota a nota e as palavras dela. Elas voltam no relatório.'},
+ {id:'ontem',bl:'Retrato do dia',p:'Me conta o teu dia de ontem, do acordar ao deitar.',d:'Cada atividade que aparecer vai depois para Atividades.',m:'mapa'},
+ {id:'semana',bl:'Retrato do dia',p:'O que muda nos outros dias da semana? E no fim de semana?'},
+ {id:'trabalho',bl:'Trabalho e renda',p:'Como é o teu trabalho? Tem horário fixo ou vai por demanda? A renda é fixa, variável ou comissionada?',m:'perfil'},
+ {id:'casa',bl:'Carga',p:'Em casa, quem faz o quê? O que só tu lembra?',d:'O que só ela lembra é a carga invisível.',m:'mapa'},
+ {id:'corpo',bl:'Corpo',p:'Como estão o teu sono, a tua alimentação e o teu movimento?'},
+ {id:'dinheiro',bl:'Dinheiro',p:'Como estão as contas? Em que momento tu gasta para compensar o cansaço?',m:'financas'},
+ {id:'descanso',bl:'Descanso',p:'O que é descanso para ti? Quando foi o último fim de semana sem compromisso nenhum?',m:'descanso'},
+ {id:'fuga',bl:'Descanso',p:'Para onde tu foge quando esgota? Celular, compras, comida, bebida, trabalho?',m:'descanso'},
+ {id:'energia',bl:'Energia',p:'Quais são as 3 coisas que mais te drenam? E as 3 que mais te nutrem?',m:'mapa'},
+ {id:'ninguem',bl:'Energia',p:'Se tu parasse de fazer alguma coisa amanhã, o que ninguém perceberia por um mês?'},
+ {id:'crenca',bl:'Raiz',p:'Que frase tu ouviu na infância sobre trabalho, dever ou descanso?',d:'Leva a frase para Descanso e constrói a nova junto com ela.',m:'descanso'},
+ {id:'sonho',bl:'Direção',p:'Daqui a 3 anos, como é um dia perfeito na tua vida?',m:'metas'},
+ {id:'roda',bl:'Direção',p:'De 0 a 10, como está hoje cada área da tua vida?',m:'roda'}
+];
+
+function A(area,nome,freq,onde,quem,energia,obs){return {area,nome,freq,onde,quem,energia:energia||'q',obs:obs||''}}
+const hoje=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const fmt=iso=>iso?iso.split('-').reverse().join('/'):'';
+
+function vazio(nome){return {
+ nome:nome||'',perfil:{rotina:'',trabalho:[],renda:'',contas:'',filhos:'',horaIni:'',horaFim:''},
+ sonho:'',sonhoPrazo:'',diaIdeal:'',roda:Object.fromEntries(AREAS_RODA.map(a=>[a,5])),rodaTocada:false,
+ metas:['Curto prazo','Médio prazo','Longo prazo'].map(p=>({prazo:p,titulo:'',S:'',M:'',A:'',R:'',T:'',codigo:''})),
+ atividades:[],invisivel:[],ancoras:[],blocos:{foco:[],operacional:[],pessoas:[],rapidas:[]},cuidado:['','','','','','',''],
+ financas:{renda:'',contas:'',dividaTotal:'',reservaMeta:'',reservaAtual:'',combinado:''},
+ gastos:[],fugas:[],descansoDef:'',crenca:'',crencaNova:'',linkFin:'',
+ anamnese:{},encontros:[],direcionamentos:['','',''],mensagem:'',proximo:'',consentimento:'',
+ possivel:{janela:'',dentro:'',regras:[],noite:'',ponte:''}};}
+function completa(f){const b=vazio(f.nome);for(const k in b){if(f[k]===undefined)f[k]=b[k];}if(!Array.isArray(f.direcionamentos))f.direcionamentos=['','',''];return f;}
+const clone=o=>JSON.parse(JSON.stringify(o));
+const slug=s=>(s||'cliente').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'cliente';
+
+let DB={atual:null,fichas:{}};
+let S=null;
+let tab='fichas';
+try{const t=sessionStorage.getItem(KEY+'-tab');if(t&&TABNAME[t])tab=t;}catch(e){}
+const hashT=location.hash.slice(1);if(TABNAME[hashT])tab=hashT;
+
+const sb=window.supabase.createClient(SB_URL,SB_KEY);
+const pend=new Set();let timer=null;
+function estado(t){const el=$('#savestate');if(el)el.textContent=t;}
+function save(){if(DB.atual)pend.add(DB.atual);if(!pend.size)return;estado('Salvando…');clearTimeout(timer);timer=setTimeout(flush,700);}
+async function flush(){clearTimeout(timer);const ids=[...pend];pend.clear();if(!ids.length)return;
+ const rows=ids.filter(id=>DB.fichas[id]).map(id=>({id,dados:DB.fichas[id],updated_at:new Date().toISOString()}));
+ if(!rows.length)return;
+ const {error}=await sb.from('fichas').upsert(rows,{onConflict:'owner,id'});
+ if(error){ids.forEach(id=>pend.add(id));estado('Não salvou. Confere a internet: tento de novo em 10 s');timer=setTimeout(flush,10000);}else estado('Salvo na nuvem');}
+window.addEventListener('beforeunload',e=>{if(pend.size){flush();e.preventDefault();e.returnValue='';}});
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $=s=>document.querySelector(s);
+
+function renderSel(){$('#fichaSel').innerHTML=Object.entries(DB.fichas).map(([id,f])=>`<option value="${esc(id)}" ${id===DB.atual?'selected':''}>${esc(f.nome||'Sem nome')}</option>`).join('');}
+function renderTabs(){$('#tabs').innerHTML=TABS.map(([id,l])=>`<button role="tab" type="button" id="t-${id}" aria-selected="${id===tab}" data-tab="${id}">${l}</button>`).join('');}
+function go(id){tab=id;try{sessionStorage.setItem(KEY+'-tab',id)}catch(e){}document.body.classList.remove('present');renderTabs();render();window.scrollTo({top:0});}
+function abrir(id){DB.atual=id;S=DB.fichas[id];try{localStorage.setItem(KEY+'-atual',id)}catch(e){}renderSel();}
+
+/* ---------- helpers ---------- */
+function quemPill(v,i){const q=QUEM.find(x=>x[0]===v)||QUEM[5];return `<button type="button" class="pill p-${q[0]}" data-cycle="quem" data-i="${i}" title="Toque para mudar">${q[1]}</button>`}
+function enPill(v,i){const q=ENERG.find(x=>x[0]===v)||ENERG[0];return `<button type="button" class="pill ${q[0]==='q'?'p-q':'e-'+q[0]}" data-cycle="energia" data-i="${i}" title="Toque para mudar">${q[1]}</button>`}
+function contagem(){const a=S.atividades;const c=k=>a.filter(x=>x.quem===k).length;
+ return {n:a.length,so:c('so'),del:c('del'),div:c('div'),aut:c('aut'),cort:c('cort'),drena:a.filter(x=>x.energia==='drena').length,nutre:a.filter(x=>x.energia==='nutre').length,semE:a.filter(x=>x.energia==='q').length}}
+function cuidadoCount(){return S.cuidado.filter(x=>x&&x!=='Desabei').length}
+function respondidas(f){return ROTEIRO.filter(q=>(f.anamnese[q.id]||'').trim()).length}
+
+function radar(){
+ const n=AREAS_RODA.length,cx=210,cy=200,R=140;
+ const pt=(i,v)=>{const a=-Math.PI/2+i*2*Math.PI/n;return [cx+Math.cos(a)*R*v/10,cy+Math.sin(a)*R*v/10]};
+ let g='';
+ [2,4,6,8,10].forEach(l=>{g+=`<polygon points="${AREAS_RODA.map((_,i)=>pt(i,l).join(',')).join(' ')}" fill="none" stroke="var(--line)" stroke-width="1"/>`});
+ AREAS_RODA.forEach((a,i)=>{const [x,y]=pt(i,10);g+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--line)"/>`;
+  const [lx,ly]=pt(i,12.4);const anc=Math.abs(lx-cx)<8?'middle':(lx>cx?'start':'end');
+  g+=`<text x="${lx}" y="${ly}" text-anchor="${anc}" dominant-baseline="middle" font-size="11" fill="var(--muted)" font-family="Figtree, sans-serif">${esc(a)}</text>`});
+ const poly=AREAS_RODA.map((a,i)=>pt(i,S.roda[a]||0).join(',')).join(' ');
+ g+=`<polygon points="${poly}" fill="var(--vinho)" fill-opacity=".22" stroke="var(--vinho)" stroke-width="2"/>`;
+ AREAS_RODA.forEach((a,i)=>{const [x,y]=pt(i,S.roda[a]||0);g+=`<circle cx="${x}" cy="${y}" r="3.5" fill="var(--vinho)"/>`});
+ return `<svg viewBox="0 0 420 400" role="img" aria-label="Roda da vida">${g}</svg>`;
+}
+
+/* ---------- views ---------- */
+const V={};
+let confirmDel='';
+V.fichas=()=>`${Object.keys(DB.fichas).length?'':'<div class="callout p"><b>Nenhuma ficha ainda.</b> Para trazer as fichas do link antigo: lá, clica em "Copiar todos os dados"; aqui, em "Importar dados", cola e importa. Ou cria uma cliente nova abaixo.</div>'}<div><h2>Clientes</h2><p class="lead">Cada cliente tem a sua ficha. Tu conduz a anamnese no encontro, registra o andamento e gera o relatório que ela leva para casa.</p></div>
+ <div class="cards">${Object.entries(DB.fichas).map(([id,f])=>{const ult=f.encontros.length?f.encontros[f.encontros.length-1].data:'';return `<div class="box card ${id===DB.atual?'cur':''}">
+  <span class="nm">${esc(f.nome||'Sem nome')}</span>
+  <span class="small">Anamnese ${respondidas(f)} de ${ROTEIRO.length} · ${f.encontros.length} ${f.encontros.length===1?'encontro':'encontros'}${ult?` · último em ${fmt(ult)}`:''}</span>
+  <span class="small">${f.consentimento?(f.consentimento==='próprio'?'Ficha pessoal':'Consentimento em '+fmt(f.consentimento)):'Sem consentimento registrado'}</span>
+  <div class="row"><button class="btn" type="button" data-abrir="${esc(id)}">Abrir ficha</button>
+  ${confirmDel===id?`<button class="btn ghost" type="button" data-delok="${esc(id)}">Confirmar exclusão</button><button class="btn ghost" type="button" data-delno="1">Cancelar</button>`:(Object.keys(DB.fichas).length>1?`<button class="btn ghost" type="button" data-del="${esc(id)}">Excluir</button>`:'')}</div>
+ </div>`}).join('')}</div>
+ <div class="box"><h3>Nova cliente</h3><div class="row"><input type="text" id="novaNome" placeholder="Nome da cliente" style="flex:1 1 220px"><button class="btn" type="button" id="novaBtn">Criar ficha</button></div></div>`;
+
+V.anamnese=()=>{const r=respondidas(S);
+ return `<div><h2>Anamnese de ${esc(S.nome||'cliente')}</h2><p class="lead">Conduz na ordem. Escreve com as palavras dela. Quando a resposta pede mais detalhe, o botão leva para o módulo certo.</p></div>
+ <div class="box"><div class="row" style="justify-content:space-between"><span class="num"><b>${r}</b> de ${ROTEIRO.length} respondidas</span><span class="small">${S.consentimento?'':'Antes de começar, registra o consentimento dela na aba Perfil.'}</span></div><div class="meter" style="margin-top:8px"><i style="width:${r/ROTEIRO.length*100}%"></i></div></div>
+ ${ROTEIRO.map((q,i)=>{const v=S.anamnese[q.id]||'';return `<div class="box q ${v.trim()?'done':''}">
+  <span class="nq">${i+1}</span><span class="bl">${q.bl}</span>
+  <span></span><label class="pq" for="a-${q.id}">${q.p}</label>
+  ${q.d?`<span></span><span class="dq">${q.d}</span>`:''}
+  <textarea id="a-${q.id}" data-anam="${q.id}">${esc(v)}</textarea>
+  ${q.m?`<div class="row"><button class="btn ghost" type="button" data-tab="${q.m}">Abrir ${TABNAME[q.m]}</button></div>`:''}
+ </div>`}).join('')}
+ <div class="row"><button class="btn" type="button" data-tab="relatorio">Ir para o relatório</button></div>`};
+
+V.painel=()=>{const c=contagem();const cc=cuidadoCount();
+ const baixas=AREAS_RODA.filter(a=>(S.roda[a]||0)<=4);
+ const gastosCans=S.gastos.filter(g=>/cansad/i.test(g.sentia)).length;
+ return `
+ <div class="dream"><h3>Sonho ${esc(S.sonhoPrazo)}</h3><p class="big">${esc(S.sonho)||'O sonho ainda não foi escrito. Aba Metas.'}</p>${S.diaIdeal?`<p class="small">${esc(S.diaIdeal)}</p>`:''}</div>
+ <div class="grid3">
+  <div class="box stat"><span class="n num">${cc}<span style="font-size:20px;color:var(--muted)">/3</span></span><span class="l">momentos de cuidado nesta semana (mínimo 3, ideal 5)</span><div class="meter" style="margin-top:8px"><i style="width:${Math.min(100,cc/5*100)}%"></i></div></div>
+  <div class="box stat"><span class="n num">${c.so}<span style="font-size:20px;color:var(--muted)">/${c.n}</span></span><span class="l">atividades que só ela pode fazer</span></div>
+  <div class="box stat"><span class="n num">${S.encontros.length}</span><span class="l">encontros registrados</span></div>
+ </div>
+ <div><h3>Metas</h3><div class="grid3">${S.metas.map(m=>`<div class="box goal"><span class="tag">${esc(m.prazo)}${m.T?` · ${esc(m.T)}`:''}</span><span class="t">${esc(m.titulo)||'Meta a definir'}</span>${m.M?`<span class="small">Chegou quando: ${esc(m.M)}</span>`:''}</div>`).join('')}</div></div>
+ <div class="grid2">
+  <div class="box"><h3>O que pede atenção</h3><ul class="list">
+   ${respondidas(S)<ROTEIRO.length?`<li>Anamnese com ${ROTEIRO.length-respondidas(S)} perguntas em aberto.</li>`:''}
+   ${cc<3?`<li>Faltam ${3-cc} momentos de cuidado para o mínimo da semana.</li>`:''}
+   ${c.semE?`<li>${c.semE} atividades sem energia marcada.</li>`:''}
+   ${c.del+c.aut+c.div+c.cort?`<li>${c.del+c.aut+c.div+c.cort} atividades podem sair das mãos dela.</li>`:''}
+   ${!S.rodaTocada?'<li>A Roda da vida ainda está com nota 5 em tudo.</li>':(baixas.length?`<li>Áreas com nota até 4: ${baixas.map(esc).join(', ')}.</li>`:'')}
+   ${gastosCans?`<li>${gastosCans} gastos registrados por cansaço.</li>`:''}
+   ${!S.crencaNova&&S.crenca?'<li>A crença ainda não tem uma frase nova.</li>':''}
+  </ul></div>
+  <div class="box"><h3>Âncoras da semana</h3>${S.ancoras.slice(0,5).map(a=>`<div class="anchor"><span class="when">${esc(a[0])}</span><span>${esc(a[1])}</span></div>`).join('')||'<p class="small">Sem âncoras ainda.</p>'}</div>
+ </div>`};
+
+V.perfil=()=>{const p=S.perfil;
+ const opt=(k,v,l)=>`<button type="button" class="chip" aria-pressed="${p[k]===v}" data-set="perfil.${k}" data-v="${v}">${l}</button>`;
+ const mul=(v,l)=>`<button type="button" class="chip" aria-pressed="${p.trabalho.includes(v)}" data-toggle="trabalho" data-v="${v}">${l}</button>`;
+ return `<div><h2>Perfil</h2><p class="lead">As respostas daqui ajustam a rotina, a regra de dinheiro e a referência de reserva.</p></div>
+ <div class="box grid2"><label class="f">Nome<input type="text" id="f-nome" value="${esc(S.nome)}" data-bind="nome"></label>
+ <label class="f">Filhos<input type="text" id="f-filhos" value="${esc(p.filhos)}" data-bind="perfil.filhos" placeholder="Ex.: 2 filhos, 3 e 7 anos"></label></div>
+ ${S.consentimento!=='próprio'?`<div class="box"><label class="row" for="f-cons"><input type="checkbox" id="f-cons" ${S.consentimento?'checked':''}> <span>Ela autorizou o registro destes dados para o acompanhamento (LGPD)${S.consentimento?` · registrado em ${fmt(S.consentimento)}`:''}</span></label></div>`:''}
+ <div class="box"><h3>A rotina é</h3><div class="chips">${opt('rotina','fixa','Fixa, com horário para começar e terminar')}${opt('rotina','flutuante','Flutuante, muda conforme a demanda')}${opt('rotina','mista','Mista')}</div>
+ ${p.rotina==='fixa'?`<div class="row" style="margin-top:12px"><label class="f">Começa<input type="text" id="f-ini" placeholder="08:00" value="${esc(p.horaIni)}" data-bind="perfil.horaIni"></label><label class="f">Termina<input type="text" id="f-fim" placeholder="18:00" value="${esc(p.horaFim)}" data-bind="perfil.horaFim"></label></div>`:''}</div>
+ <div class="box"><h3>Trabalho (pode marcar mais de um)</h3><div class="chips">${mul('clt','CLT')}${mul('negocio','Negócio próprio')}${mul('empresa_familia','Empresa da família')}${mul('autonoma','Autônoma ou comissionada')}${mul('casa','Cuida da casa')}</div></div>
+ <div class="box"><h3>A renda é</h3><div class="chips">${opt('renda','fixa','Fixa')}${opt('renda','variavel','Variável')}${opt('renda','comissionada','Comissionada')}${opt('renda','mista','Mista: parte fixa, parte variável')}</div></div>
+ <div class="box"><h3>As contas da casa</h3><div class="chips">${opt('contas','sozinha','Paga sozinha')}${opt('contas','dividida','Divide com alguém')}</div></div>`};
+
+V.roda=()=>`<div><h2>Roda da vida</h2><p class="lead">Nota de 0 a 10 para como cada área está hoje. Não para como deveria estar.</p></div>
+ <div class="box wheel"><div id="radar">${radar()}</div>
+ <div class="grid2" style="grid-template-columns:1fr">${AREAS_RODA.map((a,i)=>`<label class="sl" for="r-${i}"><span>${esc(a)}</span><output id="o-${i}">${S.roda[a]}</output><input type="range" min="0" max="10" step="1" id="r-${i}" data-roda="${esc(a)}" value="${S.roda[a]}"></label>`).join('')}</div></div>
+ ${!S.rodaTocada?'<p class="note">Todas as áreas começam em 5. Ajusta cada uma para a nota real.</p>':''}`;
+
+V.metas=()=>`<div><h2>Sonho e metas</h2><p class="lead">Do sonho saem 3 metas. Cada uma segue o SMART: específica, mensurável, alcançável, relevante e com prazo.</p></div>
+ <div class="box grid2"><label class="f">Sonho<textarea id="f-sonho" data-bind="sonho">${esc(S.sonho)}</textarea></label><label class="f">Prazo do sonho<input type="text" id="f-sprazo" data-bind="sonhoPrazo" value="${esc(S.sonhoPrazo)}"></label></div>
+ <div class="box"><label class="f">Dia ideal<textarea id="f-dia" data-bind="diaIdeal">${esc(S.diaIdeal)}</textarea></label></div>
+ ${S.metas.map((m,i)=>`<div class="box goal"><span class="tag">${esc(m.prazo)}${m.codigo?` · ${esc(m.codigo)} no Planejamento Acontecendo`:''}</span>
+  <label class="f">Meta<input type="text" id="m-${i}-t" data-bind="metas.${i}.titulo" value="${esc(m.titulo)}"></label>
+  <div class="grid2">
+   <label class="f"><span><b style="color:var(--petroleo)">S</b> · Específica: o que exatamente</span><textarea id="m-${i}-s" data-bind="metas.${i}.S">${esc(m.S)}</textarea></label>
+   <label class="f"><span><b style="color:var(--petroleo)">M</b> · Mensurável: como sabe que chegou</span><textarea id="m-${i}-m" data-bind="metas.${i}.M">${esc(m.M)}</textarea></label>
+   <label class="f"><span><b style="color:var(--petroleo)">A</b> · Alcançável: o que já tem</span><textarea id="m-${i}-a" data-bind="metas.${i}.A">${esc(m.A)}</textarea></label>
+   <label class="f"><span><b style="color:var(--petroleo)">R</b> · Relevante: por que importa</span><textarea id="m-${i}-r" data-bind="metas.${i}.R">${esc(m.R)}</textarea></label>
+  </div>
+  <label class="f"><span><b style="color:var(--petroleo)">T</b> · Prazo</span><input type="text" id="m-${i}-d" data-bind="metas.${i}.T" value="${esc(m.T)}"></label></div>`).join('')}`;
+
+let filtroArea='Todas';
+V.mapa=()=>{const c=contagem();const areas=['Todas',...new Set(S.atividades.map(a=>a.area))];if(!areas.includes(filtroArea))filtroArea='Todas';
+ const rows=S.atividades.map((a,i)=>({a,i})).filter(x=>filtroArea==='Todas'||x.a.area===filtroArea);
+ return `<div><h2>Atividades</h2><p class="lead">Tudo o que ela faz, área por área. Toca nas etiquetas para marcar quem faz e o que cada atividade faz com a energia dela.</p></div>
+ <div class="grid3">
+  <div class="box stat"><span class="n num">${c.so}</span><span class="l">só ela</span></div>
+  <div class="box stat"><span class="n num">${c.del+c.aut+c.div+c.cort}</span><span class="l">delegar, dividir, automatizar ou cortar</span></div>
+  <div class="box stat"><span class="n num">${c.drena}<span style="font-size:20px;color:var(--muted)"> / ${c.nutre}</span></span><span class="l">drenam / nutrem</span></div>
+ </div>
+ <div class="chips" role="group" aria-label="Filtrar área">${areas.map(a=>`<button type="button" class="chip" aria-pressed="${a===filtroArea}" data-filtro="${esc(a)}">${esc(a)}</button>`).join('')}</div>
+ <div class="tbl"><table><thead><tr><th>Área</th><th>Atividade</th><th>Frequência</th><th>Onde</th><th>Quem</th><th>Energia</th></tr></thead><tbody>
+ ${rows.map(({a,i})=>`<tr><td class="area">${esc(a.area)}</td><td>${esc(a.nome)}${a.obs?`<div class="small">${esc(a.obs)}</div>`:''}</td><td class="small">${esc(a.freq)}</td><td class="small">${esc(a.onde)}</td><td>${quemPill(a.quem,i)}</td><td>${enPill(a.energia,i)}</td></tr>`).join('')||'<tr><td colspan="6" class="small">Nenhuma atividade ainda. Adiciona a primeira abaixo, a partir do dia de ontem dela.</td></tr>'}
+ </tbody></table></div>
+ <div class="box"><h3>Adicionar atividade</h3><div class="grid3">
+  <label class="f">Área<select id="n-area">${['Trabalho','Negócio','Casa e família','Corpo e saúde','Estudos','Pessoas','Espiritualidade','Lazer'].map(a=>`<option>${a}</option>`).join('')}</select></label>
+  <label class="f">Atividade<input type="text" id="n-nome" placeholder="Ex.: levar ao dentista"></label>
+  <label class="f">Frequência<input type="text" id="n-freq" placeholder="Ex.: semanal"></label>
+ </div><div class="row" style="margin-top:10px"><button class="btn" type="button" id="addAtv">Adicionar</button></div></div>
+ <div class="box"><h3>Carga invisível: o que só existe na cabeça dela</h3><ul class="list">${S.invisivel.map(x=>`<li>${esc(x)}</li>`).join('')||'<li class="small">Nada registrado ainda.</li>'}</ul>
+ <div class="row" style="margin-top:10px"><input type="text" id="n-inv" placeholder="Outra coisa que só ela lembra" style="flex:1 1 220px"><button class="btn ghost" type="button" id="addInv">Adicionar</button></div></div>`};
+
+let energiaHoje='';
+try{energiaHoje=sessionStorage.getItem(KEY+'-en')||''}catch(e){}
+function bloco(k,t,d,on){return `<div class="block ${on?'on':''}"><h4>${t}</h4><span class="small">${d}</span><ul>${(S.blocos[k]||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`}
+V.rotina=()=>{const p=S.perfil;const fixa=p.rotina==='fixa';
+ return `<div><h2>Rotina ancorada</h2><p class="lead">${fixa?'O horário de trabalho é a primeira âncora. Em volta dele ficam poucos compromissos fixos e o resto se encaixa.':'Poucas âncoras fixas seguram a semana. O resto se encaixa em blocos, conforme a energia do dia. Nada de grade de horário.'}</p></div>
+ <div class="grid2">
+  <div class="box"><h3>Rotina dos sonhos</h3><label class="f" for="f-dia2">Como é um dia perfeito, daqui a uns anos</label><textarea id="f-dia2" data-bind="diaIdeal">${esc(S.diaIdeal)}</textarea></div>
+  <div class="box"><h3>Rotina possível agora</h3>
+   <label class="f">Janela de trabalho<input type="text" id="p-jan" data-bind="possivel.janela" value="${esc(S.possivel.janela)}" placeholder="Ex.: das 8h às 18h"></label>
+   <label class="f" style="margin-top:10px">O que precisa caber dentro dela<textarea id="p-den" data-bind="possivel.dentro">${esc(S.possivel.dentro)}</textarea></label>
+   <label class="f" style="margin-top:10px">Fora da janela, o que é sagrado<input type="text" id="p-noi" data-bind="possivel.noite" value="${esc(S.possivel.noite)}" placeholder="Ex.: estar com os filhos de verdade"></label>
+  </div>
+ </div>
+ <div class="box"><h3>Regras da rotina possível</h3><ul class="list">${S.possivel.regras.map((r,i)=>`<li><span style="flex:1">${esc(r)}</span><button class="btn ghost" type="button" data-regdel="${i}" aria-label="Remover regra">Remover</button></li>`).join('')||'<li class="small">Nenhuma regra ainda.</li>'}</ul>
+  <div class="row" style="margin-top:10px"><input type="text" id="n-reg" placeholder="Ex.: atendimento só até as 18h" style="flex:1 1 220px"><button class="btn ghost" type="button" id="addReg">Adicionar regra</button></div>
+  <label class="f" style="margin-top:12px">O que aproxima a possível da dos sonhos<input type="text" id="p-pon" data-bind="possivel.ponte" value="${esc(S.possivel.ponte)}" placeholder="Ex.: delegar o operacional até dezembro"></label></div>
+ ${fixa&&(p.horaIni||p.horaFim)?`<div class="callout p"><b>Trabalho:</b> das ${esc(p.horaIni)} às ${esc(p.horaFim)}. Fora disso, só âncoras pessoais.</div>`:''}
+ <div class="box"><h3>Âncoras: o que não se negocia</h3>${S.ancoras.map(a=>`<div class="anchor"><span class="when">${esc(a[0])}</span><span>${esc(a[1])}</span>${a[2]?`<span class="why">${esc(a[2])}</span>`:''}</div>`).join('')||'<p class="small">Nenhuma âncora ainda.</p>'}
+ <div class="grid3" style="margin-top:12px"><input type="text" id="n-aq" placeholder="Quando (ex.: quarta, 12h)" aria-label="Quando"><input type="text" id="n-ao" placeholder="O quê" aria-label="O quê"><button class="btn ghost" type="button" id="addAnc">Adicionar âncora</button></div></div>
+ <div class="box"><h3>Como está a energia hoje?</h3><div class="chips">${['Alta','Média','Baixa'].map(e=>`<button type="button" class="chip" aria-pressed="${energiaHoje===e}" data-energia="${e}">${e}</button>`).join('')}</div>
+ <div class="grid2" style="margin-top:14px">
+  ${bloco('foco','Foco profundo','Pede cabeça descansada e silêncio',energiaHoje==='Alta')}
+  ${bloco('pessoas','Pessoas','Atendimentos, conversas, parcerias',energiaHoje==='Alta'||energiaHoje==='Média')}
+  ${bloco('operacional','Operacional','Tarefas conhecidas, que andam no automático',energiaHoje==='Média')}
+  ${bloco('rapidas','Rápidas no celular','5 a 15 min, em qualquer brecha',energiaHoje==='Baixa'||energiaHoje==='Média')}
+ </div>
+ ${energiaHoje==='Baixa'?'<div class="callout v" style="margin-top:14px"><b>Dia de energia baixa.</b> Só as âncoras e as rápidas. O resto espera. Descansar hoje conta como cuidado.</div>':''}
+ </div>`};
+
+V.financas=()=>{const f=S.financas;const p=S.perfil;
+ const renda=p.renda||f.renda;const sozinha=(p.contas||f.contas)==='sozinha';
+ const porSent={};S.gastos.forEach(g=>{const k=(g.sentia||'Sem registro').trim();porSent[k]=porSent[k]||{n:0,v:0};porSent[k].n++;porSent[k].v+=parseFloat(String(g.valor).replace(',','.'))||0});
+ const total=S.gastos.reduce((s,g)=>s+(parseFloat(String(g.valor).replace(',','.'))||0),0);
+ const dica={fixa:'Separa a reserva e a parcela da dívida no dia em que o salário cai, antes de qualquer outro gasto.',variavel:'Vive com a média dos 3 meses mais fracos. O que entrar acima disso vai primeiro para a dívida, depois para a reserva.',comissionada:'Vive com a média dos 3 meses mais fracos. Comissão boa não é aumento: o excedente vai primeiro para a dívida, depois para a reserva.',mista:'A parte fixa paga a casa. A parte variável vai primeiro para a dívida e depois para a reserva, nunca para o dia a dia.'}[renda]||'Marca no Perfil como é a renda e aparece a regra que serve para ela.';
+ const pct=(parseFloat(f.reservaAtual)||0)/(parseFloat(f.reservaMeta)||0);
+ return `<div><h2>Finanças e emoção</h2><p class="lead">O dinheiro mostra onde o cansaço está cobrando.</p></div>
+ <div class="callout p"><b>Regra de renda:</b> ${dica}</div>
+ ${S.linkFin?`<div class="box row" style="justify-content:space-between"><span>Os números da casa ficam no sistema financeiro. Aqui fica o lado emocional do dinheiro.</span><a class="btn ghost" href="${esc(S.linkFin)}" target="_blank" rel="noopener">Abrir o sistema financeiro</a></div>`:''}
+ <div class="grid2">
+  <div class="box"><h3>Sair das dívidas</h3><label class="f">Total das dívidas (R$)<input type="number" id="f-div" inputmode="decimal" data-bind="financas.dividaTotal" value="${esc(f.dividaTotal)}"></label>
+   <p class="small" style="margin-top:8px">${sozinha?'Contas só dela: o plano precisa caber no mês mais fraco.':'Contas divididas: vale combinar quanto cada um põe na dívida.'}</p></div>
+  <div class="box"><h3>Reserva ${sozinha?'para mudar de vida':'da família'}</h3>
+   <div class="grid2"><label class="f">Meta (R$)<input type="number" id="f-rm" data-bind="financas.reservaMeta" value="${esc(f.reservaMeta)}"></label><label class="f">Tem hoje (R$)<input type="number" id="f-ra" data-bind="financas.reservaAtual" value="${esc(f.reservaAtual)}"></label></div>
+   <div class="meter" style="margin-top:10px"><i style="width:${isFinite(pct)?Math.min(100,pct*100):0}%"></i></div>
+   <p class="small" style="margin-top:6px">${sozinha?'Referência: 6 meses do custo de vida para poder sair de um emprego com calma.':'Referência: 3 a 6 meses do custo da casa.'}</p></div>
+ </div>
+ ${!sozinha?`<div class="box"><label class="f">Combinado do casal sobre gastos<textarea id="f-comb" data-bind="financas.combinado" placeholder="Ex.: compra acima de R$ 150 espera 24h; quem está cansado não decide compra.">${esc(f.combinado)}</textarea></label></div>`:''}
+ <div class="box"><h3>Diário de gasto emocional</h3>
+  <div class="tbl"><table><thead><tr><th>Dia</th><th>Hora</th><th>O que</th><th>Valor</th><th>Quem</th><th>Como estava</th><th>Do que precisava</th></tr></thead><tbody>
+  ${S.gastos.map(g=>`<tr><td class="num small">${esc(fmt(g.data).slice(0,5))}</td><td class="small">${esc(g.hora)}</td><td>${esc(g.oque)}</td><td class="num">${g.valor?'R$ '+esc(g.valor):'<span class="small">a preencher</span>'}</td><td class="small">${esc(g.quem)}</td><td><span class="pill e-drena" style="cursor:default">${esc(g.sentia)}</span></td><td class="small">${esc(g.precisava)}</td></tr>`).join('')||'<tr><td colspan="7" class="small">Nenhum registro ainda.</td></tr>'}
+  </tbody></table></div>
+  <div class="grid3" style="margin-top:12px">
+   <label class="f">O que<input type="text" id="g-o" placeholder="Ex.: roupa online"></label>
+   <label class="f">Valor (R$)<input type="number" id="g-v" inputmode="decimal"></label>
+   <label class="f">Hora<select id="g-h"><option>manhã</option><option>tarde</option><option selected>noite</option><option>madrugada</option></select></label>
+   <label class="f">Quem<select id="g-q"><option>Eu</option><option>Parceiro</option><option>Juntos</option></select></label>
+   <label class="f">Como estava<select id="g-s"><option>Cansada</option><option>Estressada</option><option>Triste</option><option>Entediada</option><option>Ansiosa</option><option>Feliz</option></select></label>
+   <label class="f">Do que precisava<input type="text" id="g-p" placeholder="Ex.: dormir"></label>
+  </div><div class="row" style="margin-top:10px"><button class="btn" type="button" id="addG">Registrar</button></div>
+  ${S.gastos.length?`<div class="callout v" style="margin-top:14px"><b>Padrão até agora:</b> ${Object.entries(porSent).map(([k,v])=>`${v.n} ${v.n>1?'vezes':'vez'} ${esc(k.toLowerCase())}${v.v?` (R$ ${v.v.toFixed(2).replace('.',',')})`:''}`).join(' · ')}${total?`. Total: R$ ${total.toFixed(2).replace('.',',')}.`:'.'}</div>`:''}
+ </div>`};
+
+V.descanso=()=>`<div><h2>Descanso</h2><p class="lead">Descanso escolhido conta como cuidado. Descanso que só acontece porque ela desabou é sinal de alerta.</p></div>
+ <div class="box"><label class="f">O que é descanso para ela<textarea id="f-desc" data-bind="descansoDef">${esc(S.descansoDef)}</textarea></label></div>
+ <div class="box"><h3>Momentos de cuidado nesta semana</h3>
+  <div class="week">${['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'].map((d,i)=>`<label class="day" for="c-${i}">${d}<select id="c-${i}" data-cuid="${i}">${CUIDADO.map(o=>`<option ${S.cuidado[i]===o?'selected':''} value="${o}">${o||'nada'}</option>`).join('')}</select></label>`).join('')}</div>
+  <div class="row" style="margin-top:12px"><span class="num"><b>${cuidadoCount()}</b> de 3 no mínimo, 5 no ideal</span></div></div>
+ <div class="box"><h3>A crença que segura o descanso</h3>
+  <label class="f">Frase antiga<input type="text" id="f-cr" data-bind="crenca" value="${esc(S.crenca)}" placeholder="A frase que ela ouviu"></label>
+  ${S.crenca?`<p class="belief" style="margin-top:12px"><s>${esc(S.crenca)}</s></p>`:''}
+  <label class="f" style="margin-top:12px">Frase nova<input type="text" id="f-cn" data-bind="crencaNova" value="${esc(S.crencaNova)}" placeholder="Com as palavras dela"></label>
+  ${S.crencaNova?`<p class="belief new" style="margin-top:10px">${esc(S.crencaNova)}</p>`:''}</div>
+ <div class="box"><h3>Para onde ela foge quando esgota</h3>
+  <div class="tbl"><table style="min-width:560px"><thead><tr><th>Fuga</th><th>Gatilho</th><th>No lugar, ela vai</th></tr></thead><tbody>
+  ${S.fugas.map((f,i)=>`<tr><td>${esc(f.nome)}</td><td><input type="text" id="fg-${i}" data-bind="fugas.${i}.gatilho" value="${esc(f.gatilho)}" placeholder="O que vem antes?" aria-label="Gatilho"></td><td><input type="text" id="fa-${i}" data-bind="fugas.${i}.alt" value="${esc(f.alt)}" placeholder="Ex.: banho e cama" aria-label="Alternativa"></td></tr>`).join('')||'<tr><td colspan="3" class="small">Nenhuma fuga registrada.</td></tr>'}
+  </tbody></table></div>
+  <div class="row" style="margin-top:10px"><input type="text" id="n-fuga" placeholder="Ex.: rolar o feed" style="flex:1 1 220px"><button class="btn ghost" type="button" id="addFuga">Adicionar fuga</button></div></div>`;
+
+let delEnc=-1;
+V.encontros=()=>`<div><h2>Encontros de ${esc(S.nome||'cliente')}</h2><p class="lead">O registro do acompanhamento. As notas privadas ficam só contigo e nunca entram no relatório.</p></div>
+ <div class="box"><h3>Registrar encontro</h3><div class="grid3">
+  <label class="f">Data<input type="date" id="e-d" value="${hoje()}"></label>
+  <label class="f">Tema<input type="text" id="e-t" placeholder="Ex.: anamnese e roda da vida"></label>
+ </div><div class="grid2" style="margin-top:10px">
+  <label class="f">O que trabalhamos<textarea id="e-w"></textarea></label>
+  <label class="f">Tarefa até o próximo encontro<textarea id="e-k"></textarea></label>
+ </div><label class="f" style="margin-top:10px">Notas privadas (só tu vê)<textarea id="e-n"></textarea></label>
+ <div class="row" style="margin-top:10px"><button class="btn" type="button" id="addEnc">Registrar encontro</button></div></div>
+ <div class="box">${S.encontros.length?S.encontros.map((e,i)=>({e,i})).reverse().map(({e,i})=>`<div class="enc">
+  <div class="row" style="justify-content:space-between"><span class="d">Encontro ${i+1} · ${fmt(e.data)}</span>${delEnc===i?`<span class="row"><button class="btn ghost" type="button" data-encok="${i}">Confirmar remoção</button><button class="btn ghost" type="button" data-encno="1">Cancelar</button></span>`:`<button class="btn ghost" type="button" data-encdel="${i}">Remover</button>`}</div>
+  ${e.tema?`<b>${esc(e.tema)}</b>`:''}${e.trab?`<p>${esc(e.trab)}</p>`:''}${e.tarefa?`<p><span class="tag2">Tarefa</span> ${esc(e.tarefa)}</p>`:''}${e.notas?`<div class="priv">${esc(e.notas)}</div>`:''}
+ </div>`).join(''):'<p class="small">Nenhum encontro registrado ainda.</p>'}</div>`;
+
+function delegaveis(){const g={del:'Delegar',div:'Dividir em casa',aut:'Automatizar',cort:'Cortar'};return Object.entries(g).map(([k,l])=>({l,itens:S.atividades.filter(a=>a.quem===k).map(a=>a.nome)})).filter(x=>x.itens.length);}
+function relatorioTexto(){const L=[];const ult=S.encontros[S.encontros.length-1];
+ L.push('VIDA DA MÃE MODERNA');L.push('Relatório de '+(S.nome||'')+' · '+fmt(hoje()));L.push('');
+ if(S.rodaTocada){L.push('ONDE TU ESTÁS HOJE');AREAS_RODA.forEach(a=>L.push('· '+a+': '+S.roda[a]+'/10'));L.push('');}
+ if(S.sonho){L.push('O TEU SONHO');L.push(S.sonho);L.push('');}
+ const ms=S.metas.filter(m=>m.titulo);if(ms.length){L.push('TUAS 3 METAS');ms.forEach(m=>L.push('· '+m.prazo+': '+m.titulo+(m.T?' (até '+m.T+')':'')+(m.M?'. Chegaste quando: '+m.M:'')));L.push('');}
+ const P=S.possivel;if(P.janela||P.dentro){L.push('TUA ROTINA POSSÍVEL AGORA');if(P.janela)L.push('Janela: '+P.janela);if(P.dentro)L.push(P.dentro);P.regras.forEach(r=>L.push('· '+r));if(P.noite)L.push('Fora da janela: '+P.noite);L.push('');}
+ if(S.diaIdeal){L.push('TUA ROTINA DOS SONHOS');L.push(S.diaIdeal);if(P.ponte)L.push('O que aproxima uma da outra: '+P.ponte);L.push('');}
+ if(S.ancoras.length){L.push('TUA ROTINA ANCORADA');S.ancoras.forEach(a=>L.push('· '+a[0]+': '+a[1]));L.push('');}
+ const dl=delegaveis();if(dl.length){L.push('O QUE SAI DAS TUAS MÃOS');dl.forEach(g=>L.push('· '+g.l+': '+g.itens.join(', ')));L.push('');}
+ if(S.crenca){L.push('A FRASE QUE TU DEIXA PARA TRÁS');L.push(S.crenca);if(S.crencaNova){L.push('A TUA FRASE NOVA');L.push(S.crencaNova);}L.push('');}
+ const ds=S.direcionamentos.filter(x=>x.trim());if(ds.length){L.push('DIRECIONAMENTOS');ds.forEach((d,i)=>L.push((i+1)+'. '+d));L.push('');}
+ if(ult&&ult.tarefa){L.push('ATÉ O PRÓXIMO ENCONTRO');L.push(ult.tarefa);L.push('');}
+ if(S.proximo){L.push('Próximo encontro: '+S.proximo);L.push('');}
+ if(S.mensagem){L.push(S.mensagem);L.push('');}
+ L.push('Andréia Zanon · Mentora sistêmica');return L.join('\n');}
+
+V.relatorio=()=>{const ult=S.encontros[S.encontros.length-1];const ms=S.metas.filter(m=>m.titulo);const dl=delegaveis();const ds=S.direcionamentos.filter(x=>x.trim());
+ const dren=S.atividades.filter(a=>a.energia==='drena').map(a=>a.nome),nut=S.atividades.filter(a=>a.energia==='nutre').map(a=>a.nome);
+ const baixas=AREAS_RODA.filter(a=>S.roda[a]<=4),altas=AREAS_RODA.filter(a=>S.roda[a]>=8);
+ return `<div class="prep"><h2>Relatório de ${esc(S.nome||'cliente')}</h2><p class="lead">Escreve os direcionamentos com ela no fim do encontro. O relatório se monta sozinho com o que foi preenchido. As notas privadas ficam de fora.</p></div>
+ <div class="box prep grid2">
+  ${[0,1,2].map(i=>`<label class="f">Direcionamento ${i+1}<textarea id="d-${i}" data-bind="direcionamentos.${i}">${esc(S.direcionamentos[i])}</textarea></label>`).join('')}
+  <label class="f">Mensagem final<textarea id="d-msg" data-bind="mensagem">${esc(S.mensagem)}</textarea></label>
+  <label class="f">Próximo encontro<input type="text" id="d-prox" data-bind="proximo" value="${esc(S.proximo)}" placeholder="Ex.: quinta, 29/10, 9h"></label>
+ </div>
+ <div class="row prep"><button class="btn" type="button" id="presentBtn">Mostrar em tela cheia</button><button class="btn ghost" type="button" id="copyRel">Copiar texto para o WhatsApp</button><span id="relMsg" class="small"></span></div>
+ <article class="report" id="report">
+  <header><span class="kicker">Vida da Mãe Moderna · ${fmt(hoje())}</span><span class="rname">${esc(S.nome||'')}</span><span class="small">O teu mapa e a tua direção, construídos no nosso encontro.</span></header>
+  ${S.rodaTocada?`<section class="wheel"><div>${radar()}</div><div><h4>Onde tu estás hoje</h4>${altas.length?`<p>Tua força está em <b>${altas.map(esc).join(', ')}</b>.</p>`:''}${baixas.length?`<p style="margin-top:8px">Pedem cuidado agora: <b>${baixas.map(esc).join(', ')}</b>.</p>`:''}</div></section>`:''}
+  ${S.sonho?`<section><h4>O teu sonho</h4><p class="belief">${esc(S.sonho)}</p></section>`:''}
+  ${S.diaIdeal||S.possivel.janela?`<section><div class="grid2">
+   ${S.possivel.janela||S.possivel.dentro?`<div><h4>Tua rotina possível agora</h4>${S.possivel.janela?`<p><span class="tag2">Janela</span> ${esc(S.possivel.janela)}</p>`:''}${S.possivel.dentro?`<p style="margin-top:8px">${esc(S.possivel.dentro)}</p>`:''}${S.possivel.regras.length?`<ul class="list" style="margin-top:10px">${S.possivel.regras.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>`:''}${S.possivel.noite?`<p style="margin-top:10px"><b>Fora da janela:</b> ${esc(S.possivel.noite)}</p>`:''}</div>`:''}
+   ${S.diaIdeal?`<div><h4>Tua rotina dos sonhos</h4><p>${esc(S.diaIdeal)}</p>${S.possivel.ponte?`<p class="small" style="margin-top:10px"><b>O que aproxima uma da outra:</b> ${esc(S.possivel.ponte)}</p>`:''}</div>`:''}
+  </div></section>`:''}
+  ${ms.length?`<section><h4>Tuas metas</h4><div class="grid3">${ms.map(m=>`<div class="goal"><span class="tag">${esc(m.prazo)}${m.T?` · até ${esc(m.T)}`:''}</span><span class="t">${esc(m.titulo)}</span>${m.M?`<span class="small">Chegaste quando: ${esc(m.M)}</span>`:''}</div>`).join('')}</div></section>`:''}
+  ${S.ancoras.length?`<section><h4>Tua rotina ancorada</h4>${S.ancoras.map(a=>`<div class="anchor"><span class="when">${esc(a[0])}</span><span>${esc(a[1])}</span></div>`).join('')}<p class="small" style="margin-top:8px">O resto da semana se encaixa conforme a tua energia.</p></section>`:''}
+  ${dl.length?`<section><h4>O que sai das tuas mãos</h4><ul class="list">${dl.map(g=>`<li><span><b>${g.l}:</b> ${g.itens.map(esc).join(', ')}</span></li>`).join('')}</ul></section>`:''}
+  ${dren.length||nut.length?`<section class="grid2">${dren.length?`<div><h4>O que te drena</h4><ul class="list">${dren.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}${nut.length?`<div><h4>O que te nutre</h4><ul class="list">${nut.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}</section>`:''}
+  ${S.crenca?`<section><h4>A frase que tu deixa para trás</h4><p class="belief"><s>${esc(S.crenca)}</s></p>${S.crencaNova?`<p class="belief new" style="margin-top:8px">${esc(S.crencaNova)}</p>`:''}</section>`:''}
+  ${ds.length?`<section><h4>Direcionamentos</h4><div style="display:grid;gap:10px">${ds.map((d,i)=>`<div class="dir"><b>${i+1}</b><span>${esc(d)}</span></div>`).join('')}</div></section>`:''}
+  ${(ult&&ult.tarefa)||S.proximo?`<section><h4>Até o próximo encontro</h4>${ult&&ult.tarefa?`<p>${esc(ult.tarefa)}</p>`:''}${S.proximo?`<p class="small" style="margin-top:6px">Próximo encontro: ${esc(S.proximo)}</p>`:''}</section>`:''}
+  ${S.mensagem?`<section><p class="belief">${esc(S.mensagem)}</p></section>`:''}
+  <div class="sig">Andréia Zanon · Mentora sistêmica · @andreiazanon__</div>
+ </article>`};
+
+function render(){if(!S&&tab!=='fichas'){tab='fichas';renderTabs();}$('#app').innerHTML=`<section class="panel" role="tabpanel" aria-labelledby="t-${tab}">${V[tab]()}</section>`+(document.body.classList.contains('present')?'<button class="btn exitp" type="button" id="exitP">Sair da tela cheia</button>':'');}
+
+/* ---------- events ---------- */
+function setPath(path,val){const ks=path.split('.');let o=S;ks.slice(0,-1).forEach(k=>o=o[k]);o[ks[ks.length-1]]=val;}
+document.addEventListener('input',e=>{const t=e.target;
+ if(t.dataset.bind){setPath(t.dataset.bind,t.value);save();if(t.dataset.bind==='nome')renderSel();}
+ if(t.dataset.anam){S.anamnese[t.dataset.anam]=t.value;save();}
+ if(t.dataset.roda){S.roda[t.dataset.roda]=+t.value;S.rodaTocada=true;const i=AREAS_RODA.indexOf(t.dataset.roda);$('#o-'+i).textContent=t.value;$('#radar').innerHTML=radar();save();}
+});
+document.addEventListener('change',e=>{const t=e.target;
+ if(t.id==='fichaSel'){abrir(t.value);render();return;}
+ if(t.id==='f-cons'){S.consentimento=t.checked?hoje():'';save();render();return;}
+ if(t.dataset.cuid){S.cuidado[+t.dataset.cuid]=t.value;save();render();return;}
+ if(t.dataset.anam){render();return;}
+ if(t.dataset.bind&&(tab==='financas'&&t.type==='number'||tab==='descanso'&&(t.id==='f-cr'||t.id==='f-cn')))render();
+});
+document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
+ if(t.dataset.tab){go(t.dataset.tab);return;}
+ if(t.dataset.abrir){abrir(t.dataset.abrir);confirmDel='';go(respondidas(S)<ROTEIRO.length&&!S.encontros.length?'anamnese':'painel');return;}
+ if(t.dataset.del){confirmDel=t.dataset.del;render();return;}
+ if(t.dataset.delno){confirmDel='';render();return;}
+ if(t.dataset.delok){const did=t.dataset.delok;pend.delete(did);sb.from('fichas').delete().eq('id',did).then(({error})=>estado(error?'Não consegui excluir na nuvem':'Ficha excluída'));delete DB.fichas[did];confirmDel='';if(!DB.fichas[DB.atual]){const k=Object.keys(DB.fichas)[0];if(k)abrir(k);else{DB.atual=null;S=null;}}renderSel();render();return;}
+ if(t.id==='novaBtn'){const n=$('#novaNome').value.trim();if(!n)return;let id=slug(n),k=2;while(DB.fichas[id])id=slug(n)+'-'+k++;DB.fichas[id]=vazio(n);abrir(id);go('perfil');return;}
+ if(t.dataset.cycle){const i=+t.dataset.i;const list=t.dataset.cycle==='quem'?QUEM:ENERG;const cur=S.atividades[i][t.dataset.cycle];const idx=list.findIndex(x=>x[0]===cur);S.atividades[i][t.dataset.cycle]=list[(idx+1)%list.length][0];save();render();return;}
+ if(t.dataset.set){const [a,b]=t.dataset.set.split('.');S[a][b]=t.dataset.v;if(b==='renda')S.financas.renda=t.dataset.v;if(b==='contas')S.financas.contas=t.dataset.v;save();render();return;}
+ if(t.dataset.toggle){const arr=S.perfil.trabalho;const v=t.dataset.v;const k=arr.indexOf(v);k>-1?arr.splice(k,1):arr.push(v);save();render();return;}
+ if(t.dataset.filtro){filtroArea=t.dataset.filtro;render();return;}
+ if(t.dataset.energia){energiaHoje=energiaHoje===t.dataset.energia?'':t.dataset.energia;try{sessionStorage.setItem(KEY+'-en',energiaHoje)}catch(e){}render();return;}
+ if(t.id==='addAtv'){const n=$('#n-nome').value.trim();if(!n)return;S.atividades.push(A($('#n-area').value,n,$('#n-freq').value.trim(),'','q'));save();render();return;}
+ if(t.id==='addInv'){const n=$('#n-inv').value.trim();if(!n)return;S.invisivel.push(n);save();render();return;}
+ if(t.id==='addAnc'){const q=$('#n-aq').value.trim(),o=$('#n-ao').value.trim();if(!q||!o)return;S.ancoras.push([q,o,'']);save();render();return;}
+ if(t.id==='addReg'){const n=$('#n-reg').value.trim();if(!n)return;S.possivel.regras.push(n);save();render();return;}
+ if(t.dataset.regdel){S.possivel.regras.splice(+t.dataset.regdel,1);save();render();return;}
+ if(t.id==='addFuga'){const n=$('#n-fuga').value.trim();if(!n)return;S.fugas.push({nome:n,gatilho:'',alt:''});save();render();return;}
+ if(t.id==='addG'){const o=$('#g-o').value.trim();if(!o)return;S.gastos.push({data:hoje(),hora:$('#g-h').value,oque:o,valor:$('#g-v').value,quem:$('#g-q').value,sentia:$('#g-s').value,precisava:$('#g-p').value.trim()});save();render();return;}
+ if(t.id==='addEnc'){const tema=$('#e-t').value.trim(),trab=$('#e-w').value.trim(),tarefa=$('#e-k').value.trim(),notas=$('#e-n').value.trim();if(!tema&&!trab&&!tarefa&&!notas)return;
+  S.encontros.push({data:$('#e-d').value||hoje(),tema,trab,tarefa,notas});S.encontros.sort((a,b)=>a.data<b.data?-1:a.data>b.data?1:0);save();render();return;}
+ if(t.dataset.encdel){delEnc=+t.dataset.encdel;render();return;}
+ if(t.dataset.encno){delEnc=-1;render();return;}
+ if(t.dataset.encok){S.encontros.splice(+t.dataset.encok,1);delEnc=-1;save();render();return;}
+ if(t.id==='presentBtn'){document.body.classList.add('present');render();window.scrollTo({top:0});return;}
+ if(t.id==='exitP'){document.body.classList.remove('present');render();return;}
+ if(t.id==='copyRel'){const msg=$('#relMsg');const txt=relatorioTexto();try{navigator.clipboard.writeText(txt).then(()=>msg.textContent='Texto copiado. Cola no WhatsApp dela.',()=>msg.textContent='Não consegui copiar neste aparelho.');}catch(err){msg.textContent='Não consegui copiar neste aparelho.'}return;}
+ if(t.id==='copyBtn'){const msg=$('#copyMsg');try{navigator.clipboard.writeText(JSON.stringify(DB)).then(()=>msg.textContent='Dados de todas as fichas copiados.',()=>msg.textContent='Não consegui copiar neste aparelho.');}catch(err){msg.textContent='Não consegui copiar neste aparelho.'}return;}
+ if(t.id==='impBtn'){$('#impArea').hidden=false;return;}
+ if(t.id==='impNo'){$('#impArea').hidden=true;return;}
+ if(t.id==='impGo'){const msg=$('#copyMsg');try{const d=JSON.parse($('#impTxt').value);const fs=d.fichas||{};let n=0;for(const k in fs){DB.fichas[k]=completa(fs[k]);pend.add(k);n++;}if(!n)throw 0;if(!DB.atual)abrir(Object.keys(fs)[0]);save();renderSel();$('#impArea').hidden=true;$('#impTxt').value='';msg.textContent=n+(n>1?' fichas importadas.':' ficha importada.');render();}catch(err){msg.textContent='Esses dados não foram reconhecidos. Copia de novo no outro aparelho com "Copiar todos os dados".';}return;}
+});
+
+async function carregar(){estado('Carregando as fichas…');
+ const {data,error}=await sb.from('fichas').select('id,dados');
+ if(error){estado('Não consegui carregar. Recarrega a página.');return;}
+ DB.fichas={};data.forEach(r=>DB.fichas[r.id]=completa(r.dados));
+ let a='';try{a=localStorage.getItem(KEY+'-atual')||''}catch(e){}
+ if(!DB.fichas[a])a=Object.keys(DB.fichas)[0]||null;DB.atual=a;S=a?DB.fichas[a]:null;
+ estado(data.length?'Salvo na nuvem':'Nenhuma ficha ainda');renderSel();renderTabs();render();}
+async function mostrar(sess){$('#login').hidden=!!sess;$('#appwrap').hidden=!sess;if(sess){$('#quem').textContent=sess.user.email;await carregar();}}
+let modo='entrar';
+$('#lgToggle').addEventListener('click',()=>{modo=modo==='entrar'?'criar':'entrar';$('#lgBtn').textContent=modo==='entrar'?'Entrar':'Criar meu acesso';$('#lgToggle').textContent=modo==='entrar'?'Primeiro acesso? Criar meu acesso':'Já tenho acesso. Entrar';$('#lgMsg').textContent='';});
+$('#lgForm').addEventListener('submit',async e=>{e.preventDefault();const email=$('#lgEmail').value.trim(),password=$('#lgPass').value;const m=$('#lgMsg');m.textContent='Aguarda…';
+ const r=modo==='entrar'?await sb.auth.signInWithPassword({email,password}):await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+'/vida'}});
+ if(r.error){m.textContent=modo==='entrar'?'E-mail ou senha não conferem.':'Não consegui criar: '+r.error.message;return;}
+ if(modo==='criar'&&!r.data.session){m.textContent='Pronto. Confirma pelo link que chegou no teu e-mail e depois entra aqui.';return;}
+ m.textContent='';});
+$('#sairBtn').addEventListener('click',async()=>{await flush();await sb.auth.signOut();});
+sb.auth.onAuthStateChange((ev,sess)=>{if(ev==='INITIAL_SESSION'||ev==='SIGNED_IN'||ev==='SIGNED_OUT')setTimeout(()=>mostrar(sess),0);});
+})();
+</script>
+</body>
+</html>
