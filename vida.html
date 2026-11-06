@@ -157,6 +157,8 @@ body.present .report{border:0}
 .login{min-height:100vh;display:grid;place-items:center;padding-block:40px}
 .lgcard{width:min(100%,380px);display:grid;gap:10px}
 .lgform{display:grid;gap:12px;margin-top:12px}
+[hidden]{display:none!important}
+body.cli .ficha-sel,body.cli #copyBtn,body.cli #impBtn,body.cli #copyMsg{display:none}
 input[type=email],input[type=password]{font:15px var(--body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px;width:100%}
 </style>
 </head>
@@ -179,7 +181,7 @@ input[type=email],input[type=password]{font:15px var(--body);color:var(--fg);bac
 <header class="top">
   <div>
     <h1>Vida da <em>Mãe</em> Moderna</h1>
-    <p class="who">Ferramenta de acompanhamento · Andréia Zanon</p>
+    <p class="who" id="subt">Ferramenta de acompanhamento · Andréia Zanon</p>
   </div>
   <div class="row"><label class="ficha-sel" for="fichaSel">Ficha<select id="fichaSel"></select></label><span class="small" id="quem"></span><button class="btn ghost" id="sairBtn" type="button">Sair</button></div>
 </header>
@@ -210,27 +212,36 @@ const TABS=[
  ['fichas','Clientes'],['anamnese','Anamnese'],['painel','Painel'],['perfil','Perfil'],['roda','Roda da vida'],['metas','Metas'],
  ['mapa','Atividades'],['rotina','Rotina'],['financas','Finanças'],['descanso','Descanso'],['encontros','Encontros'],['relatorio','Relatório']
 ];
-const TABNAME=Object.fromEntries(TABS);
+const CTABS=[
+ ['inicio','Começa aqui'],['perguntas','Perguntas'],['perfil','Perfil'],['roda','Roda da vida'],['metas','Sonho e metas'],
+ ['mapa','Atividades'],['rotina','Rotina'],['financas','Finanças'],['descanso','Descanso']
+];
+const TABNAME=Object.fromEntries([...TABS,...CTABS]);
+/* CLI = a cliente entrou com o login dela. FUNDO = ela escolheu aprofundar (senão vê só o essencial). */
+let CLI=false,UID=null,OUTRAS=[];
+const T=(a,c)=>CLI?c:a;
+const FUNDO=()=>!CLI||S.nivel==='fundo';
 const AREAS_RODA=['Corpo e saúde','Mente e descanso','Maternidade','Casamento','Família','Trabalho','Finanças','Estudos','Amizades','Espiritualidade','Lazer'];
 const QUEM=[['so','Só eu'],['del','Delegável'],['div','Dividir em casa'],['aut','Automatizar'],['cort','Cortar'],['q','?']];
 const ENERG=[['q','?'],['drena','Drena'],['neutra','Neutra'],['nutre','Nutre']];
 const CUIDADO=['','Pilates','Treino','Corrida','Caminhada','Descanso escolhido','Desabei'];
 const ROTEIRO=[
- {id:'chegada',bl:'Chegada',p:'De 0 a 10, como tu chegas hoje? O que te trouxe até aqui?',d:'Anota a nota e as palavras dela. Elas voltam no relatório.'},
- {id:'ontem',bl:'Retrato do dia',p:'Me conta o teu dia de ontem, do acordar ao deitar.',d:'Cada atividade que aparecer vai depois para Atividades.',m:'mapa'},
+ {id:'chegada',e:1,bl:'Chegada',p:'De 0 a 10, como tu chegas hoje? O que te trouxe até aqui?',d:'Anota a nota e as palavras dela. Elas voltam no relatório.'},
+ {id:'ontem',e:1,bl:'Retrato do dia',p:'Me conta o teu dia de ontem, do acordar ao deitar.',d:'Cada atividade que aparecer vai depois para Atividades.',m:'mapa'},
  {id:'semana',bl:'Retrato do dia',p:'O que muda nos outros dias da semana? E no fim de semana?'},
- {id:'trabalho',bl:'Trabalho e renda',p:'Como é o teu trabalho? Tem horário fixo ou vai por demanda? A renda é fixa, variável ou comissionada?',m:'perfil'},
- {id:'casa',bl:'Carga',p:'Em casa, quem faz o quê? O que só tu lembra?',d:'O que só ela lembra é a carga invisível.',m:'mapa'},
- {id:'corpo',bl:'Corpo',p:'Como estão o teu sono, a tua alimentação e o teu movimento?'},
- {id:'dinheiro',bl:'Dinheiro',p:'Como estão as contas? Em que momento tu gasta para compensar o cansaço?',m:'financas'},
- {id:'descanso',bl:'Descanso',p:'O que é descanso para ti? Quando foi o último fim de semana sem compromisso nenhum?',m:'descanso'},
+ {id:'trabalho',e:1,bl:'Trabalho e renda',p:'Como é o teu trabalho? Tem horário fixo ou vai por demanda? A renda é fixa, variável ou comissionada?',m:'perfil'},
+ {id:'casa',e:1,bl:'Carga',p:'Em casa, quem faz o quê? O que só tu lembra?',d:'O que só ela lembra é a carga invisível.',m:'mapa'},
+ {id:'corpo',e:1,bl:'Corpo',p:'Como estão o teu sono, a tua alimentação e o teu movimento?'},
+ {id:'dinheiro',e:1,bl:'Dinheiro',p:'Como estão as contas? Em que momento tu gasta para compensar o cansaço?',m:'financas'},
+ {id:'descanso',e:1,bl:'Descanso',p:'O que é descanso para ti? Quando foi o último fim de semana sem compromisso nenhum?',m:'descanso'},
  {id:'fuga',bl:'Descanso',p:'Para onde tu foge quando esgota? Celular, compras, comida, bebida, trabalho?',m:'descanso'},
  {id:'energia',bl:'Energia',p:'Quais são as 3 coisas que mais te drenam? E as 3 que mais te nutrem?',m:'mapa'},
  {id:'ninguem',bl:'Energia',p:'Se tu parasse de fazer alguma coisa amanhã, o que ninguém perceberia por um mês?'},
  {id:'crenca',bl:'Raiz',p:'Que frase tu ouviu na infância sobre trabalho, dever ou descanso?',d:'Leva a frase para Descanso e constrói a nova junto com ela.',m:'descanso'},
- {id:'sonho',bl:'Direção',p:'Daqui a 3 anos, como é um dia perfeito na tua vida?',m:'metas'},
- {id:'roda',bl:'Direção',p:'De 0 a 10, como está hoje cada área da tua vida?',m:'roda'}
+ {id:'sonho',e:1,bl:'Direção',p:'Daqui a 3 anos, como é um dia perfeito na tua vida?',m:'metas'},
+ {id:'roda',e:1,bl:'Direção',p:'De 0 a 10, como está hoje cada área da tua vida?',m:'roda'}
 ];
+const perguntasVisiveis=()=>FUNDO()?ROTEIRO:ROTEIRO.filter(q=>q.e);
 
 function A(area,nome,freq,onde,quem,energia,obs){return {area,nome,freq,onde,quem,energia:energia||'q',obs:obs||''}}
 const hoje=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
@@ -244,6 +255,7 @@ function vazio(nome){return {
  financas:{renda:'',contas:'',dividaTotal:'',reservaMeta:'',reservaAtual:'',combinado:''},
  gastos:[],fugas:[],descansoDef:'',crenca:'',crencaNova:'',linkFin:'',
  anamnese:{},encontros:[],direcionamentos:['','',''],mensagem:'',proximo:'',consentimento:'',
+ nivel:'',enviado:'',marcos:[],trazidoEm:'',
  possivel:{janela:'',dentro:'',regras:[],noite:'',ponte:''}};}
 function completa(f){const b=vazio(f.nome);for(const k in b){if(f[k]===undefined)f[k]=b[k];}if(!Array.isArray(f.direcionamentos))f.direcionamentos=['','',''];return f;}
 const clone=o=>JSON.parse(JSON.stringify(o));
@@ -269,7 +281,7 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const $=s=>document.querySelector(s);
 
 function renderSel(){$('#fichaSel').innerHTML=Object.entries(DB.fichas).map(([id,f])=>`<option value="${esc(id)}" ${id===DB.atual?'selected':''}>${esc(f.nome||'Sem nome')}</option>`).join('');}
-function renderTabs(){$('#tabs').innerHTML=TABS.map(([id,l])=>`<button role="tab" type="button" id="t-${id}" aria-selected="${id===tab}" data-tab="${id}">${l}</button>`).join('');}
+function renderTabs(){$('#tabs').innerHTML=(CLI?CTABS:TABS).map(([id,l])=>`<button role="tab" type="button" id="t-${id}" aria-selected="${id===tab}" data-tab="${id}">${l}</button>`).join('');}
 function go(id){tab=id;try{sessionStorage.setItem(KEY+'-tab',id)}catch(e){}document.body.classList.remove('present');renderTabs();render();window.scrollTo({top:0});}
 function abrir(id){DB.atual=id;S=DB.fichas[id];try{localStorage.setItem(KEY+'-atual',id)}catch(e){}renderSel();}
 
@@ -292,13 +304,102 @@ function radar(){
  const poly=AREAS_RODA.map((a,i)=>pt(i,S.roda[a]||0).join(',')).join(' ');
  g+=`<polygon points="${poly}" fill="var(--vinho)" fill-opacity=".22" stroke="var(--vinho)" stroke-width="2"/>`;
  AREAS_RODA.forEach((a,i)=>{const [x,y]=pt(i,S.roda[a]||0);g+=`<circle cx="${x}" cy="${y}" r="3.5" fill="var(--vinho)"/>`});
- return `<svg viewBox="0 0 420 400" role="img" aria-label="Roda da vida">${g}</svg>`;
+ return `<svg viewBox="-70 0 560 400" role="img" aria-label="Roda da vida">${g}</svg>`;
 }
 
 /* ---------- views ---------- */
 const V={};
 let confirmDel='';
+
+/* ----- modo cliente ----- */
+function secoes(){const resp=perguntasVisiveis().filter(q=>(S.anamnese[q.id]||'').trim()).length,tot=perguntasVisiveis().length;return [
+ ['perguntas','Perguntas',resp+' de '+tot+' respondidas',resp>=tot],
+ ['perfil','Perfil','Como é a tua rotina, o teu trabalho e as contas',!!(S.perfil.rotina&&S.perfil.renda&&S.perfil.contas)],
+ ['roda','Roda da vida','Uma nota para cada área',S.rodaTocada],
+ ['metas','Sonho e metas','Para onde tu queres ir',!!(S.sonho.trim()&&S.metas.some(m=>m.titulo.trim()))],
+ ['mapa','Atividades',S.atividades.length?S.atividades.length+' registradas':'Tudo o que passa pelas tuas mãos',S.atividades.length>=5],
+ ['rotina','Rotina','O dia dos sonhos e o dia possível',!!(S.diaIdeal.trim()||S.possivel.janela.trim()||S.possivel.dentro.trim())],
+ ['financas','Finanças','O dinheiro e o cansaço',!!(String(S.financas.dividaTotal).trim()||String(S.financas.reservaMeta).trim()||S.gastos.length)],
+ ['descanso','Descanso','O que te recarrega',!!S.descansoDef.trim()]];}
+
+V.consent=()=>`<div class="box" style="display:grid;gap:14px;max-width:640px">
+ <h2>Antes de começar</h2>
+ <p>As respostas que tu escreves aqui ficam guardadas com segurança e só tu e a Andréia Zanon conseguem ver. Elas servem para o teu acompanhamento e não são compartilhadas com ninguém.</p>
+ <p>A qualquer momento tu podes pedir para ver, corrigir ou apagar os teus dados. É só falar com a Andréia.</p>
+ <label class="f" for="c-nome">Como tu gostas de ser chamada?<input type="text" id="c-nome" value="${esc(S.nome)}"></label>
+ <label class="row" for="c-ok"><input type="checkbox" id="c-ok"> <span>Li e autorizo o uso das minhas respostas no meu acompanhamento.</span></label>
+ <div class="row"><button class="btn" type="button" id="c-go">Começar</button><span id="c-msg" class="small" role="status"></span></div>
+</div>`;
+
+function retrato(){
+ if(!S.rodaTocada&&!S.sonho.trim())return '';
+ const ord=AREAS_RODA.map(a=>[a,S.roda[a]]).sort((x,y)=>x[1]-y[1]);
+ const baixas=ord.slice(0,2).filter(x=>x[1]<=6),altas=ord.slice(-2).reverse().filter(x=>x[1]>=7);
+ const c=contagem();
+ return `<div class="box"><h3>Teu retrato de hoje</h3>
+  ${S.rodaTocada?`<div class="wheel"><div>${radar()}</div><div style="display:grid;gap:10px">
+   ${altas.length?`<p>O que está firme: <b>${altas.map(x=>esc(x[0])+' ('+x[1]+')').join(', ')}</b>.</p>`:''}
+   ${baixas.length?`<p>O que pede cuidado agora: <b>${baixas.map(x=>esc(x[0])+' ('+x[1]+')').join(', ')}</b>.</p>`:''}
+   ${c.n?`<p class="small">${c.n} atividades passam pelas tuas mãos${c.so?`, ${c.so} que só tu fazes`:''}${c.drena?`, ${c.drena} que te drenam`:''}.</p>`:''}
+  </div></div>`:''}
+  ${S.sonho.trim()?`<div class="dream" style="margin-top:14px"><h3>Para onde tu vais</h3><p class="big">${esc(S.sonho)}</p></div>`:''}
+  <p class="small" style="margin-top:10px">Este é o ponto de partida. Lá na frente, tu preenches de novo e a gente vê o caminho que tu fizeste.</p>
+ </div>`;}
+
+V.inicio=()=>{const sc=secoes(),feitas=sc.filter(x=>x[3]).length;
+ return `<div><h2>Oi, ${esc(S.nome||'')}</h2><p class="lead">Aqui tu enxergas como a tua vida está hoje e para onde tu queres ir. Não existe resposta certa. Escreve do teu jeito, com calma, em quantas vezes precisar: tudo fica salvo sozinho.</p></div>
+ <div class="box"><h3>Como tu queres fazer</h3><div class="chips">
+  <button type="button" class="chip" aria-pressed="${S.nivel!=='fundo'}" data-nivel="essencial">O essencial, mais leve</button>
+  <button type="button" class="chip" aria-pressed="${S.nivel==='fundo'}" data-nivel="fundo">Quero ir mais fundo</button></div>
+  <p class="small" style="margin-top:10px">${S.nivel==='fundo'?'Tu vais ver todas as perguntas e os detalhes de cada área. Se ficar pesado, volta para o essencial: nada do que tu escreveste se perde.':'Tu vais ver só o que é mais importante para começar. Quando quiser, troca para ir mais fundo.'}</p></div>
+ ${retrato()}
+ <div class="box"><h3>Teu caminho · ${feitas} de ${sc.length}</h3><div class="meter" style="margin-bottom:8px"><i style="width:${feitas/sc.length*100}%"></i></div>
+  ${sc.map(([id,l,d,ok])=>`<div class="anchor"><span class="when" style="color:${ok?'var(--ok)':'var(--muted)'}">${ok?'Feito':'A fazer'}</span><span class="row" style="justify-content:space-between"><span><b>${l}</b><br><span class="small">${esc(d)}</span></span><button class="btn ghost" type="button" data-tab="${id}">${ok?'Rever':'Abrir'}</button></span></div>`).join('')}
+  <p class="small" style="margin-top:10px">Começa pelas Perguntas. Se alguma parte não fizer sentido para ti agora, pula. A gente completa juntas no encontro.</p></div>
+ <div class="box">${S.enviado?`<p><b>Tu avisaste que terminou em ${fmt(S.enviado)}.</b> A Andréia já consegue ver. Podes continuar mexendo até o encontro.</p>`:`<p>Quando sentir que terminou, avisa a Andréia por aqui.</p><div class="row" style="margin-top:10px"><button class="btn" type="button" id="terminei">Terminei, pode ver</button></div>`}</div>`};
+
+V.perguntas=()=>{const qs=perguntasVisiveis();const r=qs.filter(q=>(S.anamnese[q.id]||'').trim()).length;
+ return `<div><h2>Perguntas</h2><p class="lead">Responde como se estivesse conversando comigo. Frases curtas servem. O que tu escreves aqui é o que a gente vai olhar juntas.</p></div>
+ <div class="box"><span class="num"><b>${r}</b> de ${qs.length} respondidas</span><div class="meter" style="margin-top:8px"><i style="width:${r/qs.length*100}%"></i></div></div>
+ ${qs.map((q,i)=>{const v=S.anamnese[q.id]||'';return `<div class="box q ${v.trim()?'done':''}">
+  <span class="nq">${i+1}</span><span class="bl">${q.bl}</span>
+  <span></span><label class="pq" for="a-${q.id}">${q.p}</label>
+  <textarea id="a-${q.id}" data-anam="${q.id}">${esc(v)}</textarea>
+ </div>`}).join('')}`};
+
+/* ----- trazer o que a cliente preencheu para a ficha da Andréia ----- */
+function juntaTexto(a,b,curto){a=String(a??'');b=String(b??'');if(!b.trim())return a;if(!a.trim())return b;if(a.includes(b.trim()))return a;return curto?a+' / ela: '+b:a+'\n\n[Ela escreveu] '+b;}
+function mesclar(t,c){
+ const uni=(a,b)=>{const s=new Set(a.map(x=>JSON.stringify(x)));(b||[]).forEach(x=>{const k=JSON.stringify(x);if(!s.has(k)){a.push(clone(x));s.add(k);}});};
+ for(const k in c.perfil){const v=c.perfil[k];if(Array.isArray(v))t.perfil[k]=[...new Set([...(t.perfil[k]||[]),...v])];else if(String(v??'').trim())t.perfil[k]=v;}
+ if(c.rodaTocada){t.roda=clone(c.roda);t.rodaTocada=true;}
+ ['sonho','diaIdeal','descansoDef'].forEach(k=>t[k]=juntaTexto(t[k],c[k]));
+ ['sonhoPrazo','crenca','crencaNova'].forEach(k=>t[k]=juntaTexto(t[k],c[k],1));
+ c.metas.forEach((m,i)=>{const tm=t.metas[i];if(!tm)return;['S','M','A','R'].forEach(k=>tm[k]=juntaTexto(tm[k],m[k]));['titulo','T'].forEach(k=>tm[k]=juntaTexto(tm[k],m[k],1));});
+ ['atividades','invisivel','ancoras','gastos','fugas'].forEach(k=>uni(t[k],c[k]));
+ for(const k in c.financas){if(k==='combinado')t.financas[k]=juntaTexto(t.financas[k],c.financas[k]);else if(String(c.financas[k]??'').trim())t.financas[k]=c.financas[k];}
+ for(const k in c.anamnese)t.anamnese[k]=juntaTexto(t.anamnese[k],c.anamnese[k]);
+ ['dentro'].forEach(k=>t.possivel[k]=juntaTexto(t.possivel[k],c.possivel[k]));
+ ['janela','noite','ponte'].forEach(k=>t.possivel[k]=juntaTexto(t.possivel[k],c.possivel[k],1));
+ uni(t.possivel.regras,c.possivel.regras);
+ c.cuidado.forEach((v,i)=>{if(v&&!t.cuidado[i])t.cuidado[i]=v;});
+ uni(t.marcos,c.marcos);
+ if(c.consentimento&&!t.consentimento)t.consentimento=c.consentimento;
+}
+const fmtDT=s=>{try{const d=new Date(s);return d.toLocaleDateString('pt-BR')+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}catch(e){return ''}};
+function alvoPadrao(nome){const n=slug(nome).split('-')[0];if(!n||n==='cliente')return '__nova';return Object.keys(DB.fichas).find(id=>{const m=slug(DB.fichas[id].nome).split('-')[0];return m&&(m.startsWith(n)||n.startsWith(m));})||'__nova';}
+let trazMsg='';
+function outrasHTML(){if(!OUTRAS.length)return '';
+ return `<div><h3>Preenchido pelas clientes</h3><p class="small" style="margin-bottom:10px">O que cada cliente escreveu no acesso dela. "Trazer respostas" junta tudo na tua ficha dela, sem apagar o que tu já tinhas: onde as duas escreveram, aparece "[Ela escreveu]". Recarrega a página para ver o mais recente.</p>${trazMsg?`<div class="callout p" style="margin-bottom:10px">${trazMsg}</div>`:''}
+ <div class="cards">${OUTRAS.map((o,i)=>{const f=o.dados;const alvo=alvoPadrao(f.nome);const resp=ROTEIRO.filter(q=>(f.anamnese[q.id]||'').trim()).length;
+  return `<div class="box card"><span class="nm">${esc(f.nome||'Sem nome')}</span>
+  <span class="small">${f.enviado?'Avisou que terminou em '+fmt(f.enviado):'Ainda preenchendo'} · mexeu em ${esc(fmtDT(o.updated_at))}</span>
+  <span class="small">${f.nivel==='fundo'?'Escolheu ir mais fundo':'Escolheu o essencial'} · ${resp} perguntas · ${f.atividades.length} atividades${f.rodaTocada?' · roda feita':''}</span>
+  <label class="f" for="alvo-${i}">Trazer para a ficha<select id="alvo-${i}">${Object.entries(DB.fichas).map(([id,x])=>`<option value="${esc(id)}" ${id===alvo?'selected':''}>${esc(x.nome||'Sem nome')}</option>`).join('')}<option value="__nova" ${alvo==='__nova'?'selected':''}>Criar ficha nova</option></select></label>
+  <div class="row"><button class="btn" type="button" data-trazer="${i}">Trazer respostas</button></div></div>`}).join('')}</div></div>`;}
 V.fichas=()=>`${Object.keys(DB.fichas).length?'':'<div class="callout p"><b>Nenhuma ficha ainda.</b> Para trazer as fichas do link antigo: lá, clica em "Copiar todos os dados"; aqui, em "Importar dados", cola e importa. Ou cria uma cliente nova abaixo.</div>'}<div><h2>Clientes</h2><p class="lead">Cada cliente tem a sua ficha. Tu conduz a anamnese no encontro, registra o andamento e gera o relatório que ela leva para casa.</p></div>
+ ${outrasHTML()}
+ ${OUTRAS.length?'<h3>Tuas fichas</h3>':''}
  <div class="cards">${Object.entries(DB.fichas).map(([id,f])=>{const ult=f.encontros.length?f.encontros[f.encontros.length-1].data:'';return `<div class="box card ${id===DB.atual?'cur':''}">
   <span class="nm">${esc(f.nome||'Sem nome')}</span>
   <span class="small">Anamnese ${respondidas(f)} de ${ROTEIRO.length} · ${f.encontros.length} ${f.encontros.length===1?'encontro':'encontros'}${ult?` · último em ${fmt(ult)}`:''}</span>
@@ -350,7 +451,7 @@ V.perfil=()=>{const p=S.perfil;
  return `<div><h2>Perfil</h2><p class="lead">As respostas daqui ajustam a rotina, a regra de dinheiro e a referência de reserva.</p></div>
  <div class="box grid2"><label class="f">Nome<input type="text" id="f-nome" value="${esc(S.nome)}" data-bind="nome"></label>
  <label class="f">Filhos<input type="text" id="f-filhos" value="${esc(p.filhos)}" data-bind="perfil.filhos" placeholder="Ex.: 2 filhos, 3 e 7 anos"></label></div>
- ${S.consentimento!=='próprio'?`<div class="box"><label class="row" for="f-cons"><input type="checkbox" id="f-cons" ${S.consentimento?'checked':''}> <span>Ela autorizou o registro destes dados para o acompanhamento (LGPD)${S.consentimento?` · registrado em ${fmt(S.consentimento)}`:''}</span></label></div>`:''}
+ ${S.consentimento!=='próprio'&&!CLI?`<div class="box"><label class="row" for="f-cons"><input type="checkbox" id="f-cons" ${S.consentimento?'checked':''}> <span>Ela autorizou o registro destes dados para o acompanhamento (LGPD)${S.consentimento?` · registrado em ${fmt(S.consentimento)}`:''}</span></label></div>`:''}
  <div class="box"><h3>A rotina é</h3><div class="chips">${opt('rotina','fixa','Fixa, com horário para começar e terminar')}${opt('rotina','flutuante','Flutuante, muda conforme a demanda')}${opt('rotina','mista','Mista')}</div>
  ${p.rotina==='fixa'?`<div class="row" style="margin-top:12px"><label class="f">Começa<input type="text" id="f-ini" placeholder="08:00" value="${esc(p.horaIni)}" data-bind="perfil.horaIni"></label><label class="f">Termina<input type="text" id="f-fim" placeholder="18:00" value="${esc(p.horaFim)}" data-bind="perfil.horaFim"></label></div>`:''}</div>
  <div class="box"><h3>Trabalho (pode marcar mais de um)</h3><div class="chips">${mul('clt','CLT')}${mul('negocio','Negócio próprio')}${mul('empresa_familia','Empresa da família')}${mul('autonoma','Autônoma ou comissionada')}${mul('casa','Cuida da casa')}</div></div>
@@ -362,39 +463,39 @@ V.roda=()=>`<div><h2>Roda da vida</h2><p class="lead">Nota de 0 a 10 para como c
  <div class="grid2" style="grid-template-columns:1fr">${AREAS_RODA.map((a,i)=>`<label class="sl" for="r-${i}"><span>${esc(a)}</span><output id="o-${i}">${S.roda[a]}</output><input type="range" min="0" max="10" step="1" id="r-${i}" data-roda="${esc(a)}" value="${S.roda[a]}"></label>`).join('')}</div></div>
  ${!S.rodaTocada?'<p class="note">Todas as áreas começam em 5. Ajusta cada uma para a nota real.</p>':''}`;
 
-V.metas=()=>`<div><h2>Sonho e metas</h2><p class="lead">Do sonho saem 3 metas. Cada uma segue o SMART: específica, mensurável, alcançável, relevante e com prazo.</p></div>
+V.metas=()=>`<div><h2>Sonho e metas</h2><p class="lead">${FUNDO()?'Do sonho saem 3 metas. Cada uma segue o SMART: específica, mensurável, alcançável, relevante e com prazo.':'Primeiro o sonho. Depois, 3 passos para chegar nele: um para agora, um para os próximos meses e um para mais longe.'}</p></div>
  <div class="box grid2"><label class="f">Sonho<textarea id="f-sonho" data-bind="sonho">${esc(S.sonho)}</textarea></label><label class="f">Prazo do sonho<input type="text" id="f-sprazo" data-bind="sonhoPrazo" value="${esc(S.sonhoPrazo)}"></label></div>
  <div class="box"><label class="f">Dia ideal<textarea id="f-dia" data-bind="diaIdeal">${esc(S.diaIdeal)}</textarea></label></div>
  ${S.metas.map((m,i)=>`<div class="box goal"><span class="tag">${esc(m.prazo)}${m.codigo?` · ${esc(m.codigo)} no Planejamento Acontecendo`:''}</span>
-  <label class="f">Meta<input type="text" id="m-${i}-t" data-bind="metas.${i}.titulo" value="${esc(m.titulo)}"></label>
-  <div class="grid2">
+  <label class="f">${T('Meta','O que tu queres conquistar')}<input type="text" id="m-${i}-t" data-bind="metas.${i}.titulo" value="${esc(m.titulo)}"></label>
+  ${FUNDO()?`<div class="grid2">
    <label class="f"><span><b style="color:var(--petroleo)">S</b> · Específica: o que exatamente</span><textarea id="m-${i}-s" data-bind="metas.${i}.S">${esc(m.S)}</textarea></label>
    <label class="f"><span><b style="color:var(--petroleo)">M</b> · Mensurável: como sabe que chegou</span><textarea id="m-${i}-m" data-bind="metas.${i}.M">${esc(m.M)}</textarea></label>
    <label class="f"><span><b style="color:var(--petroleo)">A</b> · Alcançável: o que já tem</span><textarea id="m-${i}-a" data-bind="metas.${i}.A">${esc(m.A)}</textarea></label>
    <label class="f"><span><b style="color:var(--petroleo)">R</b> · Relevante: por que importa</span><textarea id="m-${i}-r" data-bind="metas.${i}.R">${esc(m.R)}</textarea></label>
-  </div>
-  <label class="f"><span><b style="color:var(--petroleo)">T</b> · Prazo</span><input type="text" id="m-${i}-d" data-bind="metas.${i}.T" value="${esc(m.T)}"></label></div>`).join('')}`;
+  </div>`:`<label class="f">Como tu vais saber que chegou<textarea id="m-${i}-m" data-bind="metas.${i}.M">${esc(m.M)}</textarea></label>`}
+  <label class="f"><span>${FUNDO()?'<b style="color:var(--petroleo)">T</b> · Prazo':'Até quando'}</span><input type="text" id="m-${i}-d" data-bind="metas.${i}.T" value="${esc(m.T)}"></label></div>`).join('')}`;
 
 let filtroArea='Todas';
 V.mapa=()=>{const c=contagem();const areas=['Todas',...new Set(S.atividades.map(a=>a.area))];if(!areas.includes(filtroArea))filtroArea='Todas';
  const rows=S.atividades.map((a,i)=>({a,i})).filter(x=>filtroArea==='Todas'||x.a.area===filtroArea);
- return `<div><h2>Atividades</h2><p class="lead">Tudo o que ela faz, área por área. Toca nas etiquetas para marcar quem faz e o que cada atividade faz com a energia dela.</p></div>
+ return `<div><h2>Atividades</h2><p class="lead">${T('Tudo o que ela faz, área por área. Toca nas etiquetas para marcar quem faz e o que cada atividade faz com a energia dela.','Tudo o que passa pelas tuas mãos numa semana, do trabalho à casa. Depois de adicionar, toca nas etiquetas: quem mais poderia fazer isso, e se aquilo te drena ou te nutre.')}</p></div>
  <div class="grid3">
-  <div class="box stat"><span class="n num">${c.so}</span><span class="l">só ela</span></div>
+  <div class="box stat"><span class="n num">${c.so}</span><span class="l">${T('só ela','só tu')}</span></div>
   <div class="box stat"><span class="n num">${c.del+c.aut+c.div+c.cort}</span><span class="l">delegar, dividir, automatizar ou cortar</span></div>
   <div class="box stat"><span class="n num">${c.drena}<span style="font-size:20px;color:var(--muted)"> / ${c.nutre}</span></span><span class="l">drenam / nutrem</span></div>
  </div>
  <div class="chips" role="group" aria-label="Filtrar área">${areas.map(a=>`<button type="button" class="chip" aria-pressed="${a===filtroArea}" data-filtro="${esc(a)}">${esc(a)}</button>`).join('')}</div>
  <div class="tbl"><table><thead><tr><th>Área</th><th>Atividade</th><th>Frequência</th><th>Onde</th><th>Quem</th><th>Energia</th></tr></thead><tbody>
- ${rows.map(({a,i})=>`<tr><td class="area">${esc(a.area)}</td><td>${esc(a.nome)}${a.obs?`<div class="small">${esc(a.obs)}</div>`:''}</td><td class="small">${esc(a.freq)}</td><td class="small">${esc(a.onde)}</td><td>${quemPill(a.quem,i)}</td><td>${enPill(a.energia,i)}</td></tr>`).join('')||'<tr><td colspan="6" class="small">Nenhuma atividade ainda. Adiciona a primeira abaixo, a partir do dia de ontem dela.</td></tr>'}
+ ${rows.map(({a,i})=>`<tr><td class="area">${esc(a.area)}</td><td>${esc(a.nome)}${a.obs?`<div class="small">${esc(a.obs)}</div>`:''}</td><td class="small">${esc(a.freq)}</td><td class="small">${esc(a.onde)}</td><td>${quemPill(a.quem,i)}</td><td>${enPill(a.energia,i)}</td></tr>`).join('')||`<tr><td colspan="6" class="small">Nenhuma atividade ainda. Adiciona a primeira abaixo, a partir do ${T('dia de ontem dela','teu dia de ontem')}.</td></tr>`}
  </tbody></table></div>
  <div class="box"><h3>Adicionar atividade</h3><div class="grid3">
   <label class="f">Área<select id="n-area">${['Trabalho','Negócio','Casa e família','Corpo e saúde','Estudos','Pessoas','Espiritualidade','Lazer'].map(a=>`<option>${a}</option>`).join('')}</select></label>
   <label class="f">Atividade<input type="text" id="n-nome" placeholder="Ex.: levar ao dentista"></label>
   <label class="f">Frequência<input type="text" id="n-freq" placeholder="Ex.: semanal"></label>
  </div><div class="row" style="margin-top:10px"><button class="btn" type="button" id="addAtv">Adicionar</button></div></div>
- <div class="box"><h3>Carga invisível: o que só existe na cabeça dela</h3><ul class="list">${S.invisivel.map(x=>`<li>${esc(x)}</li>`).join('')||'<li class="small">Nada registrado ainda.</li>'}</ul>
- <div class="row" style="margin-top:10px"><input type="text" id="n-inv" placeholder="Outra coisa que só ela lembra" style="flex:1 1 220px"><button class="btn ghost" type="button" id="addInv">Adicionar</button></div></div>`};
+ <div class="box"><h3>Carga invisível: o que só existe na ${T('cabeça dela','tua cabeça')}</h3>${CLI?'<p class="small" style="margin-bottom:8px">As coisas que ninguém vê, mas que só acontecem porque tu lembras. Ex.: a vacina, o presente do aniversário, o que falta na despensa.</p>':''}<ul class="list">${S.invisivel.map(x=>`<li>${esc(x)}</li>`).join('')||'<li class="small">Nada registrado ainda.</li>'}</ul>
+ <div class="row" style="margin-top:10px"><input type="text" id="n-inv" placeholder="${T('Outra coisa que só ela lembra','Outra coisa que só tu lembras')}" style="flex:1 1 220px"><button class="btn ghost" type="button" id="addInv">Adicionar</button></div></div>`};
 
 let energiaHoje='';
 try{energiaHoje=sessionStorage.getItem(KEY+'-en')||''}catch(e){}
@@ -409,13 +510,13 @@ V.rotina=()=>{const p=S.perfil;const fixa=p.rotina==='fixa';
    <label class="f" style="margin-top:10px">Fora da janela, o que é sagrado<input type="text" id="p-noi" data-bind="possivel.noite" value="${esc(S.possivel.noite)}" placeholder="Ex.: estar com os filhos de verdade"></label>
   </div>
  </div>
- <div class="box"><h3>Regras da rotina possível</h3><ul class="list">${S.possivel.regras.map((r,i)=>`<li><span style="flex:1">${esc(r)}</span><button class="btn ghost" type="button" data-regdel="${i}" aria-label="Remover regra">Remover</button></li>`).join('')||'<li class="small">Nenhuma regra ainda.</li>'}</ul>
+ ${FUNDO()?`<div class="box"><h3>Regras da rotina possível</h3><ul class="list">${S.possivel.regras.map((r,i)=>`<li><span style="flex:1">${esc(r)}</span><button class="btn ghost" type="button" data-regdel="${i}" aria-label="Remover regra">Remover</button></li>`).join('')||'<li class="small">Nenhuma regra ainda.</li>'}</ul>
   <div class="row" style="margin-top:10px"><input type="text" id="n-reg" placeholder="Ex.: atendimento só até as 18h" style="flex:1 1 220px"><button class="btn ghost" type="button" id="addReg">Adicionar regra</button></div>
-  <label class="f" style="margin-top:12px">O que aproxima a possível da dos sonhos<input type="text" id="p-pon" data-bind="possivel.ponte" value="${esc(S.possivel.ponte)}" placeholder="Ex.: delegar o operacional até dezembro"></label></div>
+  <label class="f" style="margin-top:12px">O que aproxima a possível da dos sonhos<input type="text" id="p-pon" data-bind="possivel.ponte" value="${esc(S.possivel.ponte)}" placeholder="Ex.: delegar o operacional até dezembro"></label></div>`:''}
  ${fixa&&(p.horaIni||p.horaFim)?`<div class="callout p"><b>Trabalho:</b> das ${esc(p.horaIni)} às ${esc(p.horaFim)}. Fora disso, só âncoras pessoais.</div>`:''}
- <div class="box"><h3>Âncoras: o que não se negocia</h3>${S.ancoras.map(a=>`<div class="anchor"><span class="when">${esc(a[0])}</span><span>${esc(a[1])}</span>${a[2]?`<span class="why">${esc(a[2])}</span>`:''}</div>`).join('')||'<p class="small">Nenhuma âncora ainda.</p>'}
+ <div class="box"><h3>Âncoras: o que não se negocia</h3>${CLI?'<p class="small" style="margin-bottom:8px">Os poucos compromissos que seguram a tua semana. Ex.: segunda, 12h, pilates. Todo dia, 18h, buscar as crianças.</p>':''}${S.ancoras.map(a=>`<div class="anchor"><span class="when">${esc(a[0])}</span><span>${esc(a[1])}</span>${a[2]?`<span class="why">${esc(a[2])}</span>`:''}</div>`).join('')||'<p class="small">Nenhuma âncora ainda.</p>'}
  <div class="grid3" style="margin-top:12px"><input type="text" id="n-aq" placeholder="Quando (ex.: quarta, 12h)" aria-label="Quando"><input type="text" id="n-ao" placeholder="O quê" aria-label="O quê"><button class="btn ghost" type="button" id="addAnc">Adicionar âncora</button></div></div>
- <div class="box"><h3>Como está a energia hoje?</h3><div class="chips">${['Alta','Média','Baixa'].map(e=>`<button type="button" class="chip" aria-pressed="${energiaHoje===e}" data-energia="${e}">${e}</button>`).join('')}</div>
+ ${CLI&&!Object.values(S.blocos).some(b=>b.length)?'':`<div class="box"><h3>Como está a energia hoje?</h3><div class="chips">${['Alta','Média','Baixa'].map(e=>`<button type="button" class="chip" aria-pressed="${energiaHoje===e}" data-energia="${e}">${e}</button>`).join('')}</div>
  <div class="grid2" style="margin-top:14px">
   ${bloco('foco','Foco profundo','Pede cabeça descansada e silêncio',energiaHoje==='Alta')}
   ${bloco('pessoas','Pessoas','Atendimentos, conversas, parcerias',energiaHoje==='Alta'||energiaHoje==='Média')}
@@ -423,27 +524,27 @@ V.rotina=()=>{const p=S.perfil;const fixa=p.rotina==='fixa';
   ${bloco('rapidas','Rápidas no celular','5 a 15 min, em qualquer brecha',energiaHoje==='Baixa'||energiaHoje==='Média')}
  </div>
  ${energiaHoje==='Baixa'?'<div class="callout v" style="margin-top:14px"><b>Dia de energia baixa.</b> Só as âncoras e as rápidas. O resto espera. Descansar hoje conta como cuidado.</div>':''}
- </div>`};
+ </div>`}`};
 
 V.financas=()=>{const f=S.financas;const p=S.perfil;
  const renda=p.renda||f.renda;const sozinha=(p.contas||f.contas)==='sozinha';
  const porSent={};S.gastos.forEach(g=>{const k=(g.sentia||'Sem registro').trim();porSent[k]=porSent[k]||{n:0,v:0};porSent[k].n++;porSent[k].v+=parseFloat(String(g.valor).replace(',','.'))||0});
  const total=S.gastos.reduce((s,g)=>s+(parseFloat(String(g.valor).replace(',','.'))||0),0);
- const dica={fixa:'Separa a reserva e a parcela da dívida no dia em que o salário cai, antes de qualquer outro gasto.',variavel:'Vive com a média dos 3 meses mais fracos. O que entrar acima disso vai primeiro para a dívida, depois para a reserva.',comissionada:'Vive com a média dos 3 meses mais fracos. Comissão boa não é aumento: o excedente vai primeiro para a dívida, depois para a reserva.',mista:'A parte fixa paga a casa. A parte variável vai primeiro para a dívida e depois para a reserva, nunca para o dia a dia.'}[renda]||'Marca no Perfil como é a renda e aparece a regra que serve para ela.';
+ const dica={fixa:'Separa a reserva e a parcela da dívida no dia em que o salário cai, antes de qualquer outro gasto.',variavel:'Vive com a média dos 3 meses mais fracos. O que entrar acima disso vai primeiro para a dívida, depois para a reserva.',comissionada:'Vive com a média dos 3 meses mais fracos. Comissão boa não é aumento: o excedente vai primeiro para a dívida, depois para a reserva.',mista:'A parte fixa paga a casa. A parte variável vai primeiro para a dívida e depois para a reserva, nunca para o dia a dia.'}[renda]||T('Marca no Perfil como é a renda e aparece a regra que serve para ela.','Marca no Perfil como é a tua renda e aparece a regra que serve para ti.');
  const pct=(parseFloat(f.reservaAtual)||0)/(parseFloat(f.reservaMeta)||0);
- return `<div><h2>Finanças e emoção</h2><p class="lead">O dinheiro mostra onde o cansaço está cobrando.</p></div>
+ return `<div><h2>Finanças e emoção</h2><p class="lead">O dinheiro mostra onde o cansaço está cobrando.${CLI?' Não precisa de planilha: o que tu souberes de cabeça já serve.':''}</p></div>
  <div class="callout p"><b>Regra de renda:</b> ${dica}</div>
  ${S.linkFin?`<div class="box row" style="justify-content:space-between"><span>Os números da casa ficam no sistema financeiro. Aqui fica o lado emocional do dinheiro.</span><a class="btn ghost" href="${esc(S.linkFin)}" target="_blank" rel="noopener">Abrir o sistema financeiro</a></div>`:''}
  <div class="grid2">
   <div class="box"><h3>Sair das dívidas</h3><label class="f">Total das dívidas (R$)<input type="number" id="f-div" inputmode="decimal" data-bind="financas.dividaTotal" value="${esc(f.dividaTotal)}"></label>
-   <p class="small" style="margin-top:8px">${sozinha?'Contas só dela: o plano precisa caber no mês mais fraco.':'Contas divididas: vale combinar quanto cada um põe na dívida.'}</p></div>
+   <p class="small" style="margin-top:8px">${sozinha?T('Contas só dela: o plano precisa caber no mês mais fraco.','Contas só tuas: o plano precisa caber no mês mais fraco.'):'Contas divididas: vale combinar quanto cada um põe na dívida.'}</p></div>
   <div class="box"><h3>Reserva ${sozinha?'para mudar de vida':'da família'}</h3>
    <div class="grid2"><label class="f">Meta (R$)<input type="number" id="f-rm" data-bind="financas.reservaMeta" value="${esc(f.reservaMeta)}"></label><label class="f">Tem hoje (R$)<input type="number" id="f-ra" data-bind="financas.reservaAtual" value="${esc(f.reservaAtual)}"></label></div>
    <div class="meter" style="margin-top:10px"><i style="width:${isFinite(pct)?Math.min(100,pct*100):0}%"></i></div>
    <p class="small" style="margin-top:6px">${sozinha?'Referência: 6 meses do custo de vida para poder sair de um emprego com calma.':'Referência: 3 a 6 meses do custo da casa.'}</p></div>
  </div>
  ${!sozinha?`<div class="box"><label class="f">Combinado do casal sobre gastos<textarea id="f-comb" data-bind="financas.combinado" placeholder="Ex.: compra acima de R$ 150 espera 24h; quem está cansado não decide compra.">${esc(f.combinado)}</textarea></label></div>`:''}
- <div class="box"><h3>Diário de gasto emocional</h3>
+ <div class="box"><h3>Diário de gasto emocional</h3>${CLI?'<p class="small" style="margin-bottom:8px">Lembra das últimas compras que tu fizeste no cansaço, na pressa ou para te dar um agrado. Registra algumas aqui. Não é para julgar, é para enxergar.</p>':''}
   <div class="tbl"><table><thead><tr><th>Dia</th><th>Hora</th><th>O que</th><th>Valor</th><th>Quem</th><th>Como estava</th><th>Do que precisava</th></tr></thead><tbody>
   ${S.gastos.map(g=>`<tr><td class="num small">${esc(fmt(g.data).slice(0,5))}</td><td class="small">${esc(g.hora)}</td><td>${esc(g.oque)}</td><td class="num">${g.valor?'R$ '+esc(g.valor):'<span class="small">a preencher</span>'}</td><td class="small">${esc(g.quem)}</td><td><span class="pill e-drena" style="cursor:default">${esc(g.sentia)}</span></td><td class="small">${esc(g.precisava)}</td></tr>`).join('')||'<tr><td colspan="7" class="small">Nenhum registro ainda.</td></tr>'}
   </tbody></table></div>
@@ -458,21 +559,21 @@ V.financas=()=>{const f=S.financas;const p=S.perfil;
   ${S.gastos.length?`<div class="callout v" style="margin-top:14px"><b>Padrão até agora:</b> ${Object.entries(porSent).map(([k,v])=>`${v.n} ${v.n>1?'vezes':'vez'} ${esc(k.toLowerCase())}${v.v?` (R$ ${v.v.toFixed(2).replace('.',',')})`:''}`).join(' · ')}${total?`. Total: R$ ${total.toFixed(2).replace('.',',')}.`:'.'}</div>`:''}
  </div>`};
 
-V.descanso=()=>`<div><h2>Descanso</h2><p class="lead">Descanso escolhido conta como cuidado. Descanso que só acontece porque ela desabou é sinal de alerta.</p></div>
- <div class="box"><label class="f">O que é descanso para ela<textarea id="f-desc" data-bind="descansoDef">${esc(S.descansoDef)}</textarea></label></div>
+V.descanso=()=>`<div><h2>Descanso</h2><p class="lead">Descanso escolhido conta como cuidado. ${T('Descanso que só acontece porque ela desabou é sinal de alerta.','Descanso que só acontece porque tu desabaste é sinal de alerta.')}</p></div>
+ <div class="box"><label class="f">${T('O que é descanso para ela','O que é descanso para ti')}<textarea id="f-desc" data-bind="descansoDef">${esc(S.descansoDef)}</textarea></label></div>
  <div class="box"><h3>Momentos de cuidado nesta semana</h3>
   <div class="week">${['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'].map((d,i)=>`<label class="day" for="c-${i}">${d}<select id="c-${i}" data-cuid="${i}">${CUIDADO.map(o=>`<option ${S.cuidado[i]===o?'selected':''} value="${o}">${o||'nada'}</option>`).join('')}</select></label>`).join('')}</div>
   <div class="row" style="margin-top:12px"><span class="num"><b>${cuidadoCount()}</b> de 3 no mínimo, 5 no ideal</span></div></div>
- <div class="box"><h3>A crença que segura o descanso</h3>
-  <label class="f">Frase antiga<input type="text" id="f-cr" data-bind="crenca" value="${esc(S.crenca)}" placeholder="A frase que ela ouviu"></label>
+ ${FUNDO()?`<div class="box"><h3>A crença que segura o descanso</h3>
+  <label class="f">Frase antiga<input type="text" id="f-cr" data-bind="crenca" value="${esc(S.crenca)}" placeholder="${T('A frase que ela ouviu','Uma frase que tu ouvias em casa sobre trabalho ou descanso')}"></label>
   ${S.crenca?`<p class="belief" style="margin-top:12px"><s>${esc(S.crenca)}</s></p>`:''}
-  <label class="f" style="margin-top:12px">Frase nova<input type="text" id="f-cn" data-bind="crencaNova" value="${esc(S.crencaNova)}" placeholder="Com as palavras dela"></label>
+  <label class="f" style="margin-top:12px">Frase nova<input type="text" id="f-cn" data-bind="crencaNova" value="${esc(S.crencaNova)}" placeholder="${T('Com as palavras dela','Como tu queres pensar daqui para frente')}"></label>
   ${S.crencaNova?`<p class="belief new" style="margin-top:10px">${esc(S.crencaNova)}</p>`:''}</div>
- <div class="box"><h3>Para onde ela foge quando esgota</h3>
-  <div class="tbl"><table style="min-width:560px"><thead><tr><th>Fuga</th><th>Gatilho</th><th>No lugar, ela vai</th></tr></thead><tbody>
+ <div class="box"><h3>${T('Para onde ela foge quando esgota','Para onde tu foges quando esgotas')}</h3>
+  <div class="tbl"><table style="min-width:560px"><thead><tr><th>Fuga</th><th>Gatilho</th><th>${T('No lugar, ela vai','No lugar, eu vou')}</th></tr></thead><tbody>
   ${S.fugas.map((f,i)=>`<tr><td>${esc(f.nome)}</td><td><input type="text" id="fg-${i}" data-bind="fugas.${i}.gatilho" value="${esc(f.gatilho)}" placeholder="O que vem antes?" aria-label="Gatilho"></td><td><input type="text" id="fa-${i}" data-bind="fugas.${i}.alt" value="${esc(f.alt)}" placeholder="Ex.: banho e cama" aria-label="Alternativa"></td></tr>`).join('')||'<tr><td colspan="3" class="small">Nenhuma fuga registrada.</td></tr>'}
   </tbody></table></div>
-  <div class="row" style="margin-top:10px"><input type="text" id="n-fuga" placeholder="Ex.: rolar o feed" style="flex:1 1 220px"><button class="btn ghost" type="button" id="addFuga">Adicionar fuga</button></div></div>`;
+  <div class="row" style="margin-top:10px"><input type="text" id="n-fuga" placeholder="Ex.: rolar o feed" style="flex:1 1 220px"><button class="btn ghost" type="button" id="addFuga">Adicionar fuga</button></div></div>`:''}`;
 
 let delEnc=-1;
 V.encontros=()=>`<div><h2>Encontros de ${esc(S.nome||'cliente')}</h2><p class="lead">O registro do acompanhamento. As notas privadas ficam só contigo e nunca entram no relatório.</p></div>
@@ -535,7 +636,14 @@ V.relatorio=()=>{const ult=S.encontros[S.encontros.length-1];const ms=S.metas.fi
   <div class="sig">Andréia Zanon · Mentora sistêmica · @andreiazanon__</div>
  </article>`};
 
-function render(){if(!S&&tab!=='fichas'){tab='fichas';renderTabs();}$('#app').innerHTML=`<section class="panel" role="tabpanel" aria-labelledby="t-${tab}">${V[tab]()}</section>`+(document.body.classList.contains('present')?'<button class="btn exitp" type="button" id="exitP">Sair da tela cheia</button>':'');}
+function render(){
+ const lista=CLI?CTABS:TABS;if(!lista.some(x=>x[0]===tab))tab=CLI?'inicio':'fichas';
+ if(!CLI&&!S&&tab!=='fichas')tab='fichas';
+ if(CLI&&!S.consentimento){$('#tabs').hidden=true;$('#app').innerHTML=`<section class="panel">${V.consent()}</section>`;return;}
+ $('#tabs').hidden=false;renderTabs();
+ if(CLI){const i=CTABS.findIndex(x=>x[0]===tab),nx=CTABS[i+1];
+  $('#app').innerHTML=`<section class="panel" role="tabpanel" aria-labelledby="t-${tab}">${V[tab]()}${tab==='inicio'?'':`<div class="row">${nx?`<button class="btn" type="button" data-tab="${nx[0]}">Seguir para ${nx[1]}</button>`:''}<button class="btn ghost" type="button" data-tab="inicio">Voltar ao começo</button></div>`}</section>`;return;}
+ $('#app').innerHTML=`<section class="panel" role="tabpanel" aria-labelledby="t-${tab}">${V[tab]()}</section>`+(document.body.classList.contains('present')?'<button class="btn exitp" type="button" id="exitP">Sair da tela cheia</button>':'');}
 
 /* ---------- events ---------- */
 function setPath(path,val){const ks=path.split('.');let o=S;ks.slice(0,-1).forEach(k=>o=o[k]);o[ks[ks.length-1]]=val;}
@@ -548,15 +656,22 @@ document.addEventListener('change',e=>{const t=e.target;
  if(t.id==='fichaSel'){abrir(t.value);render();return;}
  if(t.id==='f-cons'){S.consentimento=t.checked?hoje():'';save();render();return;}
  if(t.dataset.cuid){S.cuidado[+t.dataset.cuid]=t.value;save();render();return;}
- if(t.dataset.anam){render();return;}
- if(t.dataset.bind&&(tab==='financas'&&t.type==='number'||tab==='descanso'&&(t.id==='f-cr'||t.id==='f-cn')))render();
+ /* sem redesenhar a tela aqui: o change dispara no momento do clique e engoliria o clique seguinte */
+ if(t.dataset.anam){const q=t.closest('.q');if(q)q.classList.toggle('done',!!t.value.trim());return;}
 });
 document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
  if(t.dataset.tab){go(t.dataset.tab);return;}
+ if(t.id==='c-go'){const n=$('#c-nome').value.trim();const m=$('#c-msg');if(!n){m.textContent='Escreve como tu gostas de ser chamada.';return;}if(!$('#c-ok').checked){m.textContent='Para continuar, marca que tu autorizas.';return;}S.nome=n;S.consentimento=hoje();save();go('inicio');return;}
+ if(t.dataset.nivel){S.nivel=t.dataset.nivel;save();render();return;}
+ if(t.id==='terminei'){S.enviado=hoje();S.marcos.push({data:hoje(),roda:clone(S.roda),rodaTocada:S.rodaTocada});save();flush();render();return;}
+ if(t.dataset.trazer){const o=OUTRAS[+t.dataset.trazer];const sel=$('#alvo-'+t.dataset.trazer).value;let id=sel;
+  if(sel==='__nova'){let k=2;id=slug(o.dados.nome);while(DB.fichas[id])id=slug(o.dados.nome)+'-'+k++;DB.fichas[id]=vazio(o.dados.nome);}
+  mesclar(DB.fichas[id],o.dados);DB.fichas[id].trazidoEm=hoje();pend.add(id);abrir(id);save();
+  trazMsg=`<b>Feito.</b> As respostas de ${esc(o.dados.nome||'cliente')} estão na ficha ${esc(DB.fichas[id].nome)}. Abre a ficha para ver o painel e o relatório.`;render();return;}
  if(t.dataset.abrir){abrir(t.dataset.abrir);confirmDel='';go(respondidas(S)<ROTEIRO.length&&!S.encontros.length?'anamnese':'painel');return;}
  if(t.dataset.del){confirmDel=t.dataset.del;render();return;}
  if(t.dataset.delno){confirmDel='';render();return;}
- if(t.dataset.delok){const did=t.dataset.delok;pend.delete(did);sb.from('fichas').delete().eq('id',did).then(({error})=>estado(error?'Não consegui excluir na nuvem':'Ficha excluída'));delete DB.fichas[did];confirmDel='';if(!DB.fichas[DB.atual]){const k=Object.keys(DB.fichas)[0];if(k)abrir(k);else{DB.atual=null;S=null;}}renderSel();render();return;}
+ if(t.dataset.delok){const did=t.dataset.delok;pend.delete(did);sb.from('fichas').delete().eq('owner',UID).eq('id',did).then(({error})=>estado(error?'Não consegui excluir na nuvem':'Ficha excluída'));delete DB.fichas[did];confirmDel='';if(!DB.fichas[DB.atual]){const k=Object.keys(DB.fichas)[0];if(k)abrir(k);else{DB.atual=null;S=null;}}renderSel();render();return;}
  if(t.id==='novaBtn'){const n=$('#novaNome').value.trim();if(!n)return;let id=slug(n),k=2;while(DB.fichas[id])id=slug(n)+'-'+k++;DB.fichas[id]=vazio(n);abrir(id);go('perfil');return;}
  if(t.dataset.cycle){const i=+t.dataset.i;const list=t.dataset.cycle==='quem'?QUEM:ENERG;const cur=S.atividades[i][t.dataset.cycle];const idx=list.findIndex(x=>x[0]===cur);S.atividades[i][t.dataset.cycle]=list[(idx+1)%list.length][0];save();render();return;}
  if(t.dataset.set){const [a,b]=t.dataset.set.split('.');S[a][b]=t.dataset.v;if(b==='renda')S.financas.renda=t.dataset.v;if(b==='contas')S.financas.contas=t.dataset.v;save();render();return;}
@@ -584,14 +699,21 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
  if(t.id==='impGo'){const msg=$('#copyMsg');try{const d=JSON.parse($('#impTxt').value);const fs=d.fichas||{};let n=0;for(const k in fs){DB.fichas[k]=completa(fs[k]);pend.add(k);n++;}if(!n)throw 0;if(!DB.atual)abrir(Object.keys(fs)[0]);save();renderSel();$('#impArea').hidden=true;$('#impTxt').value='';msg.textContent=n+(n>1?' fichas importadas.':' ficha importada.');render();}catch(err){msg.textContent='Esses dados não foram reconhecidos. Copia de novo no outro aparelho com "Copiar todos os dados".';}return;}
 });
 
-async function carregar(){estado('Carregando as fichas…');
- const {data,error}=await sb.from('fichas').select('id,dados');
+async function carregar(sess){estado('Carregando…');UID=sess.user.id;
+ const {data,error}=await sb.from('fichas').select('owner,id,dados,updated_at');
  if(error){estado('Não consegui carregar. Recarrega a página.');return;}
- DB.fichas={};data.forEach(r=>DB.fichas[r.id]=completa(r.dados));
- let a='';try{a=localStorage.getItem(KEY+'-atual')||''}catch(e){}
- if(!DB.fichas[a])a=Object.keys(DB.fichas)[0]||null;DB.atual=a;S=a?DB.fichas[a]:null;
- estado(data.length?'Salvo na nuvem':'Nenhuma ficha ainda');renderSel();renderTabs();render();}
-async function mostrar(sess){$('#login').hidden=!!sess;$('#appwrap').hidden=!sess;if(sess){$('#quem').textContent=sess.user.email;await carregar();}}
+ const meus=data.filter(r=>r.owner===UID);
+ const adm=await sb.rpc('sou_admin');
+ CLI=adm.error?!meus.some(r=>r.id!=='minha'):!adm.data;
+ document.body.classList.toggle('cli',CLI);
+ $('#subt').textContent=CLI?'Teu mapa · com Andréia Zanon':'Ferramenta de acompanhamento · Andréia Zanon';
+ OUTRAS=CLI?[]:data.filter(r=>r.owner!==UID).map(r=>({...r,dados:completa(r.dados)})).sort((a,b)=>a.updated_at<b.updated_at?1:-1);
+ DB.fichas={};meus.forEach(r=>DB.fichas[r.id]=completa(r.dados));
+ if(CLI){if(!DB.fichas.minha)DB.fichas.minha=vazio('');DB.atual='minha';S=DB.fichas.minha;if(!CTABS.some(x=>x[0]===tab))tab='inicio';}
+ else{let a='';try{a=localStorage.getItem(KEY+'-atual')||''}catch(e){}
+  if(!DB.fichas[a])a=Object.keys(DB.fichas)[0]||null;DB.atual=a;S=a?DB.fichas[a]:null;}
+ estado(meus.length?'Salvo na nuvem':(CLI?'':'Nenhuma ficha ainda'));renderSel();renderTabs();render();}
+async function mostrar(sess){$('#login').hidden=!!sess;$('#appwrap').hidden=!sess;if(sess){$('#quem').textContent=sess.user.email;await carregar(sess);}else{CLI=false;OUTRAS=[];document.body.classList.remove('cli');}}
 let modo='entrar';
 $('#lgToggle').addEventListener('click',()=>{modo=modo==='entrar'?'criar':'entrar';$('#lgBtn').textContent=modo==='entrar'?'Entrar':'Criar meu acesso';$('#lgToggle').textContent=modo==='entrar'?'Primeiro acesso? Criar meu acesso':'Já tenho acesso. Entrar';$('#lgMsg').textContent='';});
 $('#lgForm').addEventListener('submit',async e=>{e.preventDefault();const email=$('#lgEmail').value.trim(),password=$('#lgPass').value;const m=$('#lgMsg');m.textContent='Aguarda…';
